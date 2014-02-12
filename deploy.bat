@@ -3,7 +3,7 @@ git push origin master
 
 ConsoleWrite("Hello World!" & @CRLF)
 
-@Echo off
+@Echo on
 Color 02
 Echo 'Text inside console'
 
