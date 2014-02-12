@@ -3,4 +3,5 @@ git push origin master
 
 
 
-X:\HardX\src\HardX.git\git push origin master
+cd X:\HardX\src\HardX.git\
+git push origin master
