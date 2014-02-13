@@ -5,3 +5,5 @@ call git push origin master
 
 
 X:\HardX\src\HardX.git\push_remote.bat
+
+echo "Выполнено"
