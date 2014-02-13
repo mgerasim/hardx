@@ -4,5 +4,4 @@ call git push origin master
 
 
 
-cd X:\HardX\src\HardX.git\
-call git push origin master
+call X:\HardX\src\HardX.git\git push origin master
