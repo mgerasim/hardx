@@ -1,4 +1,4 @@
-@echo off
+@echo on
 
 call git add . 
 call git commit -m fix 
