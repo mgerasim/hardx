@@ -8,4 +8,4 @@ call git push origin master
 
 call X:\HardX\src\HardX.git\push_remote.bat
 
-echo "Выполнено"
+echo Выполнено
