@@ -4,4 +4,4 @@ call git push origin master
 
 
 
-call X:\HardX\src\HardX.git\push_remote.bat
+X:\HardX\src\HardX.git\push_remote.bat
