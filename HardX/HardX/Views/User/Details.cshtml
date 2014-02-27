@@ -1,0 +1,26 @@
+﻿@model HardX.Models.User
+
+@{
+    ViewBag.Title = "Просмотр пользователя";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<fieldset>
+    <legend>Пользователя</legend>
+
+    <div class="display-label">Учетная запись</div>
+    <div class="display-field">@Model.Login</div>
+
+    <div class="display-label">Имя пользователя</div>
+    <div class="display-field">@Model.Name</div>
+	
+    <div class="display-label">Филиал</div>
+    <div class="display-field">@Model.Branche.FullName</div>
+
+</fieldset>
+<p>
+    @Html.ActionLink("Редактировать", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Назад", "Index")
+</p>
+

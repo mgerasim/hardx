@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                    assembly="HardX"
+                   namespace="HardX.Models">
+  
+  <class name="Action" table="actions">
+   
+    <id name="Id" column="id" type="int">
+      
+      <generator class="sequence">
+        <param name="sequence">SEQ_ACTIONS</param>
+      </generator>
+    </id>    
+    <property name="Name"  column="name" type="String" length="255"/>
+
+    <set name="Roles" table="actions_roles" generic="true">
+      <key>
+        <column name="action_id" not-null="true" sql-type="INTEGER" />
+      </key>
+      <many-to-many class="Role" fetch="join">
+        <column name="Id" not-null="true" sql-type="INTEGER" />
+      </many-to-many>
+    </set>
+    
+  </class>
+</hibernate-mapping>
