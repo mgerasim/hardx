@@ -70,6 +70,7 @@
     <Compile Include="Controllers\BrancheController.cs" />
     <Compile Include="Controllers\DevmodelController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MatmodelController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Core\Entity.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Factories\ActionFactory.cs" />
     <Compile Include="Factories\BrancheFactory.cs" />
     <Compile Include="Factories\DevmodelFactory.cs" />
+    <Compile Include="Factories\MatmodelFactory.cs" />
     <Compile Include="Factories\RoleFactory.cs" />
     <Compile Include="Factories\TypedevFactory.cs" />
     <Compile Include="Factories\UserFactory.cs" />
@@ -90,6 +92,7 @@
     <Compile Include="Models\Action.cs" />
     <Compile Include="Models\Branche.cs" />
     <Compile Include="Models\Devmodel.cs" />
+    <Compile Include="Models\Matmodel.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Typedev.cs" />
     <Compile Include="Models\User.cs" />
@@ -99,6 +102,7 @@
     <Compile Include="Repositories\ActionRepository.cs" />
     <Compile Include="Repositories\BrancheRepository.cs" />
     <Compile Include="Repositories\DevmodelRepository.cs" />
+    <Compile Include="Repositories\MatmodelRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\TypedevRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
@@ -145,6 +149,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Vendor.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Matmodel.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <Content Include="Web.config" />
@@ -198,7 +205,9 @@
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Views\Matmodel\Index.cshtml" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Devmodel\Index.cshtml" />
   </ItemGroup>

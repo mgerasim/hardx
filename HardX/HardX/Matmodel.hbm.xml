@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                    assembly="HardX"
+                   namespace="HardX.Models">
+  
+  <class name="Matmodel" table="MAT_MODELS" lazy="false">
+   
+    <id name="Id" column="id" type="int">
+      
+      <generator class="sequence">
+        <param name="sequence">SEQ_MAT_MODELS</param>
+      </generator>
+    </id>    
+    <property name="Name"  column="name" type="String" length="255"/>
+    <many-to-one name="Vendor" column="Vendor_ID" />
+    <property name="Partnumber"  column="partnumber" type="string"/>
+    <property name="Capacity"  column="capacity" type="int"/>
+    <property name="Price"  column="price" type="int"/>
+    
+  </class>
+</hibernate-mapping>
