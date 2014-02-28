@@ -10,7 +10,7 @@ namespace HardX.Models
 {
     public class Matmodel : Entity<Matmodel>
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
 
         [Display(Name = "Наименование")]
         [Required(ErrorMessage = "* Укажите наименование оборудования")]

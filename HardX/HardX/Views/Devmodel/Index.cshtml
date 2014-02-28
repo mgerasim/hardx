@@ -49,6 +49,7 @@
 		<td>
             @Html.ActionLink("Редактировать", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Просмотр", "Details", new { id=item.Id }) |
+			@Html.ActionLink("Совместимость", "Compatibility", new { id=item.Id }) |
             @Html.ActionLink("Удалить", "Delete", new { id=item.Id }, new { onclick = "return confirm('Вы действительно хотите удалить?');" })
         </td>
     </tr>

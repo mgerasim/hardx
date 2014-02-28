@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                    assembly="HardX"
+                   namespace="HardX.Models">
+  
+  <class name="Devmodel" table="DEV_MODELS" lazy="false">
+   
+    <id name="Id" column="id" type="int">
+      
+      <generator class="sequence">
+        <param name="sequence">SEQ_DEV_MODELS</param>
+      </generator>
+    </id>    
+    <property name="Name"  column="name" type="String" length="255"/>
+    <many-to-one name="Vendor" column="Vendor_ID" />
+    <many-to-one name="Typedev" column="Type_ID" />
+    <property name="Printspeed"  column="printspeed" type="int"/>
+    <property name="Capacity"  column="capacity" type="int"/>
+    
+    <set name="Matmodels" table="link_dev_mat_models" lazy="false" cascade="none">
+      <key column="DEV_MODEL_ID" />
+      <many-to-many class="Matmodel" not-found="exception" column="MAT_MODEL_ID" />
+    </set>
+
+    
+  </class>
+</hibernate-mapping>

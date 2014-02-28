@@ -5,6 +5,8 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using HardX.Core;
 using HardX.Factories;
+using Iesi.Collections;
+using Iesi.Collections.Generic;
 
 namespace HardX.Models
 {
@@ -39,8 +41,14 @@ namespace HardX.Models
         public int Capacity { get; set; }
 
 
+        //public ISet<Matmodel> Matmodels;
+        public virtual ICollection<Matmodel> Matmodels { get; protected set; }
+
+
         public Devmodel()
         {
+            Matmodels = new HashedSet<Matmodel>();
+
             DevmodelFactory theDevmodelFactory = new DevmodelFactory();
             _repository = theDevmodelFactory.createRepository();
             if (_repository == null)

@@ -1,0 +1,22 @@
+﻿@model HardX.ViewModels.DevmodelInput
+
+@{
+    ViewBag.Title = "Совместимость расходных материалов для " + Model.TheDevmodel.Vendor.Name + " " + Model.TheDevmodel.Name;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Compatibility", "Devmodel"))
+{	
+	foreach (var item in Model.MatmodelSelections)
+	{
+		<p>
+		<input type="checkbox" name="MatmodelSelections" value="@item.ID" @(Model.SelectedMatmodel.Contains(item.ID) ? "checked" : "") /> @item.Name @item.Partnumber
+		</p>
+	}
+
+	<p>
+		<input type="submit" value="Сохранить" /> @Html.ActionLink("Отмена", "Index")
+    </p>
+}
+
