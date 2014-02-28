@@ -5,6 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using HardX.Factories;
 using HardX.Core;
+using Iesi.Collections.Generic;
 
 namespace HardX.Models
 {
@@ -38,9 +39,12 @@ namespace HardX.Models
         [Required(ErrorMessage = "* Укажите цена")]
         public int Price { get; set; }
 
+        public virtual ICollection<Devmodel> Devmodels { get; protected set; }
 
         public Matmodel()
         {
+            Devmodels = new HashedSet<Devmodel>();
+
             MatmodelFactory theMatmodelFactory = new MatmodelFactory();
             _repository = theMatmodelFactory.createRepository();
             if (_repository == null)

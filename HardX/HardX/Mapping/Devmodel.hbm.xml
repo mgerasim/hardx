@@ -5,7 +5,7 @@
   
   <class name="Devmodel" table="DEV_MODELS" lazy="false">
    
-    <id name="Id" column="id" type="int">
+    <id name="ID" column="ID" type="int">
       
       <generator class="sequence">
         <param name="sequence">SEQ_DEV_MODELS</param>

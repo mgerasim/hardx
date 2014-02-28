@@ -21,5 +21,31 @@ namespace HardX.Controllers
             return View(theListMatmodel);
         }
 
+        public ActionResult Compatibility(int ID)
+        {
+            Matmodel model = new Matmodel();
+            model = model.GetById(ID);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Compatibility(int ID, FormCollection collection)
+        {
+            Matmodel model = new Matmodel();
+            model = model.GetById(ID);
+
+            string IDs = collection["DevmodelSelections"];
+
+            foreach (string item in IDs.Split(','))
+            {
+                model.Devmodels.Add((new Devmodel()).GetById(Convert.ToInt32(item)));
+            }
+
+            model.Update(model);
+
+            return View(model);
+        }
+
     }
 }

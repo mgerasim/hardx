@@ -12,7 +12,7 @@ namespace HardX.Models
 {
     public class Devmodel : Entity<Devmodel>
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
 
         [Display(Name = "Наименование")]
         [Required(ErrorMessage = "* Укажите наименование оборудования")]
@@ -40,8 +40,6 @@ namespace HardX.Models
         [Required(ErrorMessage = "* Укажите ресурс")]
         public int Capacity { get; set; }
 
-
-        //public ISet<Matmodel> Matmodels;
         public virtual ICollection<Matmodel> Matmodels { get; protected set; }
 
 

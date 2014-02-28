@@ -16,6 +16,11 @@
     <property name="Partnumber"  column="partnumber" type="string"/>
     <property name="Capacity"  column="capacity" type="int"/>
     <property name="Price"  column="price" type="int"/>
+
+    <set name="Devmodels" table="link_dev_mat_models" lazy="false" cascade="none">
+      <key column="MAT_MODEL_ID" />
+      <many-to-many class="Devmodel" not-found="exception" column="DEV_MODEL_ID" />
+    </set>
     
   </class>
 </hibernate-mapping>

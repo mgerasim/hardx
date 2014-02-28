@@ -78,9 +78,9 @@ namespace HardX.Controllers
                 theUser.Login = collection["Login"];
                 theUser.Name = collection["Name"];
                 Branche theBranche = new Branche();
-                theUser.Branche = theBranche.GetById(Convert.ToInt32(collection["Branche.Id"]));
+                theUser.Branche = theBranche.GetById(Convert.ToInt32(collection["Branche.ID"]));
                 Role theRole = new Role();
-                theUser.Role = theRole.GetById(Convert.ToInt32(collection["Role.Id"]));
+                theUser.Role = theRole.GetById(Convert.ToInt32(collection["Role.ID"]));
                 theUser.Save(theUser);
                 return RedirectToAction("Index");               
             }
@@ -126,9 +126,9 @@ namespace HardX.Controllers
                 theUser.Login = collection["Login"];
                 theUser.Name  = collection["Name"];
                 Branche theBranche = new Branche();
-                theUser.Branche = theBranche.GetById( Convert.ToInt32(collection["Branche.Id"]));
+                theUser.Branche = theBranche.GetById( Convert.ToInt32(collection["Branche.ID"]));
                 Role theRole = new Role();
-                theUser.Role = theRole.GetById(Convert.ToInt32(collection["Role.Id"]));
+                theUser.Role = theRole.GetById(Convert.ToInt32(collection["Role.ID"]));
                 theUser.Update(theUser);
                 
                 return RedirectToAction("Index");
