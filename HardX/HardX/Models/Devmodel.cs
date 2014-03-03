@@ -7,6 +7,7 @@ using HardX.Core;
 using HardX.Factories;
 using Iesi.Collections;
 using Iesi.Collections.Generic;
+using System.Web.Mvc;
 
 namespace HardX.Models
 {
@@ -34,11 +35,11 @@ namespace HardX.Models
 
         [Display(Name = "Скорость печати")]
         [Required(ErrorMessage = "* Укажите скорость печати")]
-        public int Printspeed { get; set; }
+        public virtual int Printspeed { get; set; }
         
         [Display(Name = "Ресурс")]
         [Required(ErrorMessage = "* Укажите ресурс")]
-        public int Capacity { get; set; }
+        public virtual int Capacity { get; set; }
 
         public virtual ICollection<Matmodel> Matmodels { get; protected set; }
 
@@ -52,5 +53,24 @@ namespace HardX.Models
             if (_repository == null)
                 throw new NotImplementedException();
         }
+    }
+
+    public class NewDevmodel : Devmodel
+    {
+        [Display(Name = "Наименование")]
+        [Required(ErrorMessage = "* Укажите наименование оборудования")]
+        [Remote("IsDevmodelName_Available", "DevmodelValidation")]
+        public override string Name { get; set; }
+
+        [Display(Name = "Скорость печати")]
+        [Required(ErrorMessage = "* Укажите скорость печати")]
+        [Remote("IsNumber_Available", "DevmodelValidation")]
+        public override int Printspeed { get; set; }
+
+        [Display(Name = "Ресурс")]
+        [Required(ErrorMessage = "* Укажите ресурс")]
+        [Remote("IsNumber_Available", "DevmodelValidation")]
+        public override int Capacity { get; set; }
+
     }
 }

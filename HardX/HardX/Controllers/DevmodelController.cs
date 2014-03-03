@@ -59,5 +59,83 @@ namespace HardX.Controllers
             });
         }
 
+        public ActionResult Create()
+        {
+            NewDevmodel model = new NewDevmodel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Create(FormCollection collection)
+        {
+            try{
+                Devmodel model = new Devmodel();
+                model.Name = collection["Name"];
+                model.Printspeed = Convert.ToInt32(collection["Printspeed"]);
+                model.Typedev = (new Typedev()).GetById( Convert.ToInt32(collection["TypedevID"]) );
+                model.Vendor =  (new Vendor()).GetById( Convert.ToInt32(collection["VendorID"]) );
+                model.Capacity = Convert.ToInt32(collection["Capacity"]);
+
+                model.Save(model);
+
+                return RedirectToAction("Index");
+             }
+            catch(Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+        }
+
+        public ActionResult Edit(int ID)
+        {
+            Devmodel model = new Devmodel();
+            model = model.GetById(ID);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(int ID, FormCollection collection)
+        {
+            try
+            {
+                Devmodel model = new Devmodel();
+                model = model.GetById(ID);
+
+                model.Name = collection["Name"];
+                model.Printspeed = Convert.ToInt32(collection["Printspeed"]);
+                model.Typedev = (new Typedev()).GetById(Convert.ToInt32(collection["TypedevID"]));
+                model.Vendor = (new Vendor()).GetById(Convert.ToInt32(collection["VendorID"]));
+                model.Capacity = Convert.ToInt32(collection["Capacity"]);
+
+                model.Update(model);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+        }
+
+        public ActionResult Delete(int ID)
+        {
+            try
+            {
+                Devmodel model = new Devmodel();
+                model = model.GetById(ID);
+                                
+                model.Delete(model);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+        }
+
     }
 }
