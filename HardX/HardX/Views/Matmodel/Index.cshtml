@@ -37,8 +37,11 @@
         <td>
             @item.Name
         </td>
-        <td>
-            @item.Vendor.Name
+        <td>			
+			@if(@item.Vendor != null)
+			{
+						@item.Vendor.Name			
+			}
         </td>
 		<td>
             @item.Partnumber
@@ -53,7 +56,6 @@
         </td>
 		<td>
             @Html.ActionLink("Редактировать", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Просмотр", "Details", new { id=item.ID }) |
 			@Html.ActionLink("Совместимость", "Compatibility", new { id=item.ID }) |
             @Html.ActionLink("Удалить", "Delete", new { id=item.ID }, new { onclick = "return confirm('Вы действительно хотите удалить?');" })
         </td>

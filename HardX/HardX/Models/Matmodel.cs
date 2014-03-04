@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using HardX.Factories;
 using HardX.Core;
 using Iesi.Collections.Generic;
+using System.Web.Mvc;
 
 namespace HardX.Models
 {
@@ -27,8 +28,8 @@ namespace HardX.Models
 
         public string Type;
         
-        [Display(Name = "Скорость печати")]
-        [Required(ErrorMessage = "* Укажите скорость печати")]
+        [Display(Name = "Номер")]
+        [Required(ErrorMessage = "* Укажите номер")]
         public string Partnumber { get; set; }
         
         [Display(Name = "Ресурс")]
@@ -50,5 +51,14 @@ namespace HardX.Models
             if (_repository == null)
                 throw new NotImplementedException();
         }
+    }
+
+    public class NewMatmodel : Matmodel
+    {
+        [Display(Name = "Наименование")]
+        [Required(ErrorMessage = "* Укажите наименование расходного материала")]
+        [Remote("IsMatmodelName_Available", "MatmodelValidation")]
+        [Editable(true)]
+        public override string Name { get; set; }
     }
 }

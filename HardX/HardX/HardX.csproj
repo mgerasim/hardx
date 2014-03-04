@@ -111,6 +111,7 @@
     <Compile Include="Utils\DBConnection.cs" />
     <Compile Include="Validations\BrancheValidation.cs" />
     <Compile Include="Validations\DevmodelValidation.cs" />
+    <Compile Include="Validations\MatmodelValidation.cs" />
     <Compile Include="Validations\RoleValidation.cs" />
     <Compile Include="Validations\UserValidation.cs" />
     <Compile Include="ViewModels\DevmodelInput.cs" />
@@ -253,6 +254,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Devmodel\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Matmodel\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Matmodel\Edit.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
