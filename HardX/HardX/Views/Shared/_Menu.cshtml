@@ -1,0 +1,21 @@
+﻿<div id="myjquerymenu" class="jquerycssmenu">
+  <ul>
+    <li>
+      @Html.ActionLink("Меню_1", "Index", "Home")
+    </li>
+    <li class="current_page_item">
+      @Ajax.ActionLink("Меню_2", "", new AjaxOptions{HttpMethod = "GET"})
+        <ul>
+            <li class="current_page_item">
+              @Html.ActionLink("Подменю_1", "Index", "Home")
+            </li>
+            <li>
+              @Html.ActionLink("Подменю_2", "Index", "Home")
+            </li>
+            <li>
+              @Html.ActionLink("Подменю_3", "Index", "Home")
+            </li>
+        </ul>
+    </li>
+  </ul>
+</div>
