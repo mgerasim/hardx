@@ -31,6 +31,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DeployIisAppPath>Default Web Site/HardX</DeployIisAppPath>
+    <PackageAsSingleFile>true</PackageAsSingleFile>
+    <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AMS.Profile">
@@ -130,14 +133,15 @@
     <Content Include="Content\bootstrap\css\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap\css\bootstrap.css" />
     <Content Include="Content\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="Content\bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="Content\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\img\glyphicons-halflings-white.png" />
     <Content Include="Content\img\glyphicons-halflings.png" />
-    <Content Include="Content\tablesorter\css\bootstrap.min.css" />
-    <Content Include="Content\tablesorter\img\glyphicons-halflings-white.png" />
-    <Content Include="Content\tablesorter\img\glyphicons-halflings.png" />
-    <Content Include="Content\tablesorter\jq.css" />
-    <Content Include="Content\tablesorter\jquery.tablesorter.pager.css" />
-    <Content Include="Content\tablesorter\theme.bootstrap.css" />
+    <Content Include="Content\jq.css" />
+    <Content Include="Content\jquery.tablesorter.pager.css" />
+    <Content Include="Content\theme.bootstrap.css" />
     <Content Include="Content\themes\base\jquery.ui.accordion.css" />
     <Content Include="Content\themes\base\jquery.ui.all.css" />
     <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
@@ -186,7 +190,9 @@
     <Content Include="Scripts\jquery.tablesorter.js" />
     <Content Include="Scripts\jquery.tablesorter.pager.js" />
     <Content Include="Scripts\jquery.tablesorter.widgets.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
