@@ -42,6 +42,14 @@ namespace HardX.Models
 
         public virtual ICollection<Devmodel> Devmodels { get; protected set; }
 
+        public string FullName
+        {
+            get
+            {
+                return this.Vendor.Name + " " + this.Partnumber + " " + this.Name;
+            }
+        }
+
         public Matmodel()
         {
             Devmodels = new HashedSet<Devmodel>();

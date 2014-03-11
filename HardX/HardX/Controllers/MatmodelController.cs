@@ -44,7 +44,7 @@ namespace HardX.Controllers
 
             model.Update(model);
 
-            return View(model);
+            return RedirectToAction("Index");
         }
 
         public ActionResult Create()

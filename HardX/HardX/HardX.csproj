@@ -75,6 +75,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MatmodelController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Core\Entity.cs" />
     <Compile Include="Core\HybernoteRepository.cs" />
@@ -84,19 +85,27 @@
     <Compile Include="Factories\ActionFactory.cs" />
     <Compile Include="Factories\BrancheFactory.cs" />
     <Compile Include="Factories\DevmodelFactory.cs" />
+    <Compile Include="Factories\MaterialFactory.cs" />
     <Compile Include="Factories\MatmodelFactory.cs" />
     <Compile Include="Factories\RoleFactory.cs" />
+    <Compile Include="Factories\StoreFactory.cs" />
     <Compile Include="Factories\TypedevFactory.cs" />
     <Compile Include="Factories\UserFactory.cs" />
     <Compile Include="Factories\VendorFactory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Mapping\Store.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Compile Include="Models\Action.cs" />
     <Compile Include="Models\Branche.cs" />
     <Compile Include="Models\Devmodel.cs" />
+    <Compile Include="Models\Material.cs" />
     <Compile Include="Models\Matmodel.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\Status.cs" />
+    <Compile Include="Models\Store.cs" />
     <Compile Include="Models\Typedev.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Vendor.cs" />
@@ -105,8 +114,10 @@
     <Compile Include="Repositories\ActionRepository.cs" />
     <Compile Include="Repositories\BrancheRepository.cs" />
     <Compile Include="Repositories\DevmodelRepository.cs" />
+    <Compile Include="Repositories\MaterialRepository.cs" />
     <Compile Include="Repositories\MatmodelRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
+    <Compile Include="Repositories\StoreRepository.cs" />
     <Compile Include="Repositories\TypedevRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\VendorRepository.cs" />
@@ -116,6 +127,7 @@
     <Compile Include="Validations\DevmodelValidation.cs" />
     <Compile Include="Validations\MatmodelValidation.cs" />
     <Compile Include="Validations\RoleValidation.cs" />
+    <Compile Include="Validations\StoreValidation.cs" />
     <Compile Include="Validations\UserValidation.cs" />
     <Compile Include="ViewModels\DevmodelInput.cs" />
   </ItemGroup>
@@ -137,6 +149,17 @@
     <Content Include="Content\bootstrap\img\glyphicons-halflings.png" />
     <Content Include="Content\bootstrap\js\bootstrap.js" />
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\chosen\chosen-sprite%402x.png" />
+    <Content Include="Content\chosen\chosen-sprite.png" />
+    <Content Include="Content\chosen\chosen.css" />
+    <Content Include="Content\chosen\chosen.jquery.js" />
+    <Content Include="Content\chosen\chosen.jquery.min.js" />
+    <Content Include="Content\chosen\chosen.min.css" />
+    <Content Include="Content\chosen\chosen.proto.js" />
+    <Content Include="Content\chosen\chosen.proto.min.js" />
+    <Content Include="Content\chosen\index.html" />
+    <Content Include="Content\chosen\index.proto.html" />
+    <Content Include="Content\chosen\options.html" />
     <Content Include="Content\img\glyphicons-halflings-white.png" />
     <Content Include="Content\img\glyphicons-halflings.png" />
     <Content Include="Content\jq.css" />
@@ -187,6 +210,13 @@
     <EmbeddedResource Include="Mapping\Matmodel.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Mapping\Material.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mapping\Status.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\jquery.tablesorter.js" />
     <Content Include="Scripts\jquery.tablesorter.pager.js" />
     <Content Include="Scripts\jquery.tablesorter.widgets.js" />
@@ -266,6 +296,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Matmodel\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\Matmodels.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

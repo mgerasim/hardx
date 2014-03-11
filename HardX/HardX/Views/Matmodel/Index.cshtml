@@ -11,49 +11,40 @@
 </p>
 <table class="tablesorter">
 <thead>
-    <tr>        
+    <tr>  
+        <th class="filter-select filter-exact" data-placeholder="Выбрать...">
+            Производитель
+        </th>   
+		<th>
+            Номер
+        </th>   
         <th>
             Наименование
         </th>
-        <th class="filter-select filter-exact" data-placeholder="Выбрать...">
-            Производитель
-        </th>
-		<th>
-            Номер
-        </th>
-		<th>
-            Ресурс
-        </th>
-		<th>
-            Цена
-        </th>
+		
 		<th></th>
     </tr>
 </thead>
 
 <tbody>
 @foreach (var item in Model) {
-    <tr>        
-        <td>
-            @item.Name
-        </td>
-        <td>			
+    <tr>
+		<td>			
 			@if(@item.Vendor != null)
 			{
 						@item.Vendor.Name			
 			}
         </td>
+		     
 		<td>
             @item.Partnumber
-        </td>
-		
+        </td>   
 
-		<td>
-            @item.Capacity
+        <td>
+            @item.Name
         </td>
-		<td>
-            @item.Price
-        </td>
+        
+		
 		<td>
             @Html.ActionLink("Редактировать", "Edit", new { id=item.ID }) |
 			@Html.ActionLink("Совместимость", "Compatibility", new { id=item.ID }) |
@@ -63,26 +54,23 @@
 }
 </tbody>
 <tfoot>
-    <tr>        
-        <th>
-            Наименование
-        </th>
+    <tr>     
         <th>
             Производитель
         </th>
+		   
 		<th>
             Номер
         </th>
-		<th>
-            Ресурс
+
+        <th>
+            Наименование
         </th>
-		<th>
-            Цена
-        </th>
+		
 		<th></th>
     </tr>
 	<tr>
-			<th colspan="6" class="ts-pager form-horizontal">
+			<th colspan="4" class="ts-pager form-horizontal">
 				<button type="button" class="btn first"><i class="icon-step-backward glyphicon glyphicon-step-backward"></i></button>
 				<button type="button" class="btn prev"><i class="icon-arrow-left glyphicon glyphicon-backward"></i></button>
 				<span class="pagedisplay"></span> <!-- this can be any element, including an input -->

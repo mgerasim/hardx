@@ -51,12 +51,7 @@ namespace HardX.Controllers
 
             model.Update(model);
 
-            return View(new DevmodelInput()
-            {
-                TheDevmodel = model,
-                MatmodelSelections = (List<Matmodel>)(new Matmodel()).GetAll(),
-                SelectedMatmodel = model.Matmodels.Select(x => x.ID).ToList()
-            });
+            return RedirectToAction("Index");
         }
 
         public ActionResult Create()

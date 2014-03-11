@@ -1,28 +1,19 @@
-﻿@model IEnumerable<HardX.Models.Devmodel>
+﻿@model IEnumerable<HardX.Models.Store>
 
 @{
-    ViewBag.Title = "Список оборудования";
+    ViewBag.Title = "Список складов";
 }
 
 <h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Добавить оборудование", "Create")
+    @Html.ActionLink("Добавить склад", "Create")
 </p>
 <table class="tablesorter">
 <thead>
-    <tr>     
-	
-        <th class="filter-select filter-exact" data-placeholder="Выбрать...">
-            Производитель
-        </th>
-		   
+    <tr>        
         <th>
             Наименование
-        </th>
-        
-		<th class="filter-select filter-exact" data-placeholder="Выбрать...">
-            Тип
         </th>
         
 		<th></th>
@@ -31,46 +22,29 @@
 
 <tbody>
 @foreach (var item in Model) {
-    <tr>     
-	
-        <td>
-            @item.Vendor.Name
-        </td>
-		   
+    <tr>        
         <td>
             @item.Name
         </td>
-        <td>
-            @item.Typedev.Name
-        </td>
-		
+        
 		<td>
             @Html.ActionLink("Редактировать", "Edit", new { id=item.ID }) |
-			@Html.ActionLink("Совместимость", "Compatibility", new { id=item.ID }) |
+			@Html.ActionLink("Расходные материалы", "Matmodels", new { id=item.ID }) |
             @Html.ActionLink("Удалить", "Delete", new { id=item.ID }, new { onclick = "return confirm('Вы действительно хотите удалить?');" })
         </td>
     </tr>
 }
 </tbody>
 <tfoot>
-    <tr>     
-	
-		<th>
-            Производитель
-        </th>
-		   
+    <tr>        
         <th>
             Наименование
-        </th>
-
-		<th>
-            Тип
         </th>
         
 		<th></th>
     </tr>
 	<tr>
-			<th colspan="4" class="ts-pager form-horizontal">
+			<th colspan="2" class="ts-pager form-horizontal">
 				<button type="button" class="btn first"><i class="icon-step-backward glyphicon glyphicon-step-backward"></i></button>
 				<button type="button" class="btn prev"><i class="icon-arrow-left glyphicon glyphicon-backward"></i></button>
 				<span class="pagedisplay"></span> <!-- this can be any element, including an input -->
@@ -88,6 +62,3 @@
 </tfoot>
 
 </table>
-
-
-
