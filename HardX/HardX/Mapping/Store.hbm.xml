@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                    assembly="HardX"
+                   namespace="HardX.Models">
+
+  <class name="Store" table="REPOSITORIES">
+
+    <id name="ID" column="id" type="int">
+
+      <generator class="sequence">
+        <param name="sequence">SEQ_REPOSITORIES</param>
+      </generator>
+    </id>
+    <property name="Name"  column="name" type="String" length="255"/>
+
+    <set name="Materials" lazy="false">
+      <key column = "ID" />
+      <one-to-many class="Material" />
+    </set>
+    
+  </class>
+</hibernate-mapping>

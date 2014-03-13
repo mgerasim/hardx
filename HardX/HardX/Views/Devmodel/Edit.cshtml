@@ -1,0 +1,54 @@
+﻿@model HardX.Models.Devmodel
+
+@using HardX.Models
+
+@{
+    ViewBag.Title = "Редактировать оборудование";
+}
+
+<h2>Редактировать оборудование</h2>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Наименование:</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)			
+            @Html.EditorFor(model => model.Name)    
+			@Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+			@Html.LabelFor(model => model.Printspeed)
+            @Html.EditorFor(model => model.Printspeed)            
+        </div>
+
+        <div class="editor-label">			
+            @Html.LabelFor(model => model.Capacity)
+			@Html.EditorFor(model => model.Capacity)            
+        </div>
+        
+		<div class="editor-label">
+            @Html.LabelFor(model => model.VendorID)
+        </div>
+        <div class="editor-field">
+			@Html.DropDownListFor(model => model.VendorID, new SelectList((List<Vendor>)(new Vendor()).GetAll() , "ID", "Name" ))
+        </div>
+		
+		<div class="editor-label">
+            @Html.LabelFor(model => model.TypedevID)
+        </div>
+        <div class="editor-field">
+			@Html.DropDownListFor(model => model.TypedevID, new SelectList((List<Typedev>)(new Typedev()).GetAll() , "ID", "Name" ))
+        </div>
+
+
+        <p>
+            <input type="submit" value="Сохранить" /> @Html.ActionLink("Отмена", "Index")
+        </p>
+    </fieldset>
+}
+
