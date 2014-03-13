@@ -84,6 +84,7 @@ input[type="text"]
     padding: 2px;
     border: 1px solid #000000;
     margin-bottom: 5px;
+    font-size: 10pt;
 }
 
 input[type="text"]:focus
@@ -263,8 +264,10 @@ input[type="checkbox"]
 
 .main_foot
 {
+    font-family: Arial;
     text-align: right;
     vertical-align: bottom;
     font-size: 10px;
     padding-top: 20px;
+    line-height:13px;
 }
