@@ -135,6 +135,13 @@
     <Content Include="Content\jquerycssmenu.css" />
     <Content Include="Content\themes\cap_style\capstyle.css" />
     <Content Include="Content\themes\cap_style\images\head.jpg" />
+    <Content Include="Content\themes\pro_dropdown\pro_dropdown.css" />
+    <Content Include="Content\themes\pro_dropdown\arrow.gif" />
+    <Content Include="Content\themes\pro_dropdown\arrow_over.gif" />
+    <Content Include="Content\themes\pro_dropdown\three_0.gif" />
+    <Content Include="Content\themes\pro_dropdown\three_0a.gif" />
+    <Content Include="Content\themes\pro_dropdown\three_1.gif" />
+    <Content Include="Content\themes\pro_dropdown\three_1a.gif" />
     <EmbeddedResource Include="Mapping\Branche.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -199,6 +206,7 @@
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Scripts\jquerycssmenu.js" />
+    <Content Include="Scripts\stuHover.js" />
     <EmbeddedResource Include="Mapping\Role.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -273,6 +281,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Footer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Menu2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Role\Create.cshtml" />

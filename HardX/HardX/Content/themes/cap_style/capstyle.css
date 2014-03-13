@@ -186,7 +186,10 @@ input[type="checkbox"]
 {
     background-image: url('images/head.jpg');
     background-repeat: no-repeat;
+    /*height: 133px;
+    width: 339px;*/
     height: 133px;
+    width: 350px;
     text-align: right;
     vertical-align: bottom;
 }
