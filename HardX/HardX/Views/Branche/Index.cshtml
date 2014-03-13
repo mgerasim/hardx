@@ -1,0 +1,41 @@
+﻿@model IEnumerable<HardX.Models.Branche>
+
+
+@{
+    ViewBag.Title = "Список филиалов";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Добавить филиал", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+			Полное имя
+        </th>
+        <th>
+            Короткое имя
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+		<td>
+            @item.FullName
+        </td>
+		<td>
+            @item.ShortName
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Просмотр", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.Id }, new { onclick = "return confirm('Вы действительно хотите удалить?');" })
+        </td>        
+    </tr>
+}
+
+</table>
+

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                    assembly="HardX"
+                   namespace="HardX.Models">
+
+  <class name="Material" table="Materials" lazy="false">
+
+    <id name="ID" column="id" type="int">
+
+      <generator class="sequence">
+        <param name="sequence">SEQ_MATERIALS</param>
+      </generator>
+    </id>
+    
+    <many-to-one name="Matmodel" column="MAT_MODEL_ID" />
+    <many-to-one name="Store" column="REPOSITORY_ID" />
+    <many-to-one name="Status" column="STATUS_ID" />
+    
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,29 @@
+﻿@model HardX.Models.Role
+
+@{
+    ViewBag.Title = "Просмотр роли";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<fieldset>
+    <legend>Роль</legend>
+
+    <div class="display-label">Наименование:</div>
+    <div class="display-field">@Model.Name</div>
+	
+	<h5>Доступы:</h5>
+	
+	@foreach (var item in @Model.Actions)
+	{
+				 
+		@item.Name
+		<br />
+	}
+
+</fieldset>
+<p>
+    @Html.ActionLink("Редактировать", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Назад", "Index")
+</p>
+

@@ -1,0 +1,87 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.ComponentModel.DataAnnotations;
+using HardX.Repositories;
+using HardX.Core;
+using HardX.Factories;
+using System.Web.Mvc;
+
+namespace HardX.Models
+{
+    public partial class Role : Entity<Role>
+    {
+        private int _Id;
+        [Display(Name = "Наименование")]
+        [Required(ErrorMessage = "* Укажите наименование роли")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "* длина наименования должна быть не менее чем 2 и не более чем 50 символов")]
+        [Editable(true)]
+        public virtual string Name { get; set; }
+
+        private Iesi.Collections.Generic.ISet<Action> _Actions;
+                
+        public Role()
+        {
+            RoleFactory theRoleFactory = new RoleFactory();
+            _repository = theRoleFactory.createRepository();
+            if (_repository == null)
+                throw new NotImplementedException();
+
+            this._Actions = new Iesi.Collections.Generic.HashedSet<Action>();
+        }
+
+        public virtual int Id
+        {
+            get
+            {
+                return this._Id;
+            }
+            set
+            {
+                this._Id = value;
+            }
+        }
+        
+        
+        public virtual Iesi.Collections.Generic.ISet<Action> Actions
+        {
+            get
+            {
+                return this._Actions;
+            }
+            set
+            {
+                this._Actions = value;
+            }
+        }
+
+        public virtual Boolean IsExistAction(int actionID)
+        {
+            foreach (var theAction in this.Actions)
+            {
+                if (theAction.Id == actionID)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public virtual void ClearActions()
+        {
+            this._Actions.Clear();
+        }    
+    }
+
+    public class RoleNew : Role
+    {
+        [Display(Name = "Наименование")]
+        [Required(ErrorMessage = "* Укажите наименование роли")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "* длина наименования должна быть не менее чем 2 и не более чем 50 символов")]
+        [Remote("IsRoleName_Available", "RoleValidation")]
+        [Editable(true)]
+        public override string Name {get; set;}
+    }
+}
