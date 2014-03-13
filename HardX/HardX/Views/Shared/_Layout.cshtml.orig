@@ -2,22 +2,41 @@
 <html>
 <head>
     <title>@ViewBag.Title</title>
+<<<<<<< HEAD
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" >
 	<link href="@Url.Content("~/Content/bootstrap/css/bootstrap.css")" rel="stylesheet" >
 	<link href="@Url.Content("~/Content/jq.css")" rel="stylesheet" >	
     <link rel="shortcut icon" href="@Url.Content("~/Content/themes/rtc_style/images/favicon.ico")" />
     <link href="@Url.Content("~/Content/themes/cap_style/capstyle.css")" rel="stylesheet" type="text/css" />
-<<<<<<< HEAD
-    <link href="@Url.Content("~/Content/jquerycssmenu.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/pro_dropdown/pro_dropdown.css")" rel="stylesheet" type="text/css" />
+    @{/*<link href="@Url.Content("~/Content/jquerycssmenu.css")" rel="stylesheet" type="text/css" />
+       <script src="@Url.Content("~/Scripts/jquerycssmenu.js")" type="text/javascript"></script>*/}
 	<link href="@Url.Content("~/Content/theme.bootstrap.css")" rel="stylesheet" >
 	<link href="@Url.Content("~/Content/jquery.tablesorter.pager.css")" rel="stylesheet" >
-    <script src="@Url.Content("~/Scripts/jquerycssmenu.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/stuHover.js") type="text/javascript"></script>
 	<link href="@Url.Content("~/Content/chosen/chosen.css")" rel="stylesheet" >
 		
+=======
+    <link rel="shortcut icon" href="@Url.Content("~/Content/themes/rtc_style/images/favicon.ico")" />    
+    <link href="@Url.Content("~/Content/themes/pro_dropdown/pro_dropdown.css")" rel="stylesheet" type="text/css" />
+    @{/*<link href="@Url.Content("~/Content/jquerycssmenu.css")" rel="stylesheet" type="text/css" />
+       <script src="@Url.Content("~/Scripts/jquerycssmenu.js")" type="text/javascript"></script>*/}
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" >
+	<link href="@Url.Content("~/Content/bootstrap/css/bootstrap.css")" rel="stylesheet" >
+	<link href="@Url.Content("~/Content/jq.css")" rel="stylesheet" >	
+	<link href="@Url.Content("~/Content/theme.bootstrap.css")" rel="stylesheet" >
+	<link href="@Url.Content("~/Content/jquery.tablesorter.pager.css")" rel="stylesheet" >
+	<link href="@Url.Content("~/Content/chosen/chosen.css")" rel="stylesheet" >
+    <script src="@Url.Content("~/Scripts/stuHover.js") type="text/javascript"></script>
+>>>>>>> interface
     <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")" ></script>
 	<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.tablesorter.js")" ></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.tablesorter.widgets.js")" ></script>
 	<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.tablesorter.pager.js")" ></script>
+<<<<<<< HEAD
+=======
+    <link href="@Url.Content("~/Content/themes/cap_style/capstyle.css")" rel="stylesheet" type="text/css" />
+>>>>>>> interface
 	
 	<script id="js">$(function() {
 
@@ -90,13 +109,6 @@
 
 	
 	
-=======
-    <link href="@Url.Content("~/Content/themes/pro_dropdown/pro_dropdown.css")" rel="stylesheet" type="text/css" />
-    @{/*<link href="@Url.Content("~/Content/jquerycssmenu.css")" rel="stylesheet" type="text/css" />
-       <script src="@Url.Content("~/Scripts/jquerycssmenu.js")" type="text/javascript"></script>*/}
-    <script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/stuHover.js") type="text/javascript"></script>
->>>>>>> interface2
 </head>
 
 <body>
