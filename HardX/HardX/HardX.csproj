@@ -141,6 +141,16 @@
     <Compile Include="ViewModels\DevmodelInput.cs" />
   </ItemGroup>
   <ItemGroup>
+ <Content Include="Content\jquerycssmenu.css" />
+    <Content Include="Content\themes\cap_style\capstyle.css" />
+    <Content Include="Content\themes\cap_style\images\head.jpg" />
+    <Content Include="Content\themes\pro_dropdown\pro_dropdown.css" />
+    <Content Include="Content\themes\pro_dropdown\arrow.gif" />
+    <Content Include="Content\themes\pro_dropdown\arrow_over.gif" />
+    <Content Include="Content\themes\pro_dropdown\three_0.gif" />
+    <Content Include="Content\themes\pro_dropdown\three_0a.gif" />
+    <Content Include="Content\themes\pro_dropdown\three_1.gif" />
+    <Content Include="Content\themes\pro_dropdown\three_1a.gif" />
     <EmbeddedResource Include="Mapping\Branche.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -204,6 +214,8 @@
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Scripts\jquerycssmenu.js" />
+    <Content Include="Scripts\stuHover.js" />
     <EmbeddedResource Include="Mapping\Role.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -228,7 +240,20 @@
     <EmbeddedResource Include="Mapping\MaterialUchet.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+     <EmbeddedResource Include="Mapping\Branche.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mapping\Action.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mapping\Devmodel.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+
     <EmbeddedResource Include="Mapping\Area.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mapping\Devmodel.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <Content Include="Scripts\chosen.jquery.js" />
@@ -275,6 +300,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Menu.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Header.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Footer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Menu2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Role\Create.cshtml" />
