@@ -343,9 +343,8 @@
     <Content Include="Views\Store\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Store\Matmodels.cshtml" />
+    <Content Include="Views\Store\Materials.cshtml" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Views\Area\Create.cshtml" />
     <Content Include="Views\Area\Details.cshtml" />
