@@ -1,10 +1,22 @@
 ﻿@model HardX.ViewModels.DevmodelInput
+@using HardX.Models
 
 @{
     ViewBag.Title = "Совместимость расходных материалов для " + Model.TheDevmodel.Vendor.Name + " " + Model.TheDevmodel.Name;
 }
 
 <h2>@ViewBag.Title</h2>
+
+@foreach (var item in (new Matmodel()).GetAll() )
+{
+	if (Model.SelectedMatmodel.Contains(item.ID)) {
+		<p>
+			@item.FullName
+		</p>
+	}
+}
+
+
 
 @using (Html.BeginForm("Compatibility", "Devmodel"))
 {	
@@ -23,17 +35,15 @@
 	
 	@foreach (var item in Model.MatmodelSelections)
 	{
-		
 
-				<tr>
-					<td>
-						<input type="checkbox" name="MatmodelSelections" value="@item.ID" @(Model.SelectedMatmodel.Contains(item.ID) ? "checked" : "") /> 
-					</td>
-					<td>
-						@item.Name @item.Partnumber						
-					</td>
-				</tr>
-	
+		<tr>
+			<td>
+				<input type="checkbox" name="MatmodelSelections" value="@item.ID" @(Model.SelectedMatmodel.Contains(item.ID) ? "checked" : "") /> 
+			</td>
+			<td>
+				@item.Name @item.Partnumber						
+			</td>
+		</tr>
 		
 	}
 
@@ -71,4 +81,3 @@
 		<input type="submit" value="Сохранить" /> @Html.ActionLink("Отмена", "Index")
     </p>
 }
-

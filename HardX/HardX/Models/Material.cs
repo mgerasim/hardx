@@ -36,6 +36,8 @@ namespace HardX.Models
         [Display(Name = "Количество")]
         [Required(ErrorMessage = "* Укажите количество")]
         public int Count { get; set; }
+
+       
                 
         public Material()
         {

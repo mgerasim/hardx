@@ -23,8 +23,19 @@ namespace HardX.Models
         [Display(Name = "Производитель")]
         [Required(ErrorMessage = "* Укажите производителя")]
         public Vendor Vendor { get; set; }
-
+        [Display(Name = "Производитель")]
+        [Required(ErrorMessage = "* Укажите производителя")]
         public int VendorID;
+
+
+        [Display(Name = "Вид расходного материала")]
+        [Required(ErrorMessage = "* Укажите вид расходного материала")]
+        public Typedev Typedev { get; set; }
+        [Display(Name = "Вид расходного материала")]
+        [Required(ErrorMessage = "* Укажите вид расходного материала")]
+        public int TypedevID;
+
+
 
         public string Type;
         

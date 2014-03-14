@@ -103,11 +103,10 @@ namespace HardX.Controllers
         //
         // GET: /Store/Matmodels/5
 
-        public ActionResult Matmodels(int id)
+        public ActionResult Materials(int id)
         {
             Material model = new Material();
             model.Store = (new Store()).GetById(id);
-            ViewBag.Materials = (new Store()).GetById(id).Materials;
             return View(model);
         }
 
@@ -115,7 +114,7 @@ namespace HardX.Controllers
         // POST: /Store/Matmodels/5
 
         [HttpPost]
-        public ActionResult Matmodels(int id, FormCollection collection)
+        public ActionResult Materials(int id, FormCollection collection)
         {
             try
             {
