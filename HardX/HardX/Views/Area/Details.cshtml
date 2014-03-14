@@ -1,0 +1,19 @@
+﻿@model HardX.Models.Area
+
+@{
+    ViewBag.Title = "Просмотр площадки";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<fieldset>
+
+    <div class="display-label">Имя</div>
+    <div class="display-field">@Model.Name</div>
+
+</fieldset>
+<p>
+    @Html.ActionLink("Редактировать", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Назад", "Index")
+</p>
+

@@ -67,6 +67,7 @@ namespace HardX.Controllers
                 model.Capacity = Convert.ToInt32(collection["Capacity"]);
                 model.Price = Convert.ToInt32(collection["Price"]);
                 model.Vendor = (new Vendor()).GetById(Convert.ToInt32(collection["VendorID"]));
+                model.Typedev = (new Typedev()).GetById(Convert.ToInt32(collection["TypedevID"]));
                 model.Save(model);
                 
                 return RedirectToAction("Index");
@@ -100,6 +101,7 @@ namespace HardX.Controllers
                 model.Capacity = Convert.ToInt32(collection["Capacity"]);
                 model.Price = Convert.ToInt32(collection["Price"]);
                 model.Vendor = (new Vendor()).GetById(Convert.ToInt32(collection["VendorID"]));
+                model.Typedev = (new Typedev()).GetById(Convert.ToInt32(collection["TypedevID"]));
                 model.Update(model);
 
                 return RedirectToAction("Index");

@@ -10,8 +10,7 @@ using Core;
 using HardX.Core;
 
 namespace HardX.Repositories
-{
-    
+{    
         public class ActionRepository : HybernoteRepository<HardX.Models.Action>
         {
             public ActionRepository()

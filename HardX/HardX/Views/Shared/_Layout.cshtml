@@ -89,9 +89,11 @@
 
 <body>
 	<p>
+		@Html.ActionLink("Площадки", "Index", "Area") | 
 		@Html.ActionLink("Склады", "Index", "Store") | 
 		@Html.ActionLink("Оборудование", "Index", "Devmodel") | 
-		@Html.ActionLink("Расходные материалы", "Index", "Matmodel")
+		@Html.ActionLink("Расходные материалы", "Index", "Matmodel")| 
+		@Html.ActionLink("Филиалы", "Index", "Branche")
 	</p>
     @RenderBody()	
 	<p>

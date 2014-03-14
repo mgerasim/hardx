@@ -14,31 +14,20 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>Наименование:</legend>
-
         <div class="editor-label">
-            @Html.LabelFor(model => model.Name)			
-            @Html.EditorFor(model => model.Name)    
-			@Html.ValidationMessageFor(model => model.Name)
+        @Html.LabelFor(model => model.Typedev)
+      </div>
+      <div class="editor-field">
+        @Html.DropDownListFor(model => model.TypedevID, new SelectList((List<Typedev>)(new Typedev()).GetAll("SIGN='MAT'") , "ID", "Name" ))
         </div>
+        
         <div class="editor-field">
 			@Html.LabelFor(model => model.Partnumber)
             @Html.EditorFor(model => model.Partnumber)       
 			@Html.ValidationMessageFor(model => model.Partnumber)     
         </div>
 
-        <div class="editor-label">			
-            @Html.LabelFor(model => model.Capacity)
-			@Html.EditorFor(model => model.Capacity)            
-			@Html.ValidationMessageFor(model => model.Capacity)
-        </div>
-
-		
-        <div class="editor-label">			
-            @Html.LabelFor(model => model.Price)
-			@Html.EditorFor(model => model.Price)            
-			@Html.ValidationMessageFor(model => model.Price)
-        </div>
+        
         
 		<div class="editor-label">
             @Html.LabelFor(model => model.VendorID)
