@@ -27,6 +27,18 @@ namespace HardX
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Параметры по умолчанию
             );
 
+            routes.MapRoute(
+            "issue",                                              // Route name
+            "{controller}/issue/{repository_id}/{matmodel_id}",                           // URL with parameters
+            new { controller = "Store", action = "issue", repository_id = "0", matmodel_id = "0" }  // Parameter defaults            
+        );
+
+            routes.MapRoute(
+            "marriage",                                              // Route name
+            "{controller}/marriage/{repository_id}/{matmodel_id}",                           // URL with parameters
+            new { controller = "Store", action = "marriage", repository_id = "0", matmodel_id = "0" }  // Parameter defaults
+        );
+
         }
 
         protected void Application_Start()

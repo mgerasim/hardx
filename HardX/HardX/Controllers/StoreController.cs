@@ -145,6 +145,65 @@ namespace HardX.Controllers
                 return View();
             }
         }
+
+        //
+        // GET: /Store/Matmodels/5
+
+        public ActionResult issue(int repository_id, int matmodel_id)
+        {
+
+            ViewBag.repository_id = repository_id;
+            ViewBag.matmodel_id = matmodel_id;
+
+            return View();
+        }
+
+        //
+        // POST: /Store/Matmodels/5
+
+        [HttpPost]
+        public ActionResult issue(int repository_id, int matmodel_id, FormCollection collection)
+        {
+            try
+            {
+                Material model = new Material();
+
+              
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+        }
+
+        public ActionResult marriage(int repository_id, int matmodel_id)
+        {
+            Material model = new Material();
+            return View(model);
+        }
+
+        //
+        // POST: /Store/Matmodels/5
+
+        [HttpPost]
+        public ActionResult marriage(int repository_id, int matmodel_id, FormCollection collection)
+        {
+            try
+            {
+                Material model = new Material();
+
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+        }
                 
         public ActionResult Delete(int ID)
         {
