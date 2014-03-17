@@ -1,17 +1,23 @@
 ﻿<div id="footer">
     Группа специализированных программных систем<br />Хабаровский филиал ОАО Ростелеком<br />@DateTime.Now.Year год
-</div> 
+</div>
+
+
+
 <script type="text/javascript" src="@Url.Content("~/Scripts/chosen.jquery.js")" ></script>
 	<script type="text/javascript">
-	    var config = {
-	        '.chosen-select': {},
-	        '.chosen-select-deselect': { allow_single_deselect: true },
-	        '.chosen-select-no-single': { disable_search_threshold: 10 },
-	        '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
-	        '.chosen-select-width': { width: "95%" }
-	    }
-	    for (var selector in config) {
-	        $(selector).chosen(config[selector]);
-	    }
+    var config = {
+    '.chosen-select': {},
+    '.chosen-select-deselect': { allow_single_deselect: true },
+    '.chosen-select-no-single': { disable_search_threshold: 10 },
+    '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+    '.chosen-select-width': { width: "95%" }
+    }
+    for (var selector in config) {
+    $(selector).chosen(config[selector]);
+    }
+
+
+
   </script>
   <br />

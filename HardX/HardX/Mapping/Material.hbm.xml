@@ -14,7 +14,7 @@
     
     <many-to-one name="Matmodel" column="MAT_MODEL_ID" />
     <many-to-one name="Store" column="REPOSITORY_ID" />
-    <many-to-one name="Status" column="STATUS_ID" />
+    <property name="StatusID"  column="STATUS_ID" type="int"/>
     
   </class>
 </hibernate-mapping>

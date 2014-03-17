@@ -30,12 +30,21 @@ namespace HardX.Models
         [Required(ErrorMessage = "* Укажите статус")]
         public Status Status { get; set; }
 
-        public int StatusID;
+        public int StatusID { get; set; }
 
 
         [Display(Name = "Количество")]
         [Required(ErrorMessage = "* Укажите количество")]
         public int Count { get; set; }
+
+
+        [Display(Name = "Выдать")]
+        [Required(ErrorMessage = "* Укажите количество для выдачи")]
+        public int CountIssued { get; set; }
+        
+        [Display(Name = "В брак")]
+        [Required(ErrorMessage = "* Укажите количество как брак")]
+        public int CountMarriage { get; set; }
 
        
                 

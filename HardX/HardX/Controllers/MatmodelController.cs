@@ -37,6 +37,9 @@ namespace HardX.Controllers
 
             string IDs = collection["DevmodelSelections"];
 
+            model.Devmodels.Clear();
+            model.Update(model);
+
             foreach (string item in IDs.Split(','))
             {
                 model.Devmodels.Add((new Devmodel()).GetById(Convert.ToInt32(item)));

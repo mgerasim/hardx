@@ -43,7 +43,10 @@ namespace HardX.Controllers
             model = model.GetById(ID);
 
             string IDs = collection["MatmodelSelections"];
-                        
+
+            model.Matmodels.Clear();
+            model.Update(model);
+
             foreach (string item in IDs.Split(','))
             {
                 model.Matmodels.Add((new Matmodel()).GetById(Convert.ToInt32(item)));

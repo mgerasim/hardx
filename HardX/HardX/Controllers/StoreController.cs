@@ -116,9 +116,10 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Materials(int id, FormCollection collection)
         {
+            Material model = new Material();
             try
             {
-                Material model = new Material();
+                model.Store = (new Store()).GetById(id);
                 
                 int count = 0;
                 try
@@ -129,20 +130,63 @@ namespace HardX.Controllers
                 {
                 }
 
-                for (int i = 0; i < count; i++)
-                {
-                    model.Store = (new Store()).GetById(id);
-                    model.Matmodel = (new Matmodel()).GetById(Convert.ToInt32(collection["MatmodelID"]));
-                    model.Save(model);
-                }
-                ViewBag.Materials = model.Store.Materials;                        
 
+                for (int i = 0; i < count; i++)
+                {                    
+                    model.Matmodel = (new Matmodel()).GetById(Convert.ToInt32(collection["MatmodelID"]));
+                    model.StatusID = 1; /*остаток*/
+                    model.Save(model);
+                }                
+                ViewBag.Materials = model.Store.Materials;
+
+                int count_issued = 0;
+                try
+                {
+                    count_issued = Convert.ToInt32(collection["CountIssued"]) + 1;
+                }
+                catch
+                {
+                }
+
+                List<Material> models = new List<Material>();
+                string s = "REPOSITORY_ID = " + id.ToString() +
+                        " AND mat_model_id = " + collection["MatmodelID"] +
+                        " AND status_id = 1 " +
+                        " AND rownum < " + count_issued.ToString();
+                models = (List<Material>)model.GetAll(s);
+
+                foreach(Material item in models)
+                {
+                    item.StatusID = 2;
+                    item.Update(item);
+                }
+                                                   
+                int count_marriage = 0;    
+                try
+                {
+                    count_marriage = Convert.ToInt32(collection["CountMarriage"]) + 1;
+                }
+                catch
+                {
+                }
+                models.Clear();
+                s = "REPOSITORY_ID = " + id.ToString() +
+                        " AND mat_model_id = " + collection["MatmodelID"] +
+                        " AND status_id = 1 " +
+                        " AND rownum < " + count_marriage.ToString();
+                models = (List<Material>)model.GetAll(s);        
+                foreach (Material item in models)
+                {
+                    item.StatusID = 3;
+                    item.Update(item);
+                }
+                                     
                 return View(model);
             }
             catch (Exception ex)
             {
                 ViewBag.Error = ex.Message;
-                return View();
+                return View(model);
             }
         }
 
