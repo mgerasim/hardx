@@ -1,10 +1,43 @@
 ﻿<ul id="nav">
     <li class="top"><a href="@Url.Action("Index", "Home")" class="top_link"><span>Главная</span></a></li>
+    <li class="top"><a href="#" class="top_link"><span class="down">Ресурсы</span></a>
+        <ul class="sub">
+            <li><a href="@Url.Action("Index", "Area")">Площадки</a></li>
+            <li><a href="@Url.Action("Index", "Store")">Склады</a></li>
+        </ul>
+    </li>
+    <li class="top"><a href="#" class="top_link"><span class="down">Справочники</span></a>
+        <ul class="sub">
+            <li><a href="#" class="fly">Адреса</a>
+					<ul>
+						<li><a href="#">Регионы</a></li>
+                        <li><a href="#">Населенные пункты</a></li>
+                        <li><a href="#">Улицы</a></li>
+                        <li><a href="#">Дома</a></li>
+                        <li><a href="#">Кабинеты</a></li>
+					</ul>
+			</li>
+            <li><a href="@Url.Action("Index", "Devmodel")">Оборудование</a></li>
+            <li><a href="@Url.Action("Index", "Matmodel")">Расходные материалы</a></li>
+            <li><a href="#">Типы</a></li>
+        </ul>
+    </li>
+    <li class="top"><a href="#" class="top_link"><span class="down">Управление</span></a>
+        <ul class="sub">
+            <li><a href="#">Пользователи</a></li>
+            <li><a href="#">Роли</a></li>
+            <li><a href="@Url.Action("Index", "Branche")">Филиалы</a></li>
+        </ul>
+    </li>
+    <li class="top"><a href="#" class="top_link"><span>Помощь</span></a></li>
+</ul>
+
+    @{/*
     <li class="top"><a href="@Url.Action("Index", "Area")" class="top_link"><span>Площадки</span></a></li>
     <li class="top"><a href="@Url.Action("Index", "Store")" class="top_link"><span>Склады</span></a></li>
     <li class="top"><a href="@Url.Action("Index", "Devmodel")" class="top_link"><span>Оборудование</span></a></li>
     <li class="top"><a href="@Url.Action("Index", "Matmodel")" class="top_link"><span>Расходные материалы</span></a></li>
-    <li class="top"><a href="@Url.Action("Index", "Branche")" class="top_link"><span>Филиал</span></a></li>
+    <li class="top"><a href="@Url.Action("Index", "Branche")" class="top_link"><span>Филиалы</span></a></li>
     @{/*
     <li class="top"><a href="#" class="top_link"><span class="down">Меню1</span></a>
 		<ul class="sub">
@@ -32,5 +65,3 @@
 			<li><a href="@Url.Action("Index", "Home")">Подменю23</a></li>
 		</ul>
 	</li>*/}
-    <li class="top"><a href="@Url.Action("Index", "Home")" class="top_link"><span>Помощь</span></a></li>
-</ul>
