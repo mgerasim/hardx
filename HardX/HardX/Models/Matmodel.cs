@@ -39,8 +39,8 @@ namespace HardX.Models
 
         public string Type;
         
-        [Display(Name = "Номер")]
-        [Required(ErrorMessage = "* Укажите номер")]
+        [Display(Name = "Модель")]
+        [Required(ErrorMessage = "* Укажите модель")]
         public string Partnumber { get; set; }
         
         [Display(Name = "Ресурс")]

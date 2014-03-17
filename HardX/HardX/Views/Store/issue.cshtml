@@ -1,0 +1,19 @@
+﻿@using HardX.Models
+@{
+    ViewBag.Title = "issue";
+}
+
+<h2>issue</h2>
+
+@foreach (var item in (new MaterialUchet()).GetAll("repository_id = '" + @ViewBag.repository_id + "' AND mat_model_id = @ViewBag.matmodel_id"))
+{
+
+	<tr>
+	<td>
+		<input type="checkbox" name="DevmodelSelections" value="@item.ID"  />
+		</td>
+		<td>
+		@item.Name 
+	</td>
+	</tr>
+}

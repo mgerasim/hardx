@@ -37,9 +37,13 @@
 @foreach (var item in (new MaterialUchet()).GetAll("repository_id = " + Convert.ToInt32(Model.Store.ID)) ) {
     <tr>          
         <td>
-            @item.Name
+            @item.Name @Html.RouteLink("Выдать", "issue", new { repository_id=@Model.Store.ID, matmodel_id=@item.matmodel_id }) | @Html.RouteLink("Брак", "marriage", new { repository_id=@Model.Store.ID, matmodel_id=@item.matmodel_id })
         </td>
 		     
+        <td>
+            @item.count_total
+        </td>
+		
         <td>
             @item.count_coming
         </td>
@@ -50,10 +54,6 @@
 		
         <td>
             @item.count_marriage
-        </td>
-		
-        <td>
-            @item.count_ordered
         </td>
 					
 
@@ -136,3 +136,4 @@
         </p>
     </fieldset>
 }
+

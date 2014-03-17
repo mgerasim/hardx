@@ -13,6 +13,7 @@ namespace HardX.Models
         public int ID { get; set; }
         [Display(Name = "Полное имя")]
         public virtual string Name { get; set; }
+        public int matmodel_id { get; set; }
         public int repository_id { get; set; }
         public int count_total { get; set; }
         public int count_issued { get; set; }
