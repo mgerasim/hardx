@@ -79,6 +79,7 @@
     <Compile Include="Controllers\MatmodelController.cs" />
     <Compile Include="Controllers\RegionController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\StreetController.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Factories\MatmodelFactory.cs" />
     <Compile Include="Factories\RegionFactory.cs" />
     <Compile Include="Factories\RoleFactory.cs" />
+    <Compile Include="Factories\RoomFactory.cs" />
     <Compile Include="Factories\StateFactory.cs" />
     <Compile Include="Factories\StoreFactory.cs" />
     <Compile Include="Factories\StreetFactory.cs" />
@@ -122,6 +124,7 @@
     <Compile Include="Models\Matmodel.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\Room.cs" />
     <Compile Include="Models\State.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Store.cs" />
@@ -142,6 +145,7 @@
     <Compile Include="Repositories\MatmodelRepository.cs" />
     <Compile Include="Repositories\RegionRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
+    <Compile Include="Repositories\RoomRepository.cs" />
     <Compile Include="Repositories\StateRepository.cs" />
     <Compile Include="Repositories\StoreRepository.cs" />
     <Compile Include="Repositories\StreetRepository.cs" />
@@ -246,6 +250,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Mapping\House.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mapping\Room.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <Content Include="Scripts\jquerycssmenu.js" />
@@ -438,6 +445,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\House\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Room\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Room\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Room\Create.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

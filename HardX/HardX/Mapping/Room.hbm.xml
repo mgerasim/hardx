@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                    assembly="HardX"
+                   namespace="HardX.Models">
+
+  <class name="Room" table="ROOMS" lazy="false">
+
+    <id name="ID" column="id" type="int">
+
+      <generator class="sequence">
+        <param name="sequence">SEQ_ROOMS</param>
+      </generator>
+    </id>
+    <property name="Name"  column="name" type="String" length="255"/>
+    <many-to-one name="House" column="House_ID" />
+
+
+  </class>
+</hibernate-mapping>
