@@ -11,6 +11,10 @@
         <th>
             Наименование
         </th>
+
+		<th>
+            Совместимая техника
+        </th>
 		
 				
         <th>
@@ -26,7 +30,6 @@
         </th>
 				
         
-		<th></th>
     </tr>
 </thead>
 
@@ -36,7 +39,10 @@
         <td>
             @item.Name 
         </td>
-		     
+		          
+        <td>
+            @item.devnames
+        </td>
         
 		
         <td>
@@ -52,8 +58,6 @@
         </td>
 					
 
-		<td>
-        </td>
     </tr>
 }
 </tbody>
@@ -64,6 +68,9 @@
             Наименование
         </th>
 		
+		<th>
+            Совместимая техника
+        </th>
 				
         <th>
             Наличие
@@ -77,7 +84,6 @@
             Брак
         </th>
         
-		<th></th>
     </tr>
 	<tr>
 			<th colspan="5" class="ts-pager form-horizontal">

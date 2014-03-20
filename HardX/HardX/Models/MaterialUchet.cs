@@ -20,6 +20,7 @@ namespace HardX.Models
         public int count_marriage { get; set; }
         public int count_ordered { get; set; }
         public int count_coming { get; set; }
+        public virtual string devnames { get; set; }
          
         public MaterialUchet()
         {

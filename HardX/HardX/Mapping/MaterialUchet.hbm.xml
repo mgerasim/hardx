@@ -16,6 +16,7 @@
     <property name="count_marriage"  column="count_marriage" type="int"/>
     <property name="count_ordered"  column="count_ordered" type="int"/>
     <property name="count_coming"  column="count_coming" type="int"/>
+    <property name="devnames"  column="devnames" type="String" length="255"/>
 
   </class>
 </hibernate-mapping>

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<HardX.Models.Street>
+
+
+@{
+    ViewBag.Title = "Список улиц";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Добавить улицу", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+			Имя
+        </th>
+
+        <th>
+			Населённый пункт
+        </th>
+				
+        <th>
+			Район
+        </th>
+
+		<th>
+			Регион
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+		<td>
+            @item.Name
+        </td>
+		<td>
+            @item.Town.Name
+        </td>
+		<td>
+            @item.Town.Region.Name
+        </td>
+		<td>
+            @item.Town.Region.State.Name
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Просмотр", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.ID }, new { onclick = "return confirm('Вы действительно хотите удалить?');" })
+        </td>        
+    </tr>
+}
+
+</table>
+

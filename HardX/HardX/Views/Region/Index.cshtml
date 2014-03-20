@@ -1,0 +1,50 @@
+﻿@model IEnumerable<HardX.Models.Region>
+
+
+@{
+    ViewBag.Title = "Список район";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Добавить район", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+			Имя
+        </th>
+		
+        <th>
+			Регион
+        </th>
+
+        <th>
+			Филиал
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+		<td>
+            @item.Name
+        </td>
+		<td>
+            @item.State.Name
+        </td>
+		<td>
+            @item.State.Branche.FullName
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Просмотр", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.ID }, new { onclick = "return confirm('Вы действительно хотите удалить?');" })
+        </td>        
+    </tr>
+}
+
+</table>
+

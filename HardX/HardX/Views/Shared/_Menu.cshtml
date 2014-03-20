@@ -10,9 +10,18 @@
         <ul class="sub">
             <li><a href="#" class="fly">Адреса</a>
 					<ul>
-						<li><a href="#">Регионы</a></li>
-                        <li><a href="#">Населенные пункты</a></li>
-                        <li><a href="#">Улицы</a></li>
+						<li>
+              <a href="@Url.Action("Index", "State")">Регионы</a>
+            </li>
+            <li>
+              <a href="@Url.Action("Index", "Region")">Районы</a>
+            </li>
+            <li>
+              <a href="@Url.Action("Index", "Town")">Населённые пункты</a>
+            </li>
+            <li>
+              <a href="@Url.Action("Index", "Street")">Улицы</a>
+            </li>
                         <li><a href="#">Дома</a></li>
                         <li><a href="#">Кабинеты</a></li>
 					</ul>
