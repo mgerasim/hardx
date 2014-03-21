@@ -20,7 +20,15 @@ namespace HardX.Models
         [Display(Name = "Улица")]
         [Required(ErrorMessage = "* Укажите улицу")]
         public Street Street { get; set; }
-                                
+
+        public string FullName
+        {
+            get
+            {
+                return this.Street.Town.Name +", " + this.Street.Name + ", " + this.Name;
+            }
+        }
+        
         public House()
         {
             HouseFactory theFactory = new HouseFactory();

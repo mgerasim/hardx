@@ -48,6 +48,7 @@ namespace HardX.Controllers
             {
                 Room model = new Room();
                 model.Name = collection["Name"];
+                model.House = (new House()).GetById(Convert.ToInt32(collection["House"]));
                 model.Save(model);
                 return RedirectToAction("Index");
             }
@@ -78,6 +79,18 @@ namespace HardX.Controllers
                 Room model = new Room();
                 model = model.GetById(id);
                 model.Name = collection["Name"];
+                model.House = (new House()).GetById(Convert.ToInt32(collection["House"]));
+
+                int AreaID = 0;
+                try
+                {
+                    AreaID = Convert.ToInt32(collection["Area"]);
+                    model.Area = (new Area()).GetById(AreaID);
+                }
+                catch
+                {
+                }
+
                 model.Update(model);
 
                 return RedirectToAction("Index");
@@ -93,7 +106,12 @@ namespace HardX.Controllers
  
         public ActionResult Delete(int id)
         {
-            return View();
+            Room model = new Room();
+            model = model.GetById(id);
+
+            model.Delete(model);
+
+            return RedirectToAction("Index");
         }
 
         //

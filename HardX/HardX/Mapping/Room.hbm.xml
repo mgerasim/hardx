@@ -13,6 +13,7 @@
     </id>
     <property name="Name"  column="name" type="String" length="255"/>
     <many-to-one name="House" column="House_ID" />
+    <many-to-one name="Area" column="Area_ID" />
 
 
   </class>

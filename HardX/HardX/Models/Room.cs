@@ -20,7 +20,11 @@ namespace HardX.Models
         [Display(Name = "Здание")]
         [Required(ErrorMessage = "* Укажите здание")]
         public House House { get; set; }
-                                
+
+
+        [Display(Name = "Площадка")]        
+        public Area Area { get; set; }
+                        
         public Room()
         {
             RoomFactory theFactory = new RoomFactory();
