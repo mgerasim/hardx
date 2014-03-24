@@ -102,15 +102,24 @@
 
     <table class="main_table" align="center" border="0" cellspacing="0" cellpadding="0">
         <tr>
-            <td class="main_head">
+            <td class="main_head" rowspan="2">
                 @Html.Partial("_Header")            
             </td>
-            <td colspan="2" valign="bottom">
-                @Html.Partial("_Menu")
-            </td>
+            <td valign="top" align="right">
+            <div id="logindisplay">
+                <text>
+                    <b>@HttpContext.Current.User.Identity.Name</b>
+                </text>
+            </div>
+            </td>            
         </tr>
         <tr>
-            <td class="main_body" colspan="3">
+            <td valign="bottom">
+                @Html.Partial("_Menu")
+            </td>
+        </tr>        
+        <tr>
+            <td class="main_body" colspan="2">
                 <div class="b1"><b></b></div>
                 <!--<div class="b2"><b><i><q></q></i></b></div>-->
                 <div class="b2"><b><i></i></b></div>

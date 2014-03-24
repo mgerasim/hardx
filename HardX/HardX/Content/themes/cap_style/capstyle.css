@@ -271,3 +271,9 @@ input[type="checkbox"]
     padding-top: 20px;
     line-height:13px;
 }
+
+#logindisplay
+{
+    padding-top:20px;
+    padding-bottom:15px;
+}
