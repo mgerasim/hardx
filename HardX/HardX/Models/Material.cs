@@ -46,6 +46,10 @@ namespace HardX.Models
         [Required(ErrorMessage = "* Укажите количество как брак")]
         public int CountMarriage { get; set; }
 
+        [Display(Name = "Удалить")]
+        [Required(ErrorMessage = "* Укажите количество для удаления")]
+        public int CountDelete { get; set; }
+
        
                 
         public Material()

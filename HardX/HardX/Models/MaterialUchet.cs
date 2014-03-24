@@ -21,6 +21,8 @@ namespace HardX.Models
         public int count_ordered { get; set; }
         public int count_coming { get; set; }
         public virtual string devnames { get; set; }
+        public virtual string vendor_name { get; set; }
+        public virtual string type_name { get; set; }
          
         public MaterialUchet()
         {

@@ -180,6 +180,26 @@ namespace HardX.Controllers
                     item.StatusID = 3;
                     item.Update(item);
                 }
+                
+                //delete
+                int count_delete = 0;
+                try
+                {
+                    count_delete = Convert.ToInt32(collection["CountDelete"]) + 1;
+                }
+                catch
+                {
+                }
+                models.Clear();
+                s = "REPOSITORY_ID = " + id.ToString() +
+                        " AND mat_model_id = " + collection["MatmodelID"] +
+                        " AND status_id = 1 " +
+                        " AND rownum < " + count_delete.ToString();
+                models = (List<Material>)model.GetAll(s);
+                foreach (Material item in models)
+                {
+                    item.Delete(item);
+                }
                                      
                 return View(model);
             }

@@ -8,6 +8,15 @@
 <table class="tablesorter">
 <thead>
     <tr>     
+	
+        <th class="filter-select filter-exact" data-placeholder="Выбрать...">
+            Тип
+        </th> 
+	
+        <th class="filter-select filter-exact" data-placeholder="Выбрать...">
+            Производитель
+        </th> 
+
         <th>
             Наименование
         </th>
@@ -35,7 +44,15 @@
 
 <tbody>
 @foreach (var item in (new MaterialUchet()).GetAll("repository_id = " + Convert.ToInt32(Model.Store.ID)) ) {
-    <tr>          
+    <tr>     
+        <td>
+            @item.type_name
+        </td>
+	     
+        <td>
+            @item.vendor_name
+        </td>
+		     
         <td>
             @item.Name 
         </td>
@@ -62,7 +79,15 @@
 }
 </tbody>
 <tfoot>
-    <tr>      
+    <tr>     
+	
+        <th>
+            Тип
+        </th> 
+
+        <th>
+            Производитель
+        </th> 
 		   
         <th>
             Наименование
@@ -86,7 +111,7 @@
         
     </tr>
 	<tr>
-			<th colspan="5" class="ts-pager form-horizontal">
+			<th colspan="7" class="ts-pager form-horizontal">
 				<button type="button" class="btn first"><i class="icon-step-backward glyphicon glyphicon-step-backward"></i></button>
 				<button type="button" class="btn prev"><i class="icon-arrow-left glyphicon glyphicon-backward"></i></button>
 				<span class="pagedisplay"></span> <!-- this can be any element, including an input -->
@@ -141,6 +166,12 @@
             @Html.LabelFor(model => model.CountMarriage)
 			@Html.EditorFor(model => model.CountMarriage)            
 			@Html.ValidationMessageFor(model => model.CountMarriage)
+        </div>
+		
+		<div class="editor-label">			
+            @Html.LabelFor(model => model.CountDelete)
+			@Html.EditorFor(model => model.CountDelete)            
+			@Html.ValidationMessageFor(model => model.CountDelete)
         </div>
         
         <p>

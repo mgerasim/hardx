@@ -17,6 +17,8 @@
     <property name="count_ordered"  column="count_ordered" type="int"/>
     <property name="count_coming"  column="count_coming" type="int"/>
     <property name="devnames"  column="devnames" type="String" length="255"/>
+    <property name="vendor_name"  column="vendor_name" type="String" length="255"/>
+    <property name="type_name"  column="type_name" type="String" length="255"/>
 
   </class>
 </hibernate-mapping>

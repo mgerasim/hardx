@@ -43,6 +43,23 @@ namespace HardX.Models
             if (_repository == null)
                 throw new NotImplementedException();
         }
+
+        public static int CurrentUserId
+        {
+            get
+            {
+                int userId = 0;
+                string strLoginName = HttpContext.Current.User.Identity.Name;
+                if (HttpContext.Current.Request.IsAuthenticated)
+                {
+
+                }
+
+                return 0;
+            }
+        }
+        
+
     }
 
     public class UserNew : User
