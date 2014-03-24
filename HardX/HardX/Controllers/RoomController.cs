@@ -79,12 +79,12 @@ namespace HardX.Controllers
                 Room model = new Room();
                 model = model.GetById(id);
                 model.Name = collection["Name"];
-                model.House = (new House()).GetById(Convert.ToInt32(collection["House"]));
+                model.House = (new House()).GetById(Convert.ToInt32(collection["House.Id"]));
 
                 int AreaID = 0;
                 try
                 {
-                    AreaID = Convert.ToInt32(collection["Area"]);
+                    AreaID = Convert.ToInt32(collection["Area.ID"]);
                     model.Area = (new Area()).GetById(AreaID);
                 }
                 catch

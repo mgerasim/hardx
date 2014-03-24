@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using HardX.Factories;
 using System.Web.Mvc;
 using HardX.Core;
+using Iesi.Collections.Generic;
 
 namespace HardX.Models
 {
@@ -18,8 +19,11 @@ namespace HardX.Models
         [Editable(true)]
         public virtual string Name { get; set; }
 
+        public virtual ICollection<Room> Rooms { get; protected set; }
+
         public Area()
         {
+            Rooms = new HashedSet<Room>();
             AreaFactory theBrancheFactory = new AreaFactory();
             _repository = theBrancheFactory.createRepository();
             if (_repository == null)

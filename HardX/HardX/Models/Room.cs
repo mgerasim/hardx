@@ -24,6 +24,14 @@ namespace HardX.Models
 
         [Display(Name = "Площадка")]        
         public Area Area { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return this.House.FullName + ", " + this.Name;
+            }
+        }
                         
         public Room()
         {

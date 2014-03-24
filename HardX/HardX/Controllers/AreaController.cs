@@ -75,6 +75,14 @@ namespace HardX.Controllers
                 // TODO: Add insert logic here
                 Area model = new Area();
                 model.Name = collection["Name"];
+
+                string IDs = collection["RoomSelections"];
+                
+                foreach (string item in IDs.Split(','))
+                {
+                    model.Rooms.Add((new Room()).GetById(Convert.ToInt32(item)));
+                }
+
                 model.Save(model);
                 return RedirectToAction("Index");
             }
@@ -118,6 +126,17 @@ namespace HardX.Controllers
                 Area model = new Area();
                 model = model.GetById(id);
                 model.Name = collection["Name"];
+
+                string IDs = collection["RoomSelections"];
+
+                model.Rooms.Clear();
+                model.Update(model);
+
+                foreach (string item in IDs.Split(','))
+                {
+                    model.Rooms.Add((new Room()).GetById(Convert.ToInt32(item)));
+                }
+
                 model.Update(model);
 
                 return RedirectToAction("Index");
