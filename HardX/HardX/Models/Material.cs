@@ -31,8 +31,10 @@ namespace HardX.Models
         public Status Status { get; set; }
 
         public int StatusID { get; set; }
-
-
+        
+        [Display(Name = "Добавить позицию этого материала")]        
+        public bool fAdded { get; set; }
+        
         [Display(Name = "Количество")]
         [Required(ErrorMessage = "* Укажите количество")]
         public int Count { get; set; }

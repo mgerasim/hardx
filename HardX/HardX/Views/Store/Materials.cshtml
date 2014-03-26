@@ -8,14 +8,14 @@
 <table class="tablesorter">
 <thead>
     <tr>     
+        <th class="filter-select filter-exact" data-placeholder="Выбрать...">
+            Производитель
+        </th>
 	
         <th class="filter-select filter-exact" data-placeholder="Выбрать...">
             Тип
         </th> 
-	
-        <th class="filter-select filter-exact" data-placeholder="Выбрать...">
-            Производитель
-        </th> 
+	 
 
         <th>
             Наименование
@@ -44,14 +44,16 @@
 
 <tbody>
 @foreach (var item in (new MaterialUchet()).GetAll("repository_id = " + Convert.ToInt32(Model.Store.ID)) ) {
-    <tr>     
+    <tr> 
+	
+        <td>
+            @item.vendor_name
+        </td>
+		    
         <td>
             @item.type_name
         </td>
 	     
-        <td>
-            @item.vendor_name
-        </td>
 		     
         <td>
             @item.Name 
@@ -79,15 +81,16 @@
 }
 </tbody>
 <tfoot>
-    <tr>     
+    <tr>
+	
+        <th>
+            Производитель
+        </th>      
 	
         <th>
             Тип
         </th> 
 
-        <th>
-            Производитель
-        </th> 
 		   
         <th>
             Наименование
@@ -147,6 +150,11 @@
         <div class="editor-field">
 			@Html.DropDownListFor(model => model.MatmodelID, new SelectList((List<Matmodel>)(new Matmodel()).GetAll() , "ID", "FullName" ), new {@class="chosen-select", @style="width: 350px;" })
         </div>
+		
+		<div class="editor-label">			
+            @Html.LabelFor(model => model.fAdded)
+			<input type="checkbox" name="fAdded" id="fAdded"  />
+        </div>
 
 		<div class="editor-label">			
             @Html.LabelFor(model => model.Count)
@@ -175,7 +183,7 @@
         </div>
         
         <p>
-            <input type="submit" value="Создать" /> @Html.ActionLink("Назад", "Materials")
+            <input type="submit" value="Создать" /> @Html.ActionLink("Назад", "Index")
         </p>
     </fieldset>
 }

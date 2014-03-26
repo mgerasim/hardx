@@ -120,6 +120,15 @@ namespace HardX.Controllers
             try
             {
                 model.Store = (new Store()).GetById(id);
+
+                if (collection["fAdded"]=="on")
+                {
+                    Material modelAdded = new Material();
+                    modelAdded.Store = (new Store()).GetById(id);
+                    modelAdded.Matmodel = (new Matmodel()).GetById(Convert.ToInt32(collection["MatmodelID"]));
+                    modelAdded.StatusID = 21; /*добавлен*/
+                    modelAdded.Save(modelAdded);
+                }
                 
                 int count = 0;
                 try
