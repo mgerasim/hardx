@@ -30,6 +30,7 @@
 		<td>
             @Html.ActionLink("Редактировать", "Edit", new { id=item.ID }) |
 			@Html.ActionLink("Расходные материалы", "Materials", new { id=item.ID }) |
+			@Html.ActionLink("Выгрузка в Excel", "Report", new { id=item.ID }) |
             @Html.ActionLink("Удалить", "Delete", new { id=item.ID }, new { onclick = "return confirm('Вы действительно хотите удалить?');" })
         </td>
     </tr>

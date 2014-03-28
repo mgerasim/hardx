@@ -293,5 +293,53 @@ namespace HardX.Controllers
                 return View();
             }
         }
+
+        //
+        // GET: /Store/Report/5
+
+        public ActionResult Report(int id)
+        {
+            Material model = new Material();
+            model.Store = (new Store()).GetById(id);
+            return View(model);
+        }
+
+        //
+        // POST: /Store/Report/5
+
+        [HttpPost]
+        public ActionResult Report(int id, FormCollection collection)
+        {
+            Material model = new Material();
+            try
+            {
+                model.Store = (new Store()).GetById(id);
+
+                string listStr = collection["MaterialUchetSelections"];
+
+
+                return RedirectToAction("Excel",  new { id = id, collection = listStr});
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View(model);
+            }
+        }
+        //
+        // GET: /Store/Report/5
+
+        public ActionResult Excel(int id, string collection)
+        {
+            MaterialUchet model = new MaterialUchet();
+            List<MaterialUchet> theList = new List<MaterialUchet>();
+            theList = (List<MaterialUchet>)model.GetAll("repository_id = " + id.ToString() + " AND id in (" + collection + ")");
+            
+            Response.AddHeader("Content-Type", "application/vnd.ms-excel");
+                      
+                        
+
+            return View(theList);
+        }
     }
 }

@@ -101,10 +101,10 @@ namespace HardX.Controllers
                 model = model.GetById(ID);
 
                 model.Name = collection["Name"];
-                model.Printspeed = Convert.ToInt32(collection["Printspeed"]);
-                model.Typedev = (new Typedev()).GetById(Convert.ToInt32(collection["TypedevID"]));
-                model.Vendor = (new Vendor()).GetById(Convert.ToInt32(collection["VendorID"]));
-                model.Capacity = Convert.ToInt32(collection["Capacity"]);
+                
+                model.Typedev = (new Typedev()).GetById(Convert.ToInt32(collection["Typedev.Id"]));
+                model.Vendor = (new Vendor()).GetById(Convert.ToInt32(collection["Vendor.Id"]));
+                
 
                 model.Update(model);
 

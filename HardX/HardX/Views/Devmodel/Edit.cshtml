@@ -21,6 +21,7 @@
             @Html.EditorFor(model => model.Name)    
 			@Html.ValidationMessageFor(model => model.Name)
         </div>
+		@{/*
         <div class="editor-field">
 			@Html.LabelFor(model => model.Printspeed)
             @Html.EditorFor(model => model.Printspeed)            
@@ -30,19 +31,19 @@
             @Html.LabelFor(model => model.Capacity)
 			@Html.EditorFor(model => model.Capacity)            
         </div>
-        
+        */}
 		<div class="editor-label">
-            @Html.LabelFor(model => model.VendorID)
+            @Html.LabelFor(model => model.Vendor)
         </div>
         <div class="editor-field">
-			@Html.DropDownListFor(model => model.VendorID, new SelectList((List<Vendor>)(new Vendor()).GetAll() , "ID", "Name" ))
+			@Html.DropDownListFor(model => model.Vendor.Id, new SelectList((List<Vendor>)(new Vendor()).GetAll() , "ID", "Name" ))
         </div>
 		
 		<div class="editor-label">
-            @Html.LabelFor(model => model.TypedevID)
+            @Html.LabelFor(model => model.Typedev)
         </div>
         <div class="editor-field">
-			@Html.DropDownListFor(model => model.TypedevID, new SelectList((List<Typedev>)(new Typedev()).GetAll() , "ID", "Name" ))
+			@Html.DropDownListFor(model => model.Typedev.Id, new SelectList((List<Typedev>)(new Typedev()).GetAll() , "ID", "Name" ))
         </div>
 
 

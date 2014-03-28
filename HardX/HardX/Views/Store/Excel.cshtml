@@ -1,0 +1,90 @@
+﻿@using HardX.Models
+@model List<HardX.Models.MaterialUchet>
+
+@{
+    Layout = "";
+}
+<style type="text/css">
+    body {font-family: Tahoma;}
+    h2 {color:red}
+    table {border:1px solid black; border-spacing:0}
+    td {color:green; font-size:.8em; padding:5px}
+    .heading {background:#ccc}
+</style>
+
+<h2>Отчёт</h2>
+
+<table>
+
+	<tr class="heading">
+		
+		<th>
+            Производитель
+        </th>
+	
+        <th>
+            Тип
+        </th> 
+
+        <th>
+            Наименование
+        </th>
+
+		<th>
+            Совместимая техника
+        </th>
+		
+				
+        <th>
+            Наличие
+        </th>
+		
+        <th>
+            Выдано
+        </th>
+
+        <th>
+            Брак
+        </th>
+    </tr>
+
+	
+	@foreach(var item in Model) {
+    <tr> 
+
+        <td>
+            @item.vendor_name
+        </td>
+		    
+        <td>
+            @item.type_name
+        </td>
+	     
+		     
+        <td>
+            @item.Name 
+        </td>
+		          
+        <td>
+            @item.devnames
+        </td>
+        
+		
+        <td>
+            @item.count_coming
+        </td>
+		
+        <td>
+            @item.count_issued
+        </td>
+		
+        <td>
+            @item.count_marriage
+        </td>
+					
+
+    </tr>
+
+	}
+
+</table>

@@ -1,0 +1,150 @@
+﻿@using HardX.Models
+
+@{
+    ViewBag.Title = "Расходные материалы";
+}
+
+@using (Html.BeginForm()) {
+
+<table class="tablesorter">
+<thead>
+    <tr>     
+		<th>
+		</th>
+
+        <th class="filter-select filter-exact" data-placeholder="Выбрать...">
+            Производитель
+        </th>
+	
+        <th class="filter-select filter-exact" data-placeholder="Выбрать...">
+            Тип
+        </th> 
+	 
+
+        <th>
+            Наименование
+        </th>
+
+		<th>
+            Совместимая техника
+        </th>
+		
+				
+        <th>
+            Наличие
+        </th>
+		
+        <th>
+            Выдано
+        </th>
+
+        <th>
+            Брак
+        </th>
+				
+        
+    </tr>
+</thead>
+
+<tbody>
+@foreach (var item in (new MaterialUchet()).GetAll("repository_id = " + Convert.ToInt32(Model.Store.ID)) ) {
+    <tr> 
+
+		<td>
+			<input type="checkbox" name="MaterialUchetSelections" value="@item.ID" ) /> 
+		</td>
+	
+        <td>
+            @item.vendor_name
+        </td>
+		    
+        <td>
+            @item.type_name
+        </td>
+	     
+		     
+        <td>
+            @item.Name 
+        </td>
+		          
+        <td>
+            @item.devnames
+        </td>
+        
+		
+        <td>
+            @item.count_coming
+        </td>
+		
+        <td>
+            @item.count_issued
+        </td>
+		
+        <td>
+            @item.count_marriage
+        </td>
+					
+
+    </tr>
+}
+</tbody>
+<tfoot>
+    <tr>
+		
+		<th>
+		</th>
+	
+        <th>
+            Производитель
+        </th>      
+	
+        <th>
+            Тип
+        </th> 
+
+		   
+        <th>
+            Наименование
+        </th>
+		
+		<th>
+            Совместимая техника
+        </th>
+				
+        <th>
+            Наличие
+        </th>
+		
+        <th>
+            Выдано
+        </th>
+
+        <th>
+            Брак
+        </th>
+        
+    </tr>
+	<tr>
+			<th colspan="8" class="ts-pager form-horizontal">
+				<button type="button" class="btn first"><i class="icon-step-backward glyphicon glyphicon-step-backward"></i></button>
+				<button type="button" class="btn prev"><i class="icon-arrow-left glyphicon glyphicon-backward"></i></button>
+				<span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+				<button type="button" class="btn next"><i class="icon-arrow-right glyphicon glyphicon-forward"></i></button>
+				<button type="button" class="btn last"><i class="icon-step-forward glyphicon glyphicon-step-forward"></i></button>
+				<select class="pagesize input-mini" title="Select page size">
+					<option selected="selected" value="10">10</option>
+					<option value="20">20</option>
+					<option value="30">30</option>
+					<option value="40">40</option>
+				</select>
+				<select class="pagenum input-mini" title="Select page number"></select>
+			</th>
+		</tr>
+</tfoot>
+
+</table>
+
+<p>
+            <input type="submit" value="Выгрузить" /> @Html.ActionLink("Назад", "Index")
+</p>
+}
