@@ -45,6 +45,13 @@ namespace HardX.Models
 
         public virtual ICollection<Matmodel> Matmodels { get; protected set; }
 
+        public string FullName
+        {
+            get
+            {
+                return this.Vendor.Name + " " + this.Name;
+            }
+        }
 
         public Devmodel()
         {

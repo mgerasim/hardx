@@ -6,6 +6,16 @@
 
 <h2>@ViewBag.Title</h2>
 
+@foreach (var item in (new Devmodel()).GetAll() )
+{
+
+	if (  ((List<int>)Model.Devmodels.Select(x => x.ID).ToList()).Contains(item.ID)   ) {
+		<p>
+			@item.FullName
+		</p>
+	}
+}
+
 @using (Html.BeginForm("Compatibility", "Matmodel"))
 {	
 	<table class="tablesorter">
@@ -28,7 +38,7 @@
 			<input type="checkbox" name="DevmodelSelections" value="@item.ID" @(((List<int>)Model.Devmodels.Select(x => x.ID).ToList()).Contains(item.ID) ? "checked" : "") />
 		 </td>
 		 <td>
-			@item.Name 
+			@item.FullName 
 		</td>
 		</tr>
 	}
