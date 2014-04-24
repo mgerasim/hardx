@@ -333,7 +333,7 @@ namespace HardX.Controllers
         {
             MaterialUchet model = new MaterialUchet();
             List<MaterialUchet> theList = new List<MaterialUchet>();
-            theList = (List<MaterialUchet>)model.GetAll("repository_id = " + id.ToString() + " AND id in (" + collection + ")", "Name");
+            theList = (List<MaterialUchet>)model.GetAll("repository_id = " + id.ToString() + " AND id in (" + collection + ")", "VENDOR_NAME");
             
             Response.AddHeader("Content-Type", "application/vnd.ms-excel");
                       
