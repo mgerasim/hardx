@@ -62,11 +62,11 @@ namespace HardX.Core
                 string strQuery = "from " + _modelName +" ";
                 if (condition.Length > 0)
                 {
-                    strQuery += "where " + condition;
+                    strQuery += "where " + condition + " ";
                 }
                 if (order.Length > 0)
                 {
-                    strQuery += "order " + order;
+                    strQuery += "order by " + order + " ";
                 }
                 return session.CreateQuery(strQuery).List<T>();
             }
