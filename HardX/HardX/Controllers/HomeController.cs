@@ -16,5 +16,11 @@ namespace HardX.Controllers
             return View();
         }
 
+        public ActionResult Error(string err)
+        {
+            ViewBag.Error = err;
+            return View();
+        }
+
     }
 }

@@ -15,12 +15,14 @@ namespace HardX.Controllers
 
         public ActionResult Index()
         {
+            /*
             if (!Access.HasAccess(6))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+            */
             Area model = new Area();
             List<Area> theListModel = new List<Area>();
             theListModel = (List<Area>)model.GetAll();
@@ -33,12 +35,14 @@ namespace HardX.Controllers
 
         public ActionResult Details(int id)
         {
+            /*
             if (!Access.HasAccess(6))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+            */
             Area model = new Area();
             return View(model.GetById(id));
         }
@@ -48,12 +52,14 @@ namespace HardX.Controllers
 
         public ActionResult Create()
         {
+            /*
             if (!Access.HasAccess(5))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+            */
             AreaNew model = new AreaNew();
             return View(model);
         }
@@ -64,17 +70,20 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
+            /*
             if (!Access.HasAccess(5))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+            */
             try
             {
                 // TODO: Add insert logic here
                 Area model = new Area();
                 model.Name = collection["Name"];
+                model.User = (new User()).GetById(Convert.ToInt32(collection["User.ID"]));
 
                 string IDs = collection["RoomSelections"];
                 
@@ -86,9 +95,11 @@ namespace HardX.Controllers
                 model.Save(model);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
 
@@ -97,12 +108,14 @@ namespace HardX.Controllers
 
         public ActionResult Edit(int id)
         {
+            /*
             if (!Access.HasAccess(7))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+            */
             Area model = new Area();
             model = model.GetById(id);
             return View(model);
@@ -114,19 +127,21 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
+            /*
             if (!Access.HasAccess(7))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+            */
             try
             {
                 // TODO: Add update logic here
                 Area model = new Area();
                 model = model.GetById(id);
                 model.Name = collection["Name"];
-
+                model.User = (new User()).GetById(Convert.ToInt32(collection["User.ID"]));
                 string IDs = collection["RoomSelections"];
 
                 model.Rooms.Clear();
@@ -141,9 +156,11 @@ namespace HardX.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
 
@@ -152,41 +169,19 @@ namespace HardX.Controllers
 
         public ActionResult Delete(int id)
         {
+            /*
             if (!Access.HasAccess(8))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
-            }
+            }*/
             Area model = new Area();
             model = model.GetById(id);
             model.Delete(model);
 
             return RedirectToAction("Index");
         }
-
-        //
-        // POST: /Branch/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            if (!Access.HasAccess(8))
-            {
-                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
-                route.Add("err", "Нет доступа!");
-                return RedirectToAction("Error", "Capital", route);
-            }
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
     }
 }

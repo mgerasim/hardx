@@ -1,4 +1,5 @@
 ﻿@model HardX.Models.AreaNew
+@using HardX.Models
 
 @{
     ViewBag.Title = "Создание площадки";
@@ -21,6 +22,14 @@
             @Html.ValidationMessageFor(model => model.Name)
         </div>
 
+		<div class="editor-label">
+            @Html.LabelFor(model => model.User)
+        </div>
+        <div class="editor-field">
+			@Html.DropDownListFor(model => model.User.Id, new SelectList((List<User>)(new User()).GetAll() , "Id", "Name" ))
+        </div>
+
+		<p>Кабинеты:</p>
 		<table class="tablesorter">
 		<thead>
 			<tr>

@@ -18,6 +18,8 @@
       <one-to-many class="Room"/>
     </set> 
     
+    <many-to-one name="User"  column="User_ID" />
+    
 
   </class>
 </hibernate-mapping>

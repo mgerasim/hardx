@@ -24,6 +24,13 @@
             @Html.ValidationMessageFor(model => model.Name)
         </div>
 
+		<div class="editor-label">
+            @Html.LabelFor(model => model.User)
+        </div>
+        <div class="editor-field">
+			@Html.DropDownListFor(model => model.User.Id, new SelectList((List<User>)(new User()).GetAll() , "Id", "Name" ))
+        </div>
+		<p>Кабинеты:</p>
 		@foreach(Room item in Model.Rooms)
 		{
 			<p>

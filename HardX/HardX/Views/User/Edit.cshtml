@@ -38,7 +38,7 @@
             @Html.LabelFor(model => model.Branche)
         </div>
         <div class="editor-field">
-			@Html.DropDownListFor(model => model.Branche.Id, new SelectList((List<Branche>)(new BranchRepository()).GetAll() , "Id", "FullName" ))
+			@Html.DropDownListFor(model => model.Branche.Id, new SelectList((List<Branche>)(new BrancheRepository()).GetAll() , "Id", "FullName" ))
         </div>
 
 		<div class="editor-label">

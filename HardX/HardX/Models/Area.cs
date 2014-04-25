@@ -28,7 +28,11 @@ namespace HardX.Models
             _repository = theBrancheFactory.createRepository();
             if (_repository == null)
                 throw new NotImplementedException();
-        }       
+        }
+
+        [Display(Name = "Кладовщик")]
+        [Required(ErrorMessage = "* Укажите кладовщика")]
+        public User User { get; set; }
     }
 
     public class AreaNew : Area

@@ -15,12 +15,14 @@ namespace HardX.Controllers
 
         public ActionResult Index()
         {
+            /*
             if (!Access.HasAccess(2))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+            */
             List<User> theListUser = new List<User>();
             User theUser = new User();
             theListUser = (List<User>)theUser.GetAll();
@@ -33,12 +35,14 @@ namespace HardX.Controllers
 
         public ActionResult Details(int id)
         {
+            /*
             if (!Access.HasAccess(2))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+            */
             User theUser = new User();            
             theUser = theUser.GetById(id);
             return View(theUser);
@@ -49,12 +53,14 @@ namespace HardX.Controllers
 
         public ActionResult Create()
         {
+            /*
             if (!Access.HasAccess(1))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+            */
             UserNew theUser = new UserNew();
             return View(theUser);
         } 
@@ -65,12 +71,14 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
+            /*
             if (!Access.HasAccess(1))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+            */
             try
             {
                 // TODO: Add insert logic here
@@ -84,9 +92,11 @@ namespace HardX.Controllers
                 theUser.Save(theUser);
                 return RedirectToAction("Index");               
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
         
@@ -95,12 +105,14 @@ namespace HardX.Controllers
  
         public ActionResult Edit(int id)
         {
+            /*
             if (!Access.HasAccess(3))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+            */
             User theUser = new User();
             theUser = theUser.GetById(id);
             return View(theUser);
@@ -112,12 +124,14 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
+            /*
             if (!Access.HasAccess(3))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+             * */
             try
             {
                 // TODO: Add update logic here
@@ -133,9 +147,11 @@ namespace HardX.Controllers
                 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
 
@@ -173,9 +189,11 @@ namespace HardX.Controllers
                 // TODO: Add delete logic here
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
     }

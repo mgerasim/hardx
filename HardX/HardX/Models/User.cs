@@ -48,14 +48,36 @@ namespace HardX.Models
         {
             get
             {
-                int userId = 0;
                 string strLoginName = HttpContext.Current.User.Identity.Name;
-                if (HttpContext.Current.Request.IsAuthenticated)
+                User theUser = new User();
+                List<User> theUserList = new List<User>();
+                theUserList = (List<User>)theUser.GetAll("LOGIN = '" + strLoginName + "'");
+                if (theUserList.Count == 0 || theUserList.Count >= 2)
                 {
+                    return 0;
+                }
+                else
+                {
+                    return theUserList[0].Id;
+                }
+            }
+        }
 
+        public static string CurrentUserName
+        {
+            get
+            {
+                int UserID = User.CurrentUserId;
+                if (UserID > 0)
+                {
+                    User theUser = new User();
+                    return theUser.GetById(UserID).Name;
+                }
+                else
+                {
+                    return HttpContext.Current.User.Identity.Name;
                 }
 
-                return 0;
             }
         }
         
