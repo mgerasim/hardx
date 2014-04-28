@@ -12,14 +12,12 @@
     <div class="display-label">Имя:</div>
     <div class="display-field">@Model.Name</div>
 
-	<div class="display-label">Кладовщик:</div>
-    <div class="display-field">@Model.User.Name</div>
 
 </fieldset>
 
-<br/><p>Кабинеты:</p>
+<br/><p>Здания:</p>
 
-@foreach(Room item in @Model.Rooms)
+@foreach(House item in @Model.Houses)
 		{
 			<p>
 				@item.FullName

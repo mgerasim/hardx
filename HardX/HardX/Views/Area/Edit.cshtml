@@ -23,15 +23,9 @@
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>
-
-		<div class="editor-label">
-            @Html.LabelFor(model => model.User)
-        </div>
-        <div class="editor-field">
-			@Html.DropDownListFor(model => model.User.Id, new SelectList((List<User>)(new User()).GetAll() , "Id", "Name" ))
-        </div>
-		<p>Кабинеты:</p>
-		@foreach(Room item in Model.Rooms)
+				
+		<p>Здания:</p>
+		@foreach(House item in Model.Houses)
 		{
 			<p>
 				@item.FullName
@@ -45,18 +39,18 @@
 				<td>
 				</td>
 				<td>
-					Кабинеты
+					Здания
 				</td>
 			</tr>
 		</thead>
 
 				<tbody>
-		@foreach (var item in (new Room()).GetAll())
+		@foreach (var item in (new House()).GetAll())
 		{
 
 			<tr>
 			<td>
-				<input type="checkbox" name="RoomSelections" value="@item.ID" @(((List<int>)Model.Rooms.Select(x => x.ID).ToList()).Contains(item.ID) ? "checked" : "") />
+				<input type="checkbox" name="HouseSelections" value="@item.ID" @(((List<int>)Model.Houses.Select(x => x.ID).ToList()).Contains(item.ID) ? "checked" : "") />
 				</td>
 				<td>
 				@item.FullName 

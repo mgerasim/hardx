@@ -13,9 +13,9 @@
     </id>
     <property name="Name"  column="name" type="String" length="255"/>
     
-    <set name="Rooms"  lazy="false" >
+    <set name="Houses"  lazy="false" >
       <key column="Area_ID"/>
-      <one-to-many class="Room"/>
+      <one-to-many class="House"/>
     </set> 
     
     <many-to-one name="User"  column="User_ID" />

@@ -14,9 +14,12 @@
     <property name="Name"  column="name" type="String" length="255"/>
 
     <set name="Materials" lazy="false">
-      <key column = "ID" />
+      <key column = "repository_ID" />
       <one-to-many class="Material" />
     </set>
+    
+    <many-to-one name="Area" column="Area_ID" />
+    <many-to-one name="User" column="User_ID" />
     
   </class>
 </hibernate-mapping>

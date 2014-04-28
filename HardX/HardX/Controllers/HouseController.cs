@@ -48,6 +48,17 @@ namespace HardX.Controllers
             {
                 House model = new House();
                 model.Name = collection["Name"];
+
+                int AreaID = 0;
+                try
+                {
+                    AreaID = Convert.ToInt32(collection["Area.ID"]);
+                    model.Area = (new Area()).GetById(AreaID);
+                }
+                catch
+                {
+                }
+                
                 model.Save(model);
                 return RedirectToAction("Index");
             }
@@ -78,6 +89,17 @@ namespace HardX.Controllers
                 House model = new House();
                 model = model.GetById(id);
                 model.Name = collection["Name"];
+                
+                int AreaID = 0;
+                try
+                {
+                    AreaID = Convert.ToInt32(collection["Area.ID"]);
+                    model.Area = (new Area()).GetById(AreaID);
+                }
+                catch
+                {
+                }
+
                 model.Update(model);
 
                 return RedirectToAction("Index");

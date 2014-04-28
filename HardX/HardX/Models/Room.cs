@@ -12,18 +12,13 @@ namespace HardX.Models
     {       
         public Int32 ID {get; set;}
         [Display(Name = "Полное имя")]
-        [Required(ErrorMessage = "* Укажите значение для полного имени")]
-        [StringLength(50, MinimumLength = 5, ErrorMessage = "* длина полного имени должна быть не менее чем 5 и не более чем 50 символов")]
+        [Required(ErrorMessage = "* Укажите значение для полного имени")]        
         [Editable(true)]
         public virtual string Name { get; set; }
 
         [Display(Name = "Здание")]
         [Required(ErrorMessage = "* Укажите здание")]
-        public House House { get; set; }
-
-
-        [Display(Name = "Площадка")]        
-        public Area Area { get; set; }
+        public House House { get; set; }        
 
         public string FullName
         {
@@ -45,8 +40,7 @@ namespace HardX.Models
     public class RoomNew : Room
     {
         [Display(Name = "Полное имя")]
-        [Required(ErrorMessage = "* Укажите значение для полного имени")]
-        [StringLength(50, MinimumLength = 5, ErrorMessage = "* длина полного имени должна быть не менее чем 5 и не более чем 50 символов")]        
+        [Required(ErrorMessage = "* Укажите значение для полного имени")]        
         [Editable(true)]
         public override string Name { get; set; }        
     }

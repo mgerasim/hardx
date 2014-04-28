@@ -52,6 +52,16 @@ namespace HardX.Controllers
                 Store model = new Store();
 
                 model.Name = collection["Name"];
+                
+                if (collection["User.Id"] != "")
+                {
+                    model.User = (new User()).GetById(Convert.ToInt32(collection["User.Id"]));
+                }
+
+                if (collection["Area.Id"] != "")
+                {
+                    model.Area = (new Area()).GetById(Convert.ToInt32(collection["Area.Id"]));
+                }
                
                 model.Save(model);
 
@@ -59,8 +69,9 @@ namespace HardX.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Error = ex.Message;
-                return View();
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
         
@@ -88,6 +99,16 @@ namespace HardX.Controllers
                 model = model.GetById(id);
 
                 model.Name = collection["Name"];
+
+                if (collection["User.Id"] != "")
+                {
+                    model.User = (new User()).GetById(Convert.ToInt32(collection["User.Id"]));
+                }
+
+                if (collection["Area.Id"] != "")
+                {
+                    model.Area = (new Area()).GetById(Convert.ToInt32(collection["Area.Id"]));
+                }
                 
                 model.Update(model);
 
@@ -95,8 +116,9 @@ namespace HardX.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Error = ex.Message;
-                return View();
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
 
@@ -214,8 +236,9 @@ namespace HardX.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Error = ex.Message;
-                return View(model);
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
 
@@ -247,8 +270,9 @@ namespace HardX.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Error = ex.Message;
-                return View();
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
 
@@ -273,8 +297,9 @@ namespace HardX.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Error = ex.Message;
-                return View();
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
                 
@@ -289,8 +314,9 @@ namespace HardX.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Error = ex.Message;
-                return View();
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
 
@@ -322,8 +348,9 @@ namespace HardX.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Error = ex.Message;
-                return View(model);
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
         //

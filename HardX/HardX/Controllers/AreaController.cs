@@ -85,11 +85,14 @@ namespace HardX.Controllers
                 model.Name = collection["Name"];
                 model.User = (new User()).GetById(Convert.ToInt32(collection["User.ID"]));
 
-                string IDs = collection["RoomSelections"];
-                
-                foreach (string item in IDs.Split(','))
+                string IDs = collection["HouseSelections"];
+
+                if (IDs!=null)
                 {
-                    model.Rooms.Add((new Room()).GetById(Convert.ToInt32(item)));
+                    foreach (string item in IDs.Split(','))
+                    {
+                        model.Houses.Add((new House()).GetById(Convert.ToInt32(item)));
+                    }
                 }
 
                 model.Save(model);
@@ -142,14 +145,17 @@ namespace HardX.Controllers
                 model = model.GetById(id);
                 model.Name = collection["Name"];
                 model.User = (new User()).GetById(Convert.ToInt32(collection["User.ID"]));
-                string IDs = collection["RoomSelections"];
+                string IDs = collection["HouseSelections"];
 
-                model.Rooms.Clear();
-                model.Update(model);
-
-                foreach (string item in IDs.Split(','))
+                if (IDs != null)
                 {
-                    model.Rooms.Add((new Room()).GetById(Convert.ToInt32(item)));
+                    model.Houses.Clear();
+                    model.Update(model);
+
+                    foreach (string item in IDs.Split(','))
+                    {
+                        model.Houses.Add((new House()).GetById(Convert.ToInt32(item)));
+                    }
                 }
 
                 model.Update(model);

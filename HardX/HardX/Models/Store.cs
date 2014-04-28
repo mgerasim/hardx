@@ -67,6 +67,14 @@ namespace HardX.Models
                 this._Id = value;
             }
         }
+
+        [Display(Name = "Кладовщик")]
+        [Required(ErrorMessage = "* Укажите кладовщика")]
+        public virtual User User { get; set; }
+
+        [Display(Name = "Площадка")]
+        [Required(ErrorMessage = "* Укажите площадку")]
+        public virtual Area Area { get; set; }
     }
 
     public class NewStore : Store

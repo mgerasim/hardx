@@ -80,16 +80,7 @@ namespace HardX.Controllers
                 model = model.GetById(id);
                 model.Name = collection["Name"];
                 model.House = (new House()).GetById(Convert.ToInt32(collection["House.Id"]));
-
-                int AreaID = 0;
-                try
-                {
-                    AreaID = Convert.ToInt32(collection["Area.ID"]);
-                    model.Area = (new Area()).GetById(AreaID);
-                }
-                catch
-                {
-                }
+                                
 
                 model.Update(model);
 

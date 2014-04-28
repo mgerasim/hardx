@@ -30,13 +30,6 @@
 			@Html.DropDownListFor(model => model.House.ID, new SelectList((List<House>)(new House()).GetAll() , "ID", "FullName" ), new {@class="chosen-select", @style="width: 350px;" })
         </div>
 
-		<div class="editor-label">
-            @Html.LabelFor(model => model.Area)
-        </div>
-		<div class="editor-field">
-			@Html.DropDownListFor(model => model.Area.Id, new SelectList((List<Area>)(new Area()).GetAll() , "ID", "Name" ), new {@class="chosen-select", @style="width: 350px;" })
-        </div>
-
         <p>
             <input type="submit" value="Сохранить" />
         </p>

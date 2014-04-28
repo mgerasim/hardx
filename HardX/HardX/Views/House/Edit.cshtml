@@ -1,5 +1,5 @@
 ﻿@model HardX.Models.House
-
+@using HardX.Models
 @{
     ViewBag.Title = "Редактирование здания";
 }
@@ -21,6 +21,21 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+		
+		<div class="editor-label">
+            @Html.LabelFor(model => model.Street)
+        </div>
+        <div class="editor-field">
+			@Html.DropDownListFor(model => model.Street, new SelectList((List<Street>)(new Street()).GetAll() , "ID", "FullName" ), new {@class="chosen-select", @style="width: 350px;" })
+        </div>
+
+		<div class="editor-label">
+            @Html.LabelFor(model => model.Area)
+        </div>
+		<div class="editor-field">
+			@Html.DropDownListFor(model => model.Area, new SelectList((List<Area>)(new Area()).GetAll() , "ID", "Name" ), string.Empty, new {@class="chosen-select", @style="width: 350px;", @placeholder="Выбрать..." })
         </div>
 
         <p>

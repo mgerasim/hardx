@@ -19,11 +19,11 @@ namespace HardX.Models
         [Editable(true)]
         public virtual string Name { get; set; }
 
-        public virtual ICollection<Room> Rooms { get; protected set; }
+        public virtual ICollection<House> Houses { get; protected set; }
 
         public Area()
         {
-            Rooms = new HashedSet<Room>();
+            Houses = new HashedSet<House>();
             AreaFactory theBrancheFactory = new AreaFactory();
             _repository = theBrancheFactory.createRepository();
             if (_repository == null)

@@ -20,6 +20,20 @@
             @Html.EditorFor(model => model.Name)    
 			@Html.ValidationMessageFor(model => model.Name)
         </div>
+
+		<div class="editor-label">
+            @Html.LabelFor(model => model.User)
+        </div>
+        <div class="editor-field">
+			@Html.DropDownListFor(model => model.User.Id, new SelectList((List<User>)(new User()).GetAll() , "Id", "Name" ), string.Empty, new {@class="chosen-select", @style="width: 350px;", @placeholder="Выбрать..." })
+        </div>
+
+		<div class="editor-label">
+            @Html.LabelFor(model => model.Area)
+        </div>
+		<div class="editor-field">
+			@Html.DropDownListFor(model => model.Area.Id, new SelectList((List<Area>)(new Area()).GetAll() , "ID", "Name" ), string.Empty, new {@class="chosen-select", @style="width: 350px;", @placeholder="Выбрать..." })
+        </div>
         
         <p>
             <input type="submit" value="Создать" /> @Html.ActionLink("Назад", "Index")
