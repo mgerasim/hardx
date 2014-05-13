@@ -88,7 +88,26 @@ namespace HardX.Models
         public virtual void ClearActions()
         {
             this._Actions.Clear();
-        }    
+        }
+
+
+        public virtual void ClearUsers()
+        {
+            this._Users.Clear();
+        }
+
+        public virtual Boolean IsExistUser(int userID)
+        {
+            foreach (var theUser in this.Users)
+            {
+                if (theUser.Id == userID)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 
     public class RoleNew : Role

@@ -16,12 +16,14 @@ namespace HardX.Controllers
 
         public ActionResult Index()
         {
+            /*
             if (!Access.HasAccess(10))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+            */
             RoleRepository theRoleRepository = new RoleRepository();
             return View(theRoleRepository.GetAll());
         }
@@ -31,12 +33,14 @@ namespace HardX.Controllers
 
         public ActionResult Details(int id)
         {
+            /*
             if (!Access.HasAccess(10))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+             * */
             Role theRole = new Role();
             theRole = theRole.GetById(id);
             
@@ -48,12 +52,14 @@ namespace HardX.Controllers
 
         public ActionResult Create()
         {
+            /*
             if (!Access.HasAccess(9))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+             * */
             RoleNew theRole = new RoleNew();
             return View(theRole);
         } 
@@ -64,44 +70,52 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
+            /*
             if (!Access.HasAccess(9))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+             * */
             try
             {
                 // TODO: Add insert logic here
                 Role theRole = new Role();                
                 theRole.Name = collection["Name"];
-                string [] arrayActionID = collection["Actions"].Split(',');
-                                
-                foreach (string str in arrayActionID)
+
+                if (collection["Actions"] != null)
                 {
-                    int actionID = Convert.ToInt32(str);
-                    HardX.Models.Action theAction = new HardX.Models.Action();
-                    theAction = theAction.GetById(actionID);
-                    theRole.Actions.Add(theAction);
+                    string[] arrayActionID = collection["Actions"].Split(',');
+                    foreach (string str in arrayActionID)
+                    {
+                        int actionID = Convert.ToInt32(str);
+                        HardX.Models.Action theAction = new HardX.Models.Action();
+                        theAction = theAction.GetById(actionID);
+                        theRole.Actions.Add(theAction);
+                    }
                 }
 
-                string[] arrayUserID = collection["Users"].Split(',');
-
-                foreach (string str in arrayUserID)
+                if (collection["Users"] != null)
                 {
-                    int userID = Convert.ToInt32(str);
-                    HardX.Models.User theUser = new HardX.Models.User();
-                    theUser = theUser.GetById(userID);
-                    theRole.Users.Add(theUser);
+                    string[] arrayUserID = collection["Users"].Split(',');
+                    foreach (string str in arrayUserID)
+                    {
+                        int userID = Convert.ToInt32(str);
+                        HardX.Models.User theUser = new HardX.Models.User();
+                        theUser = theUser.GetById(userID);
+                        theRole.Users.Add(theUser);
+                    }
                 }
-
 
                 theRole.Save(theRole);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
         
@@ -110,12 +124,14 @@ namespace HardX.Controllers
  
         public ActionResult Edit(int id)
         {
+            /*
             if (!Access.HasAccess(11))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+             * */
             Role theRole = new Role();
             theRole = theRole.GetById(id);
 
@@ -128,36 +144,54 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
+            /*
             if (!Access.HasAccess(11))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
-            }
+            }*/            
             try
             {
                 // TODO: Add update logic here
                 Role theRole = new Role();
                 theRole = theRole.GetById(id);
                 theRole.Name = collection["Name"];
-                theRole.Update(theRole);
-                string[] arrayActionID = collection["Actions"].Split(',');
 
-                theRole.ClearActions();
-
-                foreach (string str in arrayActionID)
+                if (collection["Actions"] != null)
                 {
-                    int actionID = Convert.ToInt32(str);
-                    HardX.Models.Action theAction = new HardX.Models.Action();
-                    theAction = theAction.GetById(actionID);
-                    theRole.Actions.Add(theAction);
+                    string[] arrayActionID = collection["Actions"].Split(',');
+                    theRole.ClearActions();
+                    foreach (string str in arrayActionID)
+                    {
+                        int actionID = Convert.ToInt32(str);
+                        HardX.Models.Action theAction = new HardX.Models.Action();
+                        theAction = theAction.GetById(actionID);
+                        theRole.Actions.Add(theAction);
+                    }
                 }
+
+                if (collection["Users"] != null)
+                {
+                    string[] arrayUserID = collection["Users"].Split(',');
+                    theRole.ClearUsers();
+                    foreach (string str in arrayUserID)
+                    {
+                        int userID = Convert.ToInt32(str);
+                        HardX.Models.User theUser2 = new HardX.Models.User();
+                        theUser2 = theUser2.GetById(userID);
+                        theRole.Users.Add(theUser2);
+                    }
+                }
+
                 theRole.Update(theRole);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
 
@@ -166,12 +200,14 @@ namespace HardX.Controllers
  
         public ActionResult Delete(int id)
         {
+            /*
             if (!Access.HasAccess(12))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+             * */
             Role theRole = new Role();
             theRole = theRole.GetById(id);
             theRole.Delete(theRole);
@@ -184,21 +220,25 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
+            /*
             if (!Access.HasAccess(12))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+             * */
             try
             {
                 // TODO: Add delete logic here
  
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
     }
