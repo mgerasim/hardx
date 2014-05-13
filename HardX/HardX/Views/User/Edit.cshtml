@@ -40,13 +40,38 @@
         <div class="editor-field">
 			@Html.DropDownListFor(model => model.Branche.Id, new SelectList((List<Branche>)(new BrancheRepository()).GetAll() , "Id", "FullName" ))
         </div>
+		
+		@{
+			List<HardX.Models.Role> theListRole = new List<HardX.Models.Role>();
+			HardX.Models.Role theRole = new HardX.Models.Role();				
+			theListRole = (List<HardX.Models.Role>) theRole.GetAll();
+		}
+		<h5>Роли:</h5>
+		@foreach (var item in theListRole)
+		{				 
+			var roleID = "RoleID_" + item.Id; 
+			
+				if (Model.IsExistRole(Convert.ToInt32(item.Id))) {
+					<input type="checkbox"
+					checked="true" 
+					id=@roleID
+					name="Roles"
+					value="@item.Id"/>
+				}
+				else
+				{
+					<input type="checkbox"
+				
+					id=@roleID
+					name="Roles"
+					value="@item.Id"/>				
+				}
+			    
+					
+			<label for=@roleID>@item.Name</label>
 
-		<div class="editor-label">
-            @Html.LabelFor(model => model.Role)
-        </div>
-        <div class="editor-field">
-			@Html.DropDownListFor(model => model.Role.Id, new SelectList((List<Role>)(new Role()).GetAll() , "Id", "Name" ))
-        </div>
+			<br />
+		}
 
         <p>
             <input type="submit" value="Сохранить" />

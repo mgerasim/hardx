@@ -18,6 +18,11 @@
       <many-to-many class="Action" column="action_id" />
     </set>
     
+    <set name="Users" table="link_roles_users" lazy="false">
+      <key column = "role_id" />
+      <many-to-many class="User" column="user_id" />
+    </set>
+    
     
   </class>
 </hibernate-mapping>

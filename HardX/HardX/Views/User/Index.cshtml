@@ -20,9 +20,6 @@
         <th>
             Филиал
         </th>
-        <th>
-            Роль
-        </th>
 		<th></th>
     </tr>
 
@@ -36,9 +33,6 @@
         </td>
         <td>
             @item.Branche.FullName
-        </td>
-		<td>
-            @item.Role.Name
         </td>
 		<td>
             @Html.ActionLink("Редактировать", "Edit", new { id=item.Id }) |

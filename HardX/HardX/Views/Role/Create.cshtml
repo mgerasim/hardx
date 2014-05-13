@@ -41,6 +41,26 @@
 
 			<br />
 		}
+
+		@{
+			List<HardX.Models.User> theListUser = new List<HardX.Models.User>();
+			HardX.Models.User theUser = new HardX.Models.User();				
+			theListUser = (List<HardX.Models.User>) theUser.GetAll();
+		}
+		<h5>Пользователи:</h5>
+		@foreach (var item in theListUser)
+		{
+				 
+			var userID = "UserID_" + item.Id; 
+				
+			<input type="checkbox"
+			    id=@userID
+				name="Users"
+				value="@item.Id"/>
+			<label for=@userID>@item.Name</label>
+
+			<br />
+		}
 		
         <p>
             <input type="submit" value="Создать" />

@@ -18,6 +18,15 @@
     <div class="display-label">Филиал</div>
     <div class="display-field">@Model.Branche.FullName</div>
 
+	<h5>Роли:</h5>
+	
+	@foreach (var item in @Model.Roles)
+	{
+				 
+		@item.Name
+		<br />
+	}
+
 </fieldset>
 <p>
     @Html.ActionLink("Редактировать", "Edit", new { id=Model.Id }) |

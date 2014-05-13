@@ -20,6 +20,7 @@ namespace HardX.Utils
             {
                 return false;
             }
+            /*
             foreach (var theAction in theUserList[0].Role.Actions)
             {
                 if (actionID == theAction.Id)
@@ -27,6 +28,7 @@ namespace HardX.Utils
                     return true;
                 }
             }
+             * */
             return false;
         }
     }

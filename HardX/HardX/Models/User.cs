@@ -32,9 +32,7 @@ namespace HardX.Models
         [Editable(true)]
         public virtual string Name { get; set; }
 
-        [Display(Name = "Роль")]
-        [Required(ErrorMessage = "* Укажите роль")]
-        public Role Role { get; set; }
+        private Iesi.Collections.Generic.ISet<Role> _Roles;
 
         public User()
         {
@@ -42,6 +40,20 @@ namespace HardX.Models
             _repository = theUserFactory.createRepository();
             if (_repository == null)
                 throw new NotImplementedException();
+
+            this._Roles = new Iesi.Collections.Generic.HashedSet<Role>();
+        }
+
+        public virtual Iesi.Collections.Generic.ISet<Role> Roles
+        {
+            get
+            {
+                return this._Roles;
+            }
+            set
+            {
+                this._Roles = value;
+            }
         }
 
         public static int CurrentUserId
@@ -80,7 +92,24 @@ namespace HardX.Models
 
             }
         }
-        
+
+        public virtual void ClearRoles()
+        {
+            this._Roles.Clear();
+        }
+
+        public virtual Boolean IsExistRole(int roleID)
+        {
+            foreach (var theRole in this.Roles)
+            {
+                if (theRole.Id == roleID)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
     }
 

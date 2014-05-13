@@ -48,11 +48,12 @@ namespace HardX.Controllers
             {
                 House model = new House();
                 model.Name = collection["Name"];
+                model.Street = (new Street()).GetById( Convert.ToInt32(collection["Street"]) );
 
                 int AreaID = 0;
                 try
                 {
-                    AreaID = Convert.ToInt32(collection["Area.ID"]);
+                    AreaID = Convert.ToInt32(collection["Area"]);
                     model.Area = (new Area()).GetById(AreaID);
                 }
                 catch
@@ -62,9 +63,11 @@ namespace HardX.Controllers
                 model.Save(model);
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
 
@@ -89,11 +92,12 @@ namespace HardX.Controllers
                 House model = new House();
                 model = model.GetById(id);
                 model.Name = collection["Name"];
-                
+                model.Street = (new Street()).GetById(Convert.ToInt32(collection["Street"]));
+
                 int AreaID = 0;
                 try
                 {
-                    AreaID = Convert.ToInt32(collection["Area.ID"]);
+                    AreaID = Convert.ToInt32(collection["Area"]);
                     model.Area = (new Area()).GetById(AreaID);
                 }
                 catch
@@ -104,9 +108,11 @@ namespace HardX.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
 
@@ -115,7 +121,20 @@ namespace HardX.Controllers
 
         public ActionResult Delete(int id)
         {
-            return View();
+            try
+            {
+                House model = new House();
+                model = model.GetById(id);
+                model.Delete(model);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
+            }
         }
 
         //

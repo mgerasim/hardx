@@ -20,6 +20,8 @@ namespace HardX.Models
         public virtual string Name { get; set; }
 
         private Iesi.Collections.Generic.ISet<Action> _Actions;
+
+        private Iesi.Collections.Generic.ISet<User> _Users;
                 
         public Role()
         {
@@ -29,6 +31,8 @@ namespace HardX.Models
                 throw new NotImplementedException();
 
             this._Actions = new Iesi.Collections.Generic.HashedSet<Action>();
+
+            this._Users = new Iesi.Collections.Generic.HashedSet<User>();
         }
 
         public virtual int Id
@@ -53,6 +57,18 @@ namespace HardX.Models
             set
             {
                 this._Actions = value;
+            }
+        }
+
+        public virtual Iesi.Collections.Generic.ISet<User> Users
+        {
+            get
+            {
+                return this._Users;
+            }
+            set
+            {
+                this._Users = value;
             }
         }
 

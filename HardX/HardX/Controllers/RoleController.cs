@@ -84,6 +84,18 @@ namespace HardX.Controllers
                     theAction = theAction.GetById(actionID);
                     theRole.Actions.Add(theAction);
                 }
+
+                string[] arrayUserID = collection["Users"].Split(',');
+
+                foreach (string str in arrayUserID)
+                {
+                    int userID = Convert.ToInt32(str);
+                    HardX.Models.User theUser = new HardX.Models.User();
+                    theUser = theUser.GetById(userID);
+                    theRole.Users.Add(theUser);
+                }
+
+
                 theRole.Save(theRole);
                 return RedirectToAction("Index");
             }

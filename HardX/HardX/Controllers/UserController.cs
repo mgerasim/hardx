@@ -87,8 +87,17 @@ namespace HardX.Controllers
                 theUser.Name = collection["Name"];
                 Branche theBranche = new Branche();
                 theUser.Branche = theBranche.GetById(Convert.ToInt32(collection["Branche.ID"]));
-                Role theRole = new Role();
-                theUser.Role = theRole.GetById(Convert.ToInt32(collection["Role.ID"]));
+                
+                string[] arrayRoleID = collection["Roles"].Split(',');
+
+                foreach (string str in arrayRoleID)
+                {
+                    int roleID = Convert.ToInt32(str);
+                    HardX.Models.Role theRole2 = new HardX.Models.Role();
+                    theRole2 = theRole2.GetById(roleID);
+                    theUser.Roles.Add(theRole2);
+                }
+
                 theUser.Save(theUser);
                 return RedirectToAction("Index");               
             }
@@ -141,8 +150,20 @@ namespace HardX.Controllers
                 theUser.Name  = collection["Name"];
                 Branche theBranche = new Branche();
                 theUser.Branche = theBranche.GetById( Convert.ToInt32(collection["Branche.ID"]));
-                Role theRole = new Role();
-                theUser.Role = theRole.GetById(Convert.ToInt32(collection["Role.ID"]));
+                
+                string[] arrayRoleID = collection["Roles"].Split(',');
+
+                theUser.ClearRoles();
+
+                foreach (string str in arrayRoleID)
+                {
+                    int roleID = Convert.ToInt32(str);
+                    HardX.Models.Role theRole2 = new HardX.Models.Role();
+                    theRole2 = theRole2.GetById(roleID);
+                    theUser.Roles.Add(theRole2);
+                }
+
+
                 theUser.Update(theUser);
                 
                 return RedirectToAction("Index");
@@ -160,12 +181,15 @@ namespace HardX.Controllers
  
         public ActionResult Delete(int id)
         {
+            /*
             if (!Access.HasAccess(4))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+             * */
+
             User theUser = new User();
             theUser = theUser.GetById(id);
             theUser.Delete(theUser);

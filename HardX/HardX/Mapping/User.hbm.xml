@@ -13,8 +13,13 @@
     </id>
     <property name="Login"  column="login" type="String" length="255"/>
     <property name="Name" column="name" type="String" length="255"/>
-    <many-to-one name="Branche" column="Branche_ID" />
-    <many-to-one name="Role"  column="Role_ID" />
+    <many-to-one name="Branche" column="Branche_ID" />  
+    
+    <set name="Roles" table="link_roles_users" lazy="false">
+      <key column = "user_id" />
+      <many-to-many class="Role" column="role_id" />
+    </set>
+  
 
   </class>
 </hibernate-mapping>
