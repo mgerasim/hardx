@@ -32,6 +32,21 @@ namespace HardX.Models
             }
         }
 
+
+        private Iesi.Collections.Generic.ISet<Area> _Areas;
+
+        public virtual Iesi.Collections.Generic.ISet<Area> Areas
+        {
+            get
+            {
+                return this._Areas;
+            }
+            set
+            {
+                this._Areas = value;
+            }
+        }
+
        
 
         public Store()
@@ -42,6 +57,8 @@ namespace HardX.Models
                 throw new NotImplementedException();
 
             this._Materials = new Iesi.Collections.Generic.HashedSet<Material>();
+
+            this._Areas = new Iesi.Collections.Generic.HashedSet<Area>();
         }
 
         public virtual string Name
@@ -69,12 +86,34 @@ namespace HardX.Models
         }
 
         [Display(Name = "Кладовщик")]
-        [Required(ErrorMessage = "* Укажите кладовщика")]
+        [Required(ErrorMessage = "* Укажите кладовщика №1")]
         public virtual User User { get; set; }
 
-        [Display(Name = "Площадка")]
-        [Required(ErrorMessage = "* Укажите площадку")]
-        public virtual Area Area { get; set; }
+        [Display(Name = "Кладовщик 2")]
+        [Required(ErrorMessage = "* Укажите кладовщика №2")]
+        public virtual User User2 { get; set; }
+
+        [Display(Name = "Адрес")]
+        [Required(ErrorMessage = "* Укажите адрес")]
+        public virtual Room Room { get; set; }
+
+        public virtual void ClearAreas()
+        {
+            this._Areas.Clear();
+        }
+
+        public virtual Boolean IsExistArea(int areaID)
+        {
+            foreach (var theArea in this.Areas)
+            {
+                if (theArea.Id == areaID)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 
     public class NewStore : Store

@@ -83,7 +83,7 @@ namespace HardX.Models
                 if (UserID > 0)
                 {
                     User theUser = new User();
-                    return theUser.GetById(UserID).Name;
+                    return theUser.GetById(UserID).Name + " (" + HttpContext.Current.User.Identity.Name + ")";
                 }
                 else
                 {

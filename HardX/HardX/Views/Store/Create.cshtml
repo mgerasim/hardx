@@ -27,13 +27,35 @@
         <div class="editor-field">
 			@Html.DropDownListFor(model => model.User.Id, new SelectList((List<User>)(new User()).GetAll() , "Id", "Name" ), string.Empty, new {@class="chosen-select", @style="width: 350px;", @placeholder="Выбрать..." })
         </div>
+		
+		<div class="editor-label">
+            @Html.LabelFor(model => model.User2)
+        </div>
+        <div class="editor-field">
+			@Html.DropDownListFor(model => model.User2.Id, new SelectList((List<User>)(new User()).GetAll("ID != " + Convert.ToString(Model.User.Id) ) , "Id", "Name" ), string.Empty, new {@class="chosen-select", @style="width: 350px;", @placeholder="Выбрать..." })
+        </div>
 
 		<div class="editor-label">
-            @Html.LabelFor(model => model.Area)
+            @Html.LabelFor(model => model.Room)
         </div>
-		<div class="editor-field">
-			@Html.DropDownListFor(model => model.Area.Id, new SelectList((List<Area>)(new Area()).GetAll() , "ID", "Name" ), string.Empty, new {@class="chosen-select", @style="width: 350px;", @placeholder="Выбрать..." })
+        <div class="editor-field">
+			@Html.DropDownListFor(model => model.Room.ID, new SelectList((List<Room>)(new Room()).GetAll() , "ID", "FullName" ), string.Empty, new {@class="chosen-select", @style="width: 350px;", @placeholder="Выбрать..." })
         </div>
+
+		<h5>Площадки:</h5>
+		@foreach (var item in theListArea)
+		{
+				 
+			var areaID = "AreaID_" + item.Id; 
+				
+			<input type="checkbox"
+			    id=@areaID
+				name="Areas"
+				value="@item.Id"/>
+			<label for=@areaID>@item.Name</label>
+
+			<br />
+		}
         
         <p>
             <input type="submit" value="Создать" /> @Html.ActionLink("Назад", "Index")

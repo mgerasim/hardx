@@ -23,6 +23,14 @@
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>
+
+		
+		<div class="editor-label">
+            @Html.LabelFor(model => model.Store)
+        </div>
+		<div class="editor-field">
+			@Html.DropDownListFor(model => model.Store.ID, new SelectList((List<Store>)(new Store()).GetAll() , "ID", "Name" ), string.Empty, new {@class="chosen-select", @style="width: 350px;", @placeholder="Выбрать..." })
+        </div>
 				
 		<p>Здания:</p>
 		@foreach(House item in Model.Houses)

@@ -83,7 +83,16 @@ namespace HardX.Controllers
                 // TODO: Add insert logic here
                 Area model = new Area();
                 model.Name = collection["Name"];
-                model.User = (new User()).GetById(Convert.ToInt32(collection["User.ID"]));
+
+                if (collection["User.ID"] != null)
+                {
+                    model.User = (new User()).GetById(Convert.ToInt32(collection["User.ID"]));
+                }
+
+                if (collection["Store.ID"] != "")
+                {
+                    model.Store = (new Store()).GetById(Convert.ToInt32(collection["Store.ID"]));
+                }
 
                 string IDs = collection["HouseSelections"];
 
@@ -144,7 +153,16 @@ namespace HardX.Controllers
                 Area model = new Area();
                 model = model.GetById(id);
                 model.Name = collection["Name"];
-                model.User = (new User()).GetById(Convert.ToInt32(collection["User.ID"]));
+                if (collection["User.ID"] != null)
+                {
+                    model.User = (new User()).GetById(Convert.ToInt32(collection["User.ID"]));
+                }
+
+                if (collection["Store.ID"] != "")
+                {
+                    model.Store = (new Store()).GetById(Convert.ToInt32(collection["Store.ID"]));
+                }
+
                 string IDs = collection["HouseSelections"];
 
                 if (IDs != null)
@@ -160,7 +178,7 @@ namespace HardX.Controllers
 
                 model.Update(model);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", new { id = model.Id});
             }
             catch (Exception ex)
             {

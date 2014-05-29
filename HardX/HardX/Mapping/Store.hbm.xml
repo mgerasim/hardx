@@ -17,9 +17,15 @@
       <key column = "repository_ID" />
       <one-to-many class="Material" />
     </set>
-    
-    <many-to-one name="Area" column="Area_ID" />
-    <many-to-one name="User" column="User_ID" />
+
+    <set name="Areas"  lazy="false" >
+      <key column="repository_ID"/>
+      <one-to-many class="Area"/>
+    </set>
+
+    <many-to-one name="User" column="User_ID" />    
+    <many-to-one name="User2" column="User2_ID" />
+    <many-to-one name="Room" column="ROOM_ID" />
     
   </class>
 </hibernate-mapping>

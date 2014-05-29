@@ -33,6 +33,10 @@ namespace HardX.Models
         [Display(Name = "Кладовщик")]
         [Required(ErrorMessage = "* Укажите кладовщика")]
         public User User { get; set; }
+
+        [Display(Name = "Склад")]
+        [Required(ErrorMessage = "* Укажите склад")]
+        public Store Store { get; set; }
     }
 
     public class AreaNew : Area

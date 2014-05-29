@@ -15,12 +15,14 @@ namespace HardX.Controllers
 
         public ActionResult Index()
         {
+            /*
             if (!Access.HasAccess(6))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
                 return RedirectToAction("Error", "Capital", route);
             }
+            */
             Branche theBranche = new Branche();
             List<Branche> theListBranche = new List<Branche>();
             theListBranche = (List<Branche>)theBranche.GetAll();
@@ -79,9 +81,11 @@ namespace HardX.Controllers
                 theBranche.Save(theBranche);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
         
@@ -124,9 +128,11 @@ namespace HardX.Controllers
                                                
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
 
@@ -166,9 +172,11 @@ namespace HardX.Controllers
  
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
             }
         }
     }

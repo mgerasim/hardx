@@ -19,6 +19,8 @@
     </set> 
     
     <many-to-one name="User"  column="User_ID" />
+
+    <many-to-one name="Store" column="Repository_ID" />
     
 
   </class>

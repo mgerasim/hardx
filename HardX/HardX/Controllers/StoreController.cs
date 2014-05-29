@@ -58,9 +58,26 @@ namespace HardX.Controllers
                     model.User = (new User()).GetById(Convert.ToInt32(collection["User.Id"]));
                 }
 
-                if (collection["Area.Id"] != "")
+                if (collection["User2.Id"] != "")
                 {
-                    model.Area = (new Area()).GetById(Convert.ToInt32(collection["Area.Id"]));
+                    model.User2 = (new User()).GetById(Convert.ToInt32(collection["User2.Id"]));
+                }
+
+                if (collection["Room.ID"] != "")
+                {
+                    model.Room = (new Room()).GetById(Convert.ToInt32(collection["Room.ID"]));
+                }
+
+                if (collection["Areas"] != null)
+                {
+                    string[] arrayAreaIDs = collection["Areas"].Split(',');
+                    foreach (string str in arrayAreaIDs)
+                    {
+                        int areaID = Convert.ToInt32(str);
+                        HardX.Models.Area theArea = new HardX.Models.Area();
+                        theArea = theArea.GetById(areaID);
+                        model.Areas.Add(theArea);
+                    }
                 }
                
                 model.Save(model);
@@ -105,9 +122,27 @@ namespace HardX.Controllers
                     model.User = (new User()).GetById(Convert.ToInt32(collection["User.Id"]));
                 }
 
-                if (collection["Area.Id"] != "")
+                if (collection["User2.Id"] != "")
                 {
-                    model.Area = (new Area()).GetById(Convert.ToInt32(collection["Area.Id"]));
+                    model.User2 = (new User()).GetById(Convert.ToInt32(collection["User2.Id"]));
+                }
+
+                if (collection["Room.ID"] != "")
+                {
+                    model.Room = (new Room()).GetById(Convert.ToInt32(collection["Room.ID"]));
+                }
+
+                if (collection["Areas"] != null)
+                {
+                    string[] arrayAreaIDs = collection["Areas"].Split(',');
+                    model.ClearAreas();
+                    foreach (string str in arrayAreaIDs)
+                    {
+                        int areaID = Convert.ToInt32(str);
+                        HardX.Models.Area theArea = new HardX.Models.Area();
+                        theArea = theArea.GetById(areaID);
+                        model.Areas.Add(theArea);
+                    }
                 }
                 
                 model.Update(model);
@@ -118,9 +153,10 @@ namespace HardX.Controllers
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", ex.Message);
-                return RedirectToAction("Error", "Home", route);
+                return RedirectToAction("Error", "Home", route);                
             }
         }
+
 
         //
         // GET: /Store/Matmodels/5

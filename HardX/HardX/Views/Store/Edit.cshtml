@@ -29,12 +29,54 @@
 			@Html.DropDownListFor(model => model.User.Id, new SelectList((List<User>)(new User()).GetAll() , "Id", "Name" ), string.Empty, new {@class="chosen-select", @style="width: 350px;", @placeholder="Выбрать..." })
         </div>
 
+		
 		<div class="editor-label">
-            @Html.LabelFor(model => model.Area)
+            @Html.LabelFor(model => model.User2)
         </div>
-		<div class="editor-field">
-			@Html.DropDownListFor(model => model.Area.Id, new SelectList((List<Area>)(new Area()).GetAll() , "ID", "Name" ), string.Empty, new {@class="chosen-select", @style="width: 350px;", @placeholder="Выбрать..." })
+        <div class="editor-field">
+			@Html.DropDownListFor(model => model.User2.Id, new SelectList((List<User>)(new User()).GetAll("ID != " + Convert.ToString(Model.User.Id)) , "Id", "Name" ), string.Empty, new {@class="chosen-select", @style="width: 350px;", @placeholder="Выбрать..." })
         </div>
+
+		
+		<div class="editor-label">
+            @Html.LabelFor(model => model.Room)
+        </div>
+        <div class="editor-field">
+			@Html.DropDownListFor(model => model.Room.ID, new SelectList((List<Room>)(new Room()).GetAll() , "ID", "FullName" ), string.Empty, new {@class="chosen-select", @style="width: 350px;", @placeholder="Выбрать..." })
+        </div>
+
+
+		@{
+			List<HardX.Models.Area> theListArea = new List<HardX.Models.Area>();
+			HardX.Models.Area theArea = new HardX.Models.Area();				
+			theListArea = (List<HardX.Models.Area>) theArea.GetAll();
+		}
+		<h5>Площадки:</h5>
+		@foreach (var item in theListArea)
+		{
+
+				var areaID = "AreaID_" + item.Id; 
+			
+				if (Model.IsExistArea(Convert.ToInt32(item.Id))) {
+					<input type="checkbox"
+					checked="true" 
+					id=@areaID
+					name="Areas"
+					value="@item.Id"/>
+				}
+				else
+				{
+					<input type="checkbox"
+				
+					id=@areaID
+					name="Areas"
+					value="@item.Id"/>				
+				}		    
+					
+				<label for=@areaID>@item.Name</label>
+				<br />
+		}
+
         
         <p>
             <input type="submit" value="Сохранить" /> @Html.ActionLink("Назад", "Index")
