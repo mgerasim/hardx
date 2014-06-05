@@ -3,7 +3,7 @@
                     assembly="HardX"
                    namespace="HardX.Models">
 
-  <class name="MaterialUchet" table="v_Materials_Uchet" lazy="false">
+  <class name="MaterialUchet" table="v_Materials_Uchet2" lazy="false">
 
     <id name="ID" column="id" type="int">
       <generator class="identity" />

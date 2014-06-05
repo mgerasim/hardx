@@ -22,20 +22,26 @@
 			@Html.ValidationMessageFor(model => model.Name)
         </div>
 
-		<div class="editor-label">
-            @Html.LabelFor(model => model.User)
-        </div>
-        <div class="editor-field">
-			@Html.DropDownListFor(model => model.User.Id, new SelectList((List<User>)(new User()).GetAll() , "Id", "Name" ), string.Empty, new {@class="chosen-select", @style="width: 350px;", @placeholder="Выбрать..." })
-        </div>
-
-		
-		<div class="editor-label">
-            @Html.LabelFor(model => model.User2)
-        </div>
-        <div class="editor-field">
-			@Html.DropDownListFor(model => model.User2.Id, new SelectList((List<User>)(new User()).GetAll("ID != " + Convert.ToString(Model.User.Id)) , "Id", "Name" ), string.Empty, new {@class="chosen-select", @style="width: 350px;", @placeholder="Выбрать..." })
-        </div>
+		<table>
+			<tr>
+				<td>
+					<div class="editor-label">
+						@Html.LabelFor(model => model.User)
+					</div>
+					<div class="editor-field">
+						@Html.DropDownListFor(model => model.User.Id, new SelectList((List<User>)(new User()).GetAll() , "Id", "Name" ), string.Empty, new {@class="chosen-select", @style="width: 350px;", @placeholder="Выбрать..." })
+					</div>
+				</td>
+				<td>		
+					<div class="editor-label">
+						@Html.LabelFor(model => model.User2)
+					</div>
+					<div class="editor-field">
+						@Html.DropDownListFor(model => model.User2.Id, new SelectList((List<User>)(new User()).GetAll( ) , "Id", "Name" ), string.Empty, new {@class="chosen-select", @style="width: 350px;", @placeholder="Выбрать..." })
+					</div>
+				</td>
+			</tr>
+		</table>
 
 		
 		<div class="editor-label">
@@ -51,33 +57,55 @@
 			HardX.Models.Area theArea = new HardX.Models.Area();				
 			theListArea = (List<HardX.Models.Area>) theArea.GetAll();
 		}
-		<h5>Площадки:</h5>
-		@foreach (var item in theListArea)
-		{
 
-				var areaID = "AreaID_" + item.Id; 
-			
-				if (Model.IsExistArea(Convert.ToInt32(item.Id))) {
-					<input type="checkbox"
-					checked="true" 
-					id=@areaID
-					name="Areas"
-					value="@item.Id"/>
-				}
-				else
+		<br/>
+		<table class="tablesorter">
+			<thead>
+				<tr>
+					<td></td>
+					<td>Площадки</td>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in theListArea)
 				{
-					<input type="checkbox"
+				 
+					var areaID = "AreaID_" + item.Id; 
 				
-					id=@areaID
-					name="Areas"
-					value="@item.Id"/>				
-				}		    
-					
-				<label for=@areaID>@item.Name</label>
-				<br />
-		}
-
-        
+					<tr>
+						<td>					
+							@if (Model.IsExistArea(Convert.ToInt32(item.Id))) {
+								<input type="checkbox" checked="true" id=@areaID name="Areas" value="@item.Id"/>
+							}
+							else
+							{
+								<input type="checkbox" id=@areaID name="Areas" value="@item.Id"/>
+							}
+						</td>
+						<td> @item.Name </td>
+					</tr>			
+				}
+			</tbody>
+			<tfood>
+				<tr>
+					<th colspan="2" class="ts-pager form-horizontal">
+						<button type="button" class="btn first"><i class="icon-step-backward glyphicon glyphicon-step-backward"></i></button>
+						<button type="button" class="btn prev"><i class="icon-arrow-left glyphicon glyphicon-backward"></i></button>
+						<span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+						<button type="button" class="btn next"><i class="icon-arrow-right glyphicon glyphicon-forward"></i></button>
+						<button type="button" class="btn last"><i class="icon-step-forward glyphicon glyphicon-step-forward"></i></button>
+						<select class="pagesize input-mini" title="Select page size">
+							<option selected="selected" value="10">10</option>
+							<option value="20">20</option>
+							<option value="30">30</option>
+							<option value="40">40</option>
+						</select>
+						<select class="pagenum input-mini" title="Select page number"></select>
+					</th>
+				</tr>
+			</tfood>
+		</table>
+		        
         <p>
             <input type="submit" value="Сохранить" /> @Html.ActionLink("Назад", "Index")
         </p>

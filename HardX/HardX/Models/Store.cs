@@ -47,6 +47,34 @@ namespace HardX.Models
             }
         }
 
+        private Iesi.Collections.Generic.ISet<StoreDevDetail> _StoreDevDetails;
+
+        public virtual Iesi.Collections.Generic.ISet<StoreDevDetail> StoreDevDetails
+        {
+            get
+            {
+                return this._StoreDevDetails;
+            }
+            set
+            {
+                this._StoreDevDetails = value;
+            }
+        }
+
+        private Iesi.Collections.Generic.ISet<StoreMatDetail> _StoreMatDetails;
+
+        public virtual Iesi.Collections.Generic.ISet<StoreMatDetail> StoreMatDetails
+        {
+            get
+            {
+                return this._StoreMatDetails;
+            }
+            set
+            {
+                this._StoreMatDetails = value;
+            }
+        }
+
        
 
         public Store()
@@ -59,6 +87,9 @@ namespace HardX.Models
             this._Materials = new Iesi.Collections.Generic.HashedSet<Material>();
 
             this._Areas = new Iesi.Collections.Generic.HashedSet<Area>();
+
+            this._StoreDevDetails = new Iesi.Collections.Generic.HashedSet<StoreDevDetail>();
+            this._StoreMatDetails = new Iesi.Collections.Generic.HashedSet<StoreMatDetail>();
         }
 
         public virtual string Name

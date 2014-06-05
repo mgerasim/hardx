@@ -5,6 +5,37 @@
     ViewBag.Title = "Расходные материалы";
 }
 
+
+
+
+<style type="text/css">
+        .ui-dialog .ui-dialog-content
+        {
+/*            position: relative;
+            border: 0;
+            padding: .5em 1em;
+            background: none;
+            overflow: auto;
+            zoom: 1;*/
+            background-color: #ffd;
+            border: solid 1px #ea7;
+        }
+		
+        .ui-dialog .ui-dialog-titlebar
+        {
+            background-color: #ffd;
+            border: solid 1px #ea7;
+        }
+
+        .ui-widget-content
+        {
+            background-color: #ffd;
+            border: solid 1px #ea7;
+        }
+    </style>
+
+	
+
 <table class="tablesorter">
 <thead>
     <tr>     
@@ -25,18 +56,22 @@
             Совместимая техника
         </th>
 		
-				
-        <th>
+		<th>
             Наличие
         </th>
-		
-        <th>
-            Выдано
-        </th>
 
+		<th>
+            Выдача
+        </th>
+					
         <th>
             Брак
         </th>
+
+		<th>
+            Действия
+        </th>
+		
 				
         
     </tr>
@@ -53,30 +88,290 @@
         <td>
             @item.type_name
         </td>
-	     
-		     
-        <td>
+	     <td>
             @item.Name 
         </td>
 		          
         <td>
             @item.devnames
         </td>
-        
 		
         <td>
-            @item.count_coming
-        </td>
-		
-        <td>
-            @item.count_issued
-        </td>
-		
-        <td>
-            @item.count_marriage
-        </td>
-					
 
+			@{
+			// Наличие
+			}
+
+			<div id="mat@(item.ID)">
+				@item.count_coming
+			</div>
+
+			<div id="dialog@(item.ID)" title="Принять расходный материал." >
+				<p>
+					Укажите количество новых расходных материалов:
+				</p>
+				<p>
+					<input type="text">
+				</p>
+			</div>
+
+			@{
+			// Наличие
+			}	
+			<script>
+			$('#dialog@(item.ID)').dialog({
+								autoOpen: false,
+								height: 280,
+								modal: true,
+								resizable: false,
+								buttons: {
+									Сохранить: function() {
+										$(this).dialog('close');			
+
+										if (" "+(parseInt( $("#dialog@(item.ID)").find(':first-child:input').val() ))+" "!=" NaN ") {
+											$("#mat@(item.ID)").html( parseInt($("#dialog@(item.ID)").find(':first-child:input').val()) + parseInt( $("#mat@(item.ID)").html() ) );
+
+											$.get('@Url.Action("MaterialsGet", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: parseInt($("#dialog@(item.ID)").find(':first-child:input').val()) }, function(data) {
+											
+											}
+											);
+
+										} else {
+											$("#mat@(item.ID)").html( "0" );
+										}										
+									},
+									'Отмена': function() {
+										$(this).dialog('close');
+									}
+								}
+							});
+			</script>
+			
+			@{
+				// Наличие
+			}
+			<script>
+				var clicked = 0;
+				$("#mat@(item.ID)")
+					.hover(function() {
+						$(this).toggleClass("over-inline");
+					})
+					.unbind('click').click(function(e) {
+						
+						$("#dialog@(item.ID)").find(':first-child:input').val( $("#mat@(item.ID)").html() );
+						
+						$('#dialog@(item.ID)').dialog('open');
+						return;
+
+
+						var $editable = $(this);
+						if ($editable.hasClass('active-inline')) {
+							return;
+						};
+						clicked = 0;
+						
+						var content = $.trim($editable.html());
+						
+						$editable
+							.addClass("active-inline")
+							.empty();
+
+						var editElement = '<input type="text" />';
+						
+						$(editElement)
+							.val(content)
+							.appendTo($editable)
+							.focus()
+							.blur(function(e) {
+								$editable.trigger('blur');
+							});
+
+					})
+					.blur(function(e) {
+						if (clicked == 1) {
+							return;
+						};
+						clicked = 1;
+						var $editable = $(this);
+						var contents = $editable.find(':first-child:input').val();
+						alert(contents);
+						$editable
+							.removeClass('active-inline')
+							.contents()
+							.replaceWith(contents);
+					});
+			</script>
+		</td>
+		
+        <th>
+			@{
+			// Выдать
+			}
+            <div id="mat_issued@(item.ID)">
+				@item.count_issued
+			</div>
+
+			<div id="dialog_issued@(item.ID)" title="Выдать расходный материал." >
+				<p>
+					Укажите количество расходных материалов для выдачи:
+				</p>
+				<p>
+					<input type="text">
+				</p>
+			</div>
+			@{
+			// Выдать
+			}
+			<script>
+			$('#dialog_issued@(item.ID)').dialog({
+								autoOpen: false,
+								height: 280,
+								modal: true,
+								resizable: false,
+								buttons: {
+									Выдать: function() {
+										$(this).dialog('close');			
+
+										if (" "+(parseInt( $("#dialog_issued@(item.ID)").find(':first-child:input').val() ))+" "!=" NaN ") {
+											$("#mat_issued@(item.ID)").html( parseInt($("#dialog_issued@(item.ID)").find(':first-child:input').val()) + parseInt( $("#mat_issued@(item.ID)").html() ) );
+											$("#mat@(item.ID)").html( parseInt($("#mat@(item.ID)").html()) - parseInt($("#dialog_issued@(item.ID)").find(':first-child:input').val()) );
+
+											$.get('@Url.Action("MaterialsIssued", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: parseInt($("#dialog@(item.ID)").find(':first-child:input').val()) }, function(data) {
+											
+											}
+											);
+
+										} else {
+											$("#mat_issued@(item.ID)").html( "0" );
+										}										
+									},
+									'Отмена': function() {
+										$(this).dialog('close');
+									}
+								}
+							});
+			</script>
+
+			<script>
+				var clicked = 0;
+				$("#mat_issued@(item.ID)")
+					.hover(function() {
+						$(this).toggleClass("over-inline");
+					})
+					.unbind('click').click(function(e) {
+						
+						$("#dialog_issued@(item.ID)").find(':first-child:input').val( $("#mat_issued@(item.ID)").html() );
+						
+						$('#dialog_issued@(item.ID)').dialog('open');
+						return;
+					})
+					.blur(function(e) {
+						if (clicked == 1) {
+							return;
+						};
+						clicked = 1;
+						var $editable = $(this);
+						var contents = $editable.find(':first-child:input').val();
+						alert(contents);
+						$editable
+							.removeClass('active-inline')
+							.contents()
+							.replaceWith(contents);
+					});
+			</script>
+
+			@{
+			// Выдать 
+			}
+        </th>
+			
+        <th>
+            @{
+			// Брак
+			}
+            <div id="mat_marriage@(item.ID)">
+				@item.count_marriage
+			</div>
+
+			<div id="dialog_marriage@(item.ID)" title="Брак расходного материала" >
+				<p>
+					Укажите количество брака среди расходного материала:
+				</p>
+				<p>
+					<input type="text">
+				</p>
+			</div>
+			@{
+			// Брак
+			}
+			<script>
+			$('#dialog_marriage@(item.ID)').dialog({
+								autoOpen: false,
+								height: 280,
+								modal: true,
+								resizable: false,
+								buttons: {
+									Выдать: function() {
+										$(this).dialog('close');			
+
+										if (" "+(parseInt( $("#dialog_marriage@(item.ID)").find(':first-child:input').val() ))+" "!=" NaN ") {
+											$("#mat_marriage@(item.ID)").html( parseInt($("#dialog_marriage@(item.ID)").find(':first-child:input').val()) + parseInt( $("#mat_marriage@(item.ID)").html() ) );
+											$("#mat@(item.ID)").html( parseInt($("#mat@(item.ID)").html()) - parseInt($("#dialog_marriage@(item.ID)").find(':first-child:input').val()) );
+
+											$.get('@Url.Action("MaterialsMarriage", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: parseInt($("#dialog@(item.ID)").find(':first-child:input').val()) }, function(data) {
+											
+											}
+											);
+
+										} else {
+											$("#mat_marriage@(item.ID)").html( "0" );
+										}										
+									},
+									'Отмена': function() {
+										$(this).dialog('close');
+									}
+								}
+							});
+			</script>
+
+			<script>
+				var clicked = 0;
+				$("#mat_marriage@(item.ID)")
+					.hover(function() {
+						$(this).toggleClass("over-inline");
+					})
+					.unbind('click').click(function(e) {
+						
+						$("#dialog_marriage@(item.ID)").find(':first-child:input').val( $("#mat_marriage@(item.ID)").html() );
+						
+						$('#dialog_marriage@(item.ID)').dialog('open');
+						return;
+					})
+					.blur(function(e) {
+						if (clicked == 1) {
+							return;
+						};
+						clicked = 1;
+						var $editable = $(this);
+						var contents = $editable.find(':first-child:input').val();
+						alert(contents);
+						$editable
+							.removeClass('active-inline')
+							.contents()
+							.replaceWith(contents);
+					});
+			</script>
+
+			@{
+			// Брак 
+			}
+        </th>
+		
+        <td>
+            @Html.ActionLink("Удалить", "DeleteMatDetail", new { id=item.ID }, new { onclick = "return confirm('Вы действительно хотите удалить?');" })
+        </td>
+		
+      
     </tr>
 }
 </tbody>
@@ -104,18 +399,22 @@
         <th>
             Наличие
         </th>
-		
+					
         <th>
-            Выдано
+            Выдача
         </th>
-
+			
         <th>
             Брак
         </th>
+      
+        <td>
+            Действия
+        </td>
         
     </tr>
 	<tr>
-			<th colspan="7" class="ts-pager form-horizontal">
+			<th colspan="8" class="ts-pager form-horizontal">
 				<button type="button" class="btn first"><i class="icon-step-backward glyphicon glyphicon-step-backward"></i></button>
 				<button type="button" class="btn prev"><i class="icon-arrow-left glyphicon glyphicon-backward"></i></button>
 				<span class="pagedisplay"></span> <!-- this can be any element, including an input -->
@@ -126,6 +425,7 @@
 					<option value="20">20</option>
 					<option value="30">30</option>
 					<option value="40">40</option>
+					<option value="9999">Все</option>
 				</select>
 				<select class="pagenum input-mini" title="Select page number"></select>
 			</th>
@@ -134,10 +434,6 @@
 
 </table>
 
-
-
-<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
 <h2>Добавить новый расходный материал</h2>
 
@@ -153,39 +449,10 @@
 			@Html.DropDownListFor(model => model.MatmodelID, new SelectList((List<Matmodel>)(new Matmodel()).GetAll() , "ID", "FullName" ), new {@class="chosen-select", @style="width: 350px;" })
         </div>
 		
-		<div class="editor-label">			
-            @Html.LabelFor(model => model.fAdded)
-			<input type="checkbox" name="fAdded" id="fAdded"  />
-        </div>
-
-		<div class="editor-label">			
-            @Html.LabelFor(model => model.Count)
-			@Html.EditorFor(model => model.Count)            
-			@Html.ValidationMessageFor(model => model.Count)
-        </div>
-
-		
-		<div class="editor-label">			
-            @Html.LabelFor(model => model.CountIssued)
-			@Html.EditorFor(model => model.CountIssued)            
-			@Html.ValidationMessageFor(model => model.CountIssued)
-        </div>
-
-		
-		<div class="editor-label">			
-            @Html.LabelFor(model => model.CountMarriage)
-			@Html.EditorFor(model => model.CountMarriage)            
-			@Html.ValidationMessageFor(model => model.CountMarriage)
-        </div>
-		
-		<div class="editor-label">			
-            @Html.LabelFor(model => model.CountDelete)
-			@Html.EditorFor(model => model.CountDelete)            
-			@Html.ValidationMessageFor(model => model.CountDelete)
-        </div>
+		<br />
         
         <p>
-            <input type="submit" value="Создать" /> @Html.ActionLink("Назад", "Index")
+            <input type="submit" value="Добавить" /> @Html.ActionLink("Назад", "Index")
         </p>
     </fieldset>
 }

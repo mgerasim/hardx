@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                    assembly="HardX"
+                   namespace="HardX.Models">
+
+  <class name="StoreDevDetail" table="STOREDEVDETAILS" lazy="false">
+
+    <id name="ID" column="id" type="int">
+
+      <generator class="sequence">
+        <param name="sequence">SEQ_STOREDEVMODELS</param>
+      </generator>
+    </id>    
+    <many-to-one name="Devmodel" column="DEVMODEL_ID" />    
+    <many-to-one name="Store" column="STORE_ID" />    
+  </class>
+</hibernate-mapping>

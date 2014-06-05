@@ -179,12 +179,18 @@ namespace HardX.Controllers
             {
                 model.Store = (new Store()).GetById(id);
 
+                StoreMatDetail theMatDetail = new StoreMatDetail();
+                theMatDetail.Matmodel = (new Matmodel()).GetById(Convert.ToInt32(collection["MatmodelID"]));
+                theMatDetail.Store = (new Store()).GetById(id);
+                theMatDetail.Save(theMatDetail);
+
+                /*
                 if (collection["fAdded"]=="on")
                 {
                     Material modelAdded = new Material();
                     modelAdded.Store = (new Store()).GetById(id);
                     modelAdded.Matmodel = (new Matmodel()).GetById(Convert.ToInt32(collection["MatmodelID"]));
-                    modelAdded.StatusID = 21; /*добавлен*/
+                    modelAdded.StatusID = 21; 
                     modelAdded.Save(modelAdded);
                 }
                 
@@ -201,7 +207,7 @@ namespace HardX.Controllers
                 for (int i = 0; i < count; i++)
                 {                    
                     model.Matmodel = (new Matmodel()).GetById(Convert.ToInt32(collection["MatmodelID"]));
-                    model.StatusID = 1; /*остаток*/
+                    model.StatusID = 1; 
                     model.Save(model);
                 }                
                 ViewBag.Materials = model.Store.Materials;
@@ -267,7 +273,7 @@ namespace HardX.Controllers
                 {
                     item.Delete(item);
                 }
-                                     
+                 */                    
                 return View(model);
             }
             catch (Exception ex)
@@ -276,6 +282,64 @@ namespace HardX.Controllers
                 route.Add("err", ex.Message);
                 return RedirectToAction("Error", "Home", route);
             }
+                 
+        }
+
+        public ActionResult MaterialsGet(int repository_id, int matmodel_id, int count_delta)
+        {
+            Material model = new Material();
+            model.Store = (new Store()).GetById(repository_id);
+            for (int i = 0; i < count_delta; i++)
+            {
+                model.Matmodel = (new Matmodel()).GetById(matmodel_id);
+                model.StatusID = 1;
+                model.Save(model);
+            }  
+            return View();
+        }
+
+        public ActionResult MaterialsMarriage(int repository_id, int matmodel_id, int count_delta)
+        {
+
+            Material model = new Material();
+
+
+            List<Material> models = new List<Material>();
+            string s = "REPOSITORY_ID = " + repository_id.ToString() +
+                        " AND mat_model_id = " + matmodel_id.ToString() +
+                        " AND status_id = 1 " +
+                        " AND rownum < " + (count_delta + 1).ToString();
+            models = (List<Material>)model.GetAll(s);     
+
+            model.Store = (new Store()).GetById(repository_id);
+            foreach (Material item in models)
+            {
+                item.StatusID = 3;
+                item.Update(item);
+            }
+            return View();
+        }
+
+        public ActionResult MaterialsIssued(int repository_id, int matmodel_id, int count_delta)
+        {
+
+            Material model = new Material();
+
+
+            List<Material> models = new List<Material>();
+            string s = "REPOSITORY_ID = " + repository_id.ToString() +
+                        " AND mat_model_id = " + matmodel_id.ToString() +
+                        " AND status_id = 1 " +
+                        " AND rownum < " + (count_delta + 1).ToString();
+            models = (List<Material>)model.GetAll(s);
+
+            model.Store = (new Store()).GetById(repository_id);
+            foreach (Material item in models)
+            {
+                item.StatusID = 2;
+                item.Update(item);
+            }
+            return View();
         }
 
         //
@@ -355,6 +419,26 @@ namespace HardX.Controllers
                 return RedirectToAction("Error", "Home", route);
             }
         }
+
+        public ActionResult DeleteMatDetail(int ID)
+        {
+            try
+            {
+                StoreMatDetail theMD = new StoreMatDetail();
+                theMD = theMD.GetById(ID);              
+                
+                theMD.Delete(theMD);
+
+                return RedirectToAction("Materials", new  { id = theMD.Store.ID });
+            }
+            catch (Exception ex)
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
+            }
+        }
+
 
         //
         // GET: /Store/Report/5
