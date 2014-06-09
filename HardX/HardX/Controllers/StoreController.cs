@@ -481,7 +481,9 @@ namespace HardX.Controllers
             MaterialUchet model = new MaterialUchet();
             List<MaterialUchet> theList = new List<MaterialUchet>();
             theList = (List<MaterialUchet>)model.GetAll("repository_id = " + id.ToString() + " AND id in (" + collection + ")", "VENDOR_NAME");
-            
+            string filename = "Отчёт-Склад-" + (new Store()).GetById(id).Name + "_" + DateTime.Now.ToString("yyyy-MM-dd");
+            filename = filename.Replace(' ', '-');
+            Response.AddHeader("Content-Disposition", "attachment; filename=" + filename);
             Response.AddHeader("Content-Type", "application/vnd.ms-excel");
                       
                         
