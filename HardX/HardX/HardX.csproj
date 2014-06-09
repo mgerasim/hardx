@@ -93,6 +93,7 @@
     <Compile Include="Factories\ActionFactory.cs" />
     <Compile Include="Factories\AreaFactory.cs" />
     <Compile Include="Factories\BrancheFactory.cs" />
+    <Compile Include="Factories\DeviceFactory.cs" />
     <Compile Include="Factories\DevmodelFactory.cs" />
     <Compile Include="Factories\HouseFactory.cs" />
     <Compile Include="Factories\MaterialFactory.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Models\Action.cs" />
     <Compile Include="Models\Area.cs" />
     <Compile Include="Models\Branche.cs" />
+    <Compile Include="Models\Device.cs" />
     <Compile Include="Models\Devmodel.cs" />
     <Compile Include="Models\House.cs" />
     <Compile Include="Models\Material.cs" />
@@ -145,6 +147,7 @@
     <Compile Include="Repositories\ActionRepository.cs" />
     <Compile Include="Repositories\AreaRepository.cs" />
     <Compile Include="Repositories\BrancheRepository.cs" />
+    <Compile Include="Repositories\DeviceRepository.cs" />
     <Compile Include="Repositories\DevmodelRepository.cs" />
     <Compile Include="Repositories\HouseRepository.cs" />
     <Compile Include="Repositories\MaterialRepository.cs" />
@@ -267,6 +270,7 @@
     <EmbeddedResource Include="Mapping\StoreDevDetail.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <Content Include="Mapping\Device.hbm.xml" />
     <Content Include="Scripts\jquerycssmenu.js" />
     <Content Include="Scripts\stuHover.js" />
     <EmbeddedResource Include="Mapping\Role.hbm.xml">
@@ -484,6 +488,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\MaterialsMarriage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\Devices.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

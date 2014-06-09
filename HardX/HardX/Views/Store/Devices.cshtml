@@ -1,0 +1,138 @@
+﻿@model HardX.Models.StoreDevDetail
+@using HardX.Models
+
+@{
+    ViewBag.Title = "Оборудование";
+}
+
+
+
+
+<style type="text/css">
+        .ui-dialog .ui-dialog-content
+        {
+/*            position: relative;
+            border: 0;
+            padding: .5em 1em;
+            background: none;
+            overflow: auto;
+            zoom: 1;*/
+            background-color: #ffd;
+            border: solid 1px #ea7;
+        }
+		
+        .ui-dialog .ui-dialog-titlebar
+        {
+            background-color: #ffd;
+            border: solid 1px #ea7;
+        }
+
+        .ui-widget-content
+        {
+            background-color: #ffd;
+            border: solid 1px #ea7;
+        }
+    </style>
+
+	
+
+<table class="tablesorter">
+<thead>
+    <tr>     
+        <th class="filter-select filter-exact" data-placeholder="Выбрать...">
+            Производитель
+        </th>
+	
+        <th class="filter-select filter-exact" data-placeholder="Выбрать...">
+            Тип
+        </th> 
+	 
+
+        <th>
+            Наименование
+        </th>
+		<th>
+			Наличие
+		</th>
+    </tr>
+</thead>
+
+<tbody>
+
+@foreach (var item in Model.Store.StoreDevDetails) {
+    <tr> 
+        <td>
+            @item.Devmodel.Vendor.Name
+        </td>
+		    
+        <td>
+            @item.Devmodel.Typedev.Name
+        </td>
+	     <td>
+            @item.Devmodel.Name
+        </td>
+		<td>
+			0
+		</td>
+    </tr>
+}
+</tbody>
+<tfoot>
+    <tr>
+        <th>
+            Производитель
+        </th>      
+        <th>
+            Тип
+        </th> 
+        <th>
+            Наименование
+        </th>		
+		<th>
+			Наличие
+		</th>
+	</tr>
+	<tr>
+			<th colspan="4" class="ts-pager form-horizontal">
+				<button type="button" class="btn first"><i class="icon-step-backward glyphicon glyphicon-step-backward"></i></button>
+				<button type="button" class="btn prev"><i class="icon-arrow-left glyphicon glyphicon-backward"></i></button>
+				<span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+				<button type="button" class="btn next"><i class="icon-arrow-right glyphicon glyphicon-forward"></i></button>
+				<button type="button" class="btn last"><i class="icon-step-forward glyphicon glyphicon-step-forward"></i></button>
+				<select class="pagesize input-mini" title="Select page size">
+					<option selected="selected" value="10">10</option>
+					<option value="20">20</option>
+					<option value="30">30</option>
+					<option value="40">40</option>
+					<option value="9999">Все</option>
+				</select>
+				<select class="pagenum input-mini" title="Select page number"></select>
+			</th>
+		</tr>
+</tfoot>
+
+</table>
+
+
+<h2>Добавить новое оборудование</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+
+
+		<div class="editor-label">
+            @Html.LabelFor(model => model.Devmodel)
+        </div>
+        <div class="editor-field">
+			@Html.DropDownListFor(model => model.Devmodel.ID, new SelectList((List<Devmodel>)(new Devmodel()).GetAll() , "ID", "FullName" ), new {@class="chosen-select", @style="width: 350px;" })
+        </div>
+		
+		<br />
+        
+        <p>
+            <input type="submit" value="Добавить" /> @Html.ActionLink("Назад", "Index")
+        </p>
+    </fieldset>
+}
+

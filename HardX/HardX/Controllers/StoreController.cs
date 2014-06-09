@@ -285,6 +285,35 @@ namespace HardX.Controllers
                  
         }
 
+        public ActionResult Devices(int id)
+        {
+            
+            StoreDevDetail model = new StoreDevDetail();
+            model.Store = (new Store()).GetById(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Devices(int id, FormCollection collection)
+        {
+            StoreDevDetail theDevDetail = new StoreDevDetail();
+            try
+            {
+                theDevDetail.Devmodel = (new Devmodel()).GetById(Convert.ToInt32(collection["Devmodel.ID"]));
+                theDevDetail.Store = (new Store()).GetById(id);
+                theDevDetail.Save(theDevDetail);
+
+                return View(theDevDetail);
+            }
+            catch (Exception ex)
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
+            }
+
+        }
+
         public ActionResult MaterialsGet(int repository_id, int matmodel_id, int count_delta)
         {
             Material model = new Material();
