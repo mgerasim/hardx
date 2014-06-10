@@ -174,6 +174,20 @@ namespace HardX.Models
             return res;
         }
 
+        public virtual int GetMaterialCount(int MatmodelID, int StatusID)
+        {
+            int res = 0;
+            foreach (var item in Materials)
+            {
+                if (item.Matmodel.ID == MatmodelID && item.StatusID == StatusID)
+                {
+                    res++;
+                }
+            }
+
+            return res;
+        }
+
 
     }
 

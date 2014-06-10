@@ -158,11 +158,12 @@
 					})
 					.unbind('click').click(function(e) {
 						
+						/*
 						$("#dialog@(item.ID)").find(':first-child:input').val( $("#mat@(item.ID)").html() );
 						
 						$('#dialog@(item.ID)').dialog('open');
 						return;
-
+						*/
 
 						var $editable = $(this);
 						if ($editable.hasClass('active-inline')) {
@@ -194,12 +195,53 @@
 						clicked = 1;
 						var $editable = $(this);
 						var contents = $editable.find(':first-child:input').val();
-						alert(contents);
+
+						if (" "+(parseInt( contents ))+" "!=" NaN ") {											
+
+												$.get('@Url.Action("MaterialsGet", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count: parseInt(contents) }, function(data) {
+											
+											}
+											);
+
+										} else {
+											contents = "0";
+										}
+
+						//alert(contents);
 						$editable
 							.removeClass('active-inline')
 							.contents()
 							.replaceWith(contents);
-					});
+					})
+					.keyup(function(event){
+						if(event.keyCode == 13){
+										if (clicked == 1) {
+										return;
+									};
+									clicked = 1;
+									var $editable = $(this);
+									var contents = $editable.find(':first-child:input').val();
+									//alert(contents);
+
+									if (" "+(parseInt( contents ))+" "!=" NaN ") {											
+
+												$.get('@Url.Action("MaterialsGet", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count: parseInt(contents) }, function(data) {
+											
+											}
+											);
+
+										} else {
+											contents = "0";
+										}
+
+									$editable
+										.removeClass('active-inline')
+										.contents()
+										.replaceWith(contents);
+						
+						}
+					})
+					;
 			</script>
 		</td>
 		

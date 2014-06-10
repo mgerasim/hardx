@@ -314,16 +314,34 @@ namespace HardX.Controllers
 
         }
 
-        public ActionResult MaterialsGet(int repository_id, int matmodel_id, int count_delta)
+        public ActionResult MaterialsGet(int repository_id, int matmodel_id, int count)
         {
             Material model = new Material();
             model.Store = (new Store()).GetById(repository_id);
-            for (int i = 0; i < count_delta; i++)
+            int count_delta = count - model.Store.GetMaterialCount(matmodel_id, 1);
+            if (count_delta > 0)
             {
-                model.Matmodel = (new Matmodel()).GetById(matmodel_id);
-                model.StatusID = 1;
-                model.Save(model);
-            }  
+                for (int i = 0; i < count_delta; i++)
+                {
+                    model.Matmodel = (new Matmodel()).GetById(matmodel_id);
+                    model.StatusID = 1;
+                    model.Save(model);
+                }
+            }
+            else
+            {
+                count_delta = Math.Abs(count_delta);
+                List<Material> models = new List<Material>();
+                string s = "REPOSITORY_ID = " + repository_id.ToString() +
+                            " AND mat_model_id = " + matmodel_id.ToString() +
+                            " AND status_id = 1 " +
+                            " AND rownum < " + (count_delta + 1).ToString();
+                models = (List<Material>)model.GetAll(s);
+                foreach (Material item in models)
+                {
+                    item.Delete(item);
+                }
+            }
             return View();
         }
 
