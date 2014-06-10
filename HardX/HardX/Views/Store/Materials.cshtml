@@ -236,7 +236,7 @@
 											$("#mat_issued@(item.ID)").html( parseInt($("#dialog_issued@(item.ID)").find(':first-child:input').val()) + parseInt( $("#mat_issued@(item.ID)").html() ) );
 											$("#mat@(item.ID)").html( parseInt($("#mat@(item.ID)").html()) - parseInt($("#dialog_issued@(item.ID)").find(':first-child:input').val()) );
 
-											$.get('@Url.Action("MaterialsIssued", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: parseInt($("#dialog@(item.ID)").find(':first-child:input').val()) }, function(data) {
+											$.get('@Url.Action("MaterialsIssued", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: parseInt($("#dialog_issued@(item.ID)").find(':first-child:input').val()) }, function(data) {
 											
 											}
 											);
@@ -318,7 +318,7 @@
 											$("#mat_marriage@(item.ID)").html( parseInt($("#dialog_marriage@(item.ID)").find(':first-child:input').val()) + parseInt( $("#mat_marriage@(item.ID)").html() ) );
 											$("#mat@(item.ID)").html( parseInt($("#mat@(item.ID)").html()) - parseInt($("#dialog_marriage@(item.ID)").find(':first-child:input').val()) );
 
-											$.get('@Url.Action("MaterialsMarriage", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: parseInt($("#dialog@(item.ID)").find(':first-child:input').val()) }, function(data) {
+											$.get('@Url.Action("MaterialsMarriage", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: parseInt($("#dialog_marriage@(item.ID)").find(':first-child:input').val()) }, function(data) {
 											
 											}
 											);
