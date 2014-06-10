@@ -17,6 +17,11 @@
       <key column = "repository_ID" />
       <one-to-many class="Material" />
     </set>
+    
+    <set name="Devices" lazy="false">
+      <key column = "repository_ID" />
+      <one-to-many class="Device" />
+    </set>
 
     <set name="Areas"  lazy="false" >
       <key column="repository_ID"/>

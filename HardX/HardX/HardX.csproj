@@ -270,7 +270,9 @@
     <EmbeddedResource Include="Mapping\StoreDevDetail.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <Content Include="Mapping\Device.hbm.xml" />
+    <EmbeddedResource Include="Mapping\Device.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="Scripts\jquerycssmenu.js" />
     <Content Include="Scripts\stuHover.js" />
     <EmbeddedResource Include="Mapping\Role.hbm.xml">
@@ -491,6 +493,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\Devices.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\DevicesGet.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

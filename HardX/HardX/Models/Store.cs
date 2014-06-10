@@ -32,6 +32,20 @@ namespace HardX.Models
             }
         }
 
+        private Iesi.Collections.Generic.ISet<Device> _Devices;
+
+        public virtual Iesi.Collections.Generic.ISet<Device> Devices
+        {
+            get
+            {
+                return this._Devices;
+            }
+            set
+            {
+                this._Devices = value;
+            }
+        }
+
 
         private Iesi.Collections.Generic.ISet<Area> _Areas;
 
@@ -85,6 +99,7 @@ namespace HardX.Models
                 throw new NotImplementedException();
 
             this._Materials = new Iesi.Collections.Generic.HashedSet<Material>();
+            this._Devices = new Iesi.Collections.Generic.HashedSet<Device>();
 
             this._Areas = new Iesi.Collections.Generic.HashedSet<Area>();
 
@@ -144,6 +159,21 @@ namespace HardX.Models
             }
             return false;
         }
+
+        public virtual int GetDeviceCount(int DevmodelID, int StatusID)
+        {
+            int res = 0;
+            foreach (var item in Devices)
+            {
+                if (item.Devmodel.ID == DevmodelID && item.StatusID == StatusID)
+                {
+                    res++;
+                }
+            }
+
+            return res;
+        }
+
 
     }
 

@@ -327,6 +327,19 @@ namespace HardX.Controllers
             return View();
         }
 
+        public ActionResult DevicesGet(int repository_id, int devmodel_id, int count_delta)
+        {
+            Device model = new Device();
+            model.Store = (new Store()).GetById(repository_id);
+            for (int i = 0; i < count_delta; i++)
+            {
+                model.Devmodel = (new Devmodel()).GetById(devmodel_id);
+                model.StatusID = 1;
+                model.Save(model);
+            }
+            return View();
+        }
+
         public ActionResult MaterialsMarriage(int repository_id, int matmodel_id, int count_delta)
         {
 

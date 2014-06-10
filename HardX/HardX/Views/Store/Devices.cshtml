@@ -72,7 +72,72 @@
             @item.Devmodel.Name
         </td>
 		<td>
-			0
+			@{
+				// Наличие
+			}	
+			<div id="mat@(item.ID)">
+				@Model.Store.GetDeviceCount(@item.Devmodel.ID, 1)
+			</div>
+			
+			@{
+				// Наличие
+			}	
+			<div id="dialog@(item.ID)" title="Добавить технику на склад" >
+				<p>
+					Укажите количество техники:
+				</p>
+				<p>
+					<input type="text">
+				</p>
+			</div>			
+			@{
+				// Наличие
+			}	
+			<script>
+			$('#dialog@(item.ID)').dialog({
+								autoOpen: false,
+								height: 280,
+								modal: true,
+								resizable: false,
+								buttons: {
+									Сохранить: function() {
+										$(this).dialog('close');			
+
+										if (" "+(parseInt( $("#dialog@(item.ID)").find(':first-child:input').val() ))+" "!=" NaN ") {
+											$("#mat@(item.ID)").html( parseInt($("#dialog@(item.ID)").find(':first-child:input').val()) + parseInt( $("#mat@(item.ID)").html() ) );
+
+											$.get('@Url.Action("DevicesGet", "Store")', { repository_id: @(item.Store.ID), devmodel_id: @(item.Devmodel.ID), count_delta: parseInt($("#dialog@(item.ID)").find(':first-child:input').val()) }, function(data) {
+											
+											}
+											);
+
+										} else {
+											$("#mat@(item.ID)").html( "0" );
+										}										
+									},
+									'Отмена': function() {
+										$(this).dialog('close');
+									}
+								}
+							});
+					</script>
+			@{
+				// Наличие
+			}
+			<script>
+				var clicked = 0;
+				$("#mat@(item.ID)")
+					.hover(function() {
+						$(this).toggleClass("over-inline");
+					})
+					.unbind('click').click(function(e) {
+						
+						$("#dialog@(item.ID)").find(':first-child:input').val( $("#mat@(item.ID)").html() );
+						
+						$('#dialog@(item.ID)').dialog('open');
+						return;
+					});
+			</script>
 		</td>
     </tr>
 }
