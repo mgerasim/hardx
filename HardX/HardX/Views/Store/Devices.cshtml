@@ -1,4 +1,4 @@
-﻿@model HardX.Models.StoreDevDetail
+﻿@model HardX.Models.Device
 @using HardX.Models
 
 @{
@@ -59,7 +59,7 @@
 
 <tbody>
 
-@foreach (var item in Model.Store.StoreDevDetails) {
+@foreach (var item in (new Store()).GetById(Model.Store.ID).StoreDevDetails) {
     <tr> 
         <td>
             @item.Devmodel.Vendor.Name

@@ -184,96 +184,7 @@ namespace HardX.Controllers
                 theMatDetail.Store = (new Store()).GetById(id);
                 theMatDetail.Save(theMatDetail);
 
-                /*
-                if (collection["fAdded"]=="on")
-                {
-                    Material modelAdded = new Material();
-                    modelAdded.Store = (new Store()).GetById(id);
-                    modelAdded.Matmodel = (new Matmodel()).GetById(Convert.ToInt32(collection["MatmodelID"]));
-                    modelAdded.StatusID = 21; 
-                    modelAdded.Save(modelAdded);
-                }
-                
-                int count = 0;
-                try
-                {
-                    count = Convert.ToInt32(collection["Count"]);
-                }
-                catch
-                {
-                }
-
-
-                for (int i = 0; i < count; i++)
-                {                    
-                    model.Matmodel = (new Matmodel()).GetById(Convert.ToInt32(collection["MatmodelID"]));
-                    model.StatusID = 1; 
-                    model.Save(model);
-                }                
-                ViewBag.Materials = model.Store.Materials;
-
-                int count_issued = 0;
-                try
-                {
-                    count_issued = Convert.ToInt32(collection["CountIssued"]) + 1;
-                }
-                catch
-                {
-                }
-
-                List<Material> models = new List<Material>();
-                string s = "REPOSITORY_ID = " + id.ToString() +
-                        " AND mat_model_id = " + collection["MatmodelID"] +
-                        " AND status_id = 1 " +
-                        " AND rownum < " + count_issued.ToString();
-                models = (List<Material>)model.GetAll(s);
-
-                foreach(Material item in models)
-                {
-                    item.StatusID = 2;
-                    item.Update(item);
-                }
-                                                   
-                int count_marriage = 0;    
-                try
-                {
-                    count_marriage = Convert.ToInt32(collection["CountMarriage"]) + 1;
-                }
-                catch
-                {
-                }
-                models.Clear();
-                s = "REPOSITORY_ID = " + id.ToString() +
-                        " AND mat_model_id = " + collection["MatmodelID"] +
-                        " AND status_id = 1 " +
-                        " AND rownum < " + count_marriage.ToString();
-                models = (List<Material>)model.GetAll(s);        
-                foreach (Material item in models)
-                {
-                    item.StatusID = 3;
-                    item.Update(item);
-                }
-                
-                //delete
-                int count_delete = 0;
-                try
-                {
-                    count_delete = Convert.ToInt32(collection["CountDelete"]) + 1;
-                }
-                catch
-                {
-                }
-                models.Clear();
-                s = "REPOSITORY_ID = " + id.ToString() +
-                        " AND mat_model_id = " + collection["MatmodelID"] +
-                        " AND status_id = 1 " +
-                        " AND rownum < " + count_delete.ToString();
-                models = (List<Material>)model.GetAll(s);
-                foreach (Material item in models)
-                {
-                    item.Delete(item);
-                }
-                 */                    
+                     
                 return View(model);
             }
             catch (Exception ex)
@@ -287,23 +198,25 @@ namespace HardX.Controllers
 
         public ActionResult Devices(int id)
         {
-            
-            StoreDevDetail model = new StoreDevDetail();
-            model.Store = (new Store()).GetById(id);
-            return View(model);
+            Device theDev = new Device();            
+            theDev.Store = (new Store()).GetById(id);
+            return View(theDev);
         }
 
         [HttpPost]
         public ActionResult Devices(int id, FormCollection collection)
         {
-            StoreDevDetail theDevDetail = new StoreDevDetail();
+            Device theDev = new Device();
             try
             {
+                theDev.Store = (new Store()).GetById(id);
+
+                StoreDevDetail theDevDetail = new StoreDevDetail();
                 theDevDetail.Devmodel = (new Devmodel()).GetById(Convert.ToInt32(collection["Devmodel.ID"]));
                 theDevDetail.Store = (new Store()).GetById(id);
                 theDevDetail.Save(theDevDetail);
-
-                return View(theDevDetail);
+                
+                return View(theDev);
             }
             catch (Exception ex)
             {
