@@ -412,6 +412,25 @@ namespace HardX.Controllers
             }
         }
 
+        public ActionResult DeleteDevDetail(int ID)
+        {
+            try
+            {
+                StoreDevDetail theDD = new StoreDevDetail();
+                theDD = theDD.GetById(ID);
+
+                theDD.Delete(theDD);
+
+                return RedirectToAction("Devices", new { id = theDD.Store.ID });
+            }
+            catch (Exception ex)
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", ex.Message);
+                return RedirectToAction("Error", "Home", route);
+            }
+        }
+
 
         //
         // GET: /Store/Report/5
