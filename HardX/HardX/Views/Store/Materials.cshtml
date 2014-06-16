@@ -295,31 +295,98 @@
 			</script>
 
 			<script>
+
+				function handleIssueSuccess(editable)
+				{
+					var contents = editable.find(':first-child:input').val();
+						
+						
+						if (" "+(parseInt( contents ))+" "!=" NaN ") {
+											
+											contents = parseInt( contents ) + parseInt( content ) ;
+											contents = contents + " ";
+											
+											
+
+										/*	$.get('@Url.Action("MaterialsIssued", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: parseInt($("#dialog_issued@(item.ID)").find(':first-child:input').val()) }, function(data) {
+											
+											}
+											);
+											*/
+										} else {
+											contents = content;
+										}
+
+
+
+						editable
+							.removeClass('active-inline')
+							.contents()
+							.replaceWith(contents);
+
+
+						
+				}
+
 				var clicked = 0;
+				var content=0;
 				$("#mat_issued@(item.ID)")
 					.hover(function() {
 						$(this).toggleClass("over-inline");
 					})
 					.unbind('click').click(function(e) {
-						
+						/*
 						$("#dialog_issued@(item.ID)").find(':first-child:input').val( $("#mat_issued@(item.ID)").html() );
 						
 						$('#dialog_issued@(item.ID)').dialog('open');
 						return;
+						*/
+
+						var $editable = $(this);
+						if ($editable.hasClass('active-inline')) {
+							return;
+						};
+						clicked = 0;
+						
+						content = $.trim($editable.html());
+						
+						$editable
+							.addClass("active-inline")
+							.empty();
+
+						var editElement = '<input type="text" />';
+						
+						$(editElement)
+							//.val(content)
+							.appendTo($editable)
+							.focus()
+							.blur(function(e) {
+								$editable.trigger('blur');
+							});
 					})
-					.blur(function(e) {
+					//.blur(function(e) {
+					.unbind('blur').blur(function(e) {
+						/*
 						if (clicked == 1) {
 							return;
 						};
+						*/
 						clicked = 1;
 						var $editable = $(this);
-						var contents = $editable.find(':first-child:input').val();
-						alert(contents);
-						$editable
-							.removeClass('active-inline')
-							.contents()
-							.replaceWith(contents);
-					});
+						handleIssueSuccess($editable);
+					})
+					.keyup(function(event){
+						if(event.keyCode == 13){
+										if (clicked == 1) {
+										return;
+									};
+									clicked = 1;
+									var $editable = $(this);
+									handleIssueSuccess($editable);
+						
+						}
+					})
+					;
 			</script>
 
 			@{
