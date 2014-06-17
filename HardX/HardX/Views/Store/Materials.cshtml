@@ -97,250 +97,55 @@
         </td>
 		
         <td>
-
-			@{
-			// Наличие
+			@{// Наличие
 			}
-
 			<div id="mat@(item.ID)">
-				@item.count_coming
+				@Model.Store.GetMaterialCount(@item.matmodel_id, 1)
 			</div>
-
-			<div id="dialog@(item.ID)" title="Принять расходный материал." >
-				<p>
-					Укажите количество новых расходных материалов:
-				</p>
-				<p>
-					<input type="text">
-				</p>
-			</div>
-
-			@{
-			// Наличие
-			}	
 			<script>
-			$('#dialog@(item.ID)').dialog({
-								autoOpen: false,
-								height: 280,
-								modal: true,
-								resizable: false,
-								buttons: {
-									Сохранить: function() {
-										$(this).dialog('close');			
-
-										if (" "+(parseInt( $("#dialog@(item.ID)").find(':first-child:input').val() ))+" "!=" NaN ") {
-											$("#mat@(item.ID)").html( parseInt($("#dialog@(item.ID)").find(':first-child:input').val()) + parseInt( $("#mat@(item.ID)").html() ) );
-
-											$.get('@Url.Action("MaterialsGet", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: parseInt($("#dialog@(item.ID)").find(':first-child:input').val()) }, function(data) {
-											
-											}
-											);
-
-										} else {
-											$("#mat@(item.ID)").html( "0" );
-										}										
-									},
-									'Отмена': function() {
-										$(this).dialog('close');
-									}
-								}
-							});
-			</script>
-			
-			@{
-				// Наличие
-			}
-			<script>
-				var clicked = 0;
-				$("#mat@(item.ID)")
-					.hover(function() {
-						$(this).toggleClass("over-inline");
-					})
-					.unbind('click').click(function(e) {
-						
-						/*
-						$("#dialog@(item.ID)").find(':first-child:input').val( $("#mat@(item.ID)").html() );
-						
-						$('#dialog@(item.ID)').dialog('open');
-						return;
-						*/
-
-						var $editable = $(this);
-						if ($editable.hasClass('active-inline')) {
-							return;
-						};
-						clicked = 0;
-						
-						var content = $.trim($editable.html());
-						
-						$editable
-							.addClass("active-inline")
-							.empty();
-
-						var editElement = '<input type="text" />';
-						
-						$(editElement)
-							.val(content)
-							.appendTo($editable)
-							.focus()
-							.blur(function(e) {
-								$editable.trigger('blur');
-							});
-
-					})
-					.blur(function(e) {
-						if (clicked == 1) {
-							return;
-						};
-						clicked = 1;
-						var $editable = $(this);
-						var contents = $editable.find(':first-child:input').val();
-
-						if (" "+(parseInt( contents ))+" "!=" NaN ") {											
-
-												$.get('@Url.Action("MaterialsGet", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count: parseInt(contents) }, function(data) {
-											
-											}
-											);
-
-										} else {
-											contents = "0";
-										}
-
-						//alert(contents);
-						$editable
-							.removeClass('active-inline')
-							.contents()
-							.replaceWith(contents);
-					})
-					.keyup(function(event){
-						if(event.keyCode == 13){
-										if (clicked == 1) {
-										return;
-									};
-									clicked = 1;
-									var $editable = $(this);
-									var contents = $editable.find(':first-child:input').val();
-									//alert(contents);
-
-									if (" "+(parseInt( contents ))+" "!=" NaN ") {											
-
-												$.get('@Url.Action("MaterialsGet", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count: parseInt(contents) }, function(data) {
-											
-											}
-											);
-
-										} else {
-											contents = "0";
-										}
-
-									$editable
-										.removeClass('active-inline')
-										.contents()
-										.replaceWith(contents);
-						
-						}
-					})
-					;
-			</script>
-		</td>
-		
-        <th>
-			@{
-			// Выдать
-			}
-            <div id="mat_issued@(item.ID)">
-				@item.count_issued
-			</div>
-
-			<div id="dialog_issued@(item.ID)" title="Выдать расходный материал." >
-				<p>
-					Укажите количество расходных материалов для выдачи:
-				</p>
-				<p>
-					<input type="text">
-				</p>
-			</div>
-			@{
-			// Выдать
-			}
-			<script>
-			$('#dialog_issued@(item.ID)').dialog({
-								autoOpen: false,
-								height: 280,
-								modal: true,
-								resizable: false,
-								buttons: {
-									Выдать: function() {
-										$(this).dialog('close');			
-
-										if (" "+(parseInt( $("#dialog_issued@(item.ID)").find(':first-child:input').val() ))+" "!=" NaN ") {
-											$("#mat_issued@(item.ID)").html( parseInt($("#dialog_issued@(item.ID)").find(':first-child:input').val()) + parseInt( $("#mat_issued@(item.ID)").html() ) );
-											$("#mat@(item.ID)").html( parseInt($("#mat@(item.ID)").html()) - parseInt($("#dialog_issued@(item.ID)").find(':first-child:input').val()) );
-
-											$.get('@Url.Action("MaterialsIssued", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: parseInt($("#dialog_issued@(item.ID)").find(':first-child:input').val()) }, function(data) {
-											
-											}
-											);
-
-										} else {
-											$("#mat_issued@(item.ID)").html( "0" );
-										}										
-									},
-									'Отмена': function() {
-										$(this).dialog('close');
-									}
-								}
-							});
-			</script>
-
-			<script>
-
-				function handleIssueSuccess(editable)
+				function handleGetSuccess@(item.ID)(editable)
 				{
 					var contents = editable.find(':first-child:input').val();
-						
-						
-						if (" "+(parseInt( contents ))+" "!=" NaN ") {
+					
+					if (" "+(parseInt( contents ))+" "!=" NaN ") {											
+						var count_delta = parseInt( contents );
+						contents = parseInt( contents ) + parseInt( content ) ;
+						contents = contents + " ";
 											
-											contents = parseInt( contents ) + parseInt( content ) ;
-											contents = contents + " ";
+						if (count_delta > 0) {
+							$.get('@Url.Action("MaterialsGet", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: count_delta }, function(data) {	});
+						} 
+						else {
+							$.get('@Url.Action("MaterialsDel", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: Math.abs(count_delta) }, function(data) {	});
+						}
 											
-											
+					} else {
+						contents = content;
+					}
 
-										/*	$.get('@Url.Action("MaterialsIssued", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: parseInt($("#dialog_issued@(item.ID)").find(':first-child:input').val()) }, function(data) {
-											
-											}
-											);
-											*/
-										} else {
-											contents = content;
-										}
+					editable
+						.removeClass('active-inline')
+						.contents()
+						.replaceWith(contents);
+				}
 
-
-
-						editable
+				function handleGetFail(editable)
+				{
+					contents = content;
+					
+					editable
 							.removeClass('active-inline')
 							.contents()
 							.replaceWith(contents);
-
-
-						
 				}
 
 				var clicked = 0;
 				var content=0;
-				$("#mat_issued@(item.ID)")
+				$("#mat@(item.ID)")
 					.hover(function() {
 						$(this).toggleClass("over-inline");
 					})
-					.unbind('click').click(function(e) {
-						/*
-						$("#dialog_issued@(item.ID)").find(':first-child:input').val( $("#mat_issued@(item.ID)").html() );
-						
-						$('#dialog_issued@(item.ID)').dialog('open');
-						return;
-						*/
+					.unbind('click').click(function(e) {						
 
 						var $editable = $(this);
 						if ($editable.hasClass('active-inline')) {
@@ -364,34 +169,141 @@
 								$editable.trigger('blur');
 							});
 					})
-					//.blur(function(e) {
-					.unbind('blur').blur(function(e) {
-						/*
-						if (clicked == 1) {
-							return;
-						};
-						*/
+					.unbind('blur').blur(function(e) {						
 						clicked = 1;
 						var $editable = $(this);
-						handleIssueSuccess($editable);
+						handleGetFail($editable);
 					})
 					.keyup(function(event){
 						if(event.keyCode == 13){
-										if (clicked == 1) {
-										return;
-									};
-									clicked = 1;
-									var $editable = $(this);
-									handleIssueSuccess($editable);
+							if (clicked == 1) {
+								return;
+							};
+							clicked = 1;
+							var $editable = $(this);
+							handleGetSuccess@(item.ID)($editable);
 						
+						}
+						if(event.keyCode == 27){
+								if (clicked == 1) {
+									return;
+								};
+								clicked = 1;
+								var $editable = $(this);
+								handleGetFail($editable);						
 						}
 					})
 					;
 			</script>
-
+			
+		</td>
+		
+        <th>
 			@{
-			// Выдать 
+			// Выдать
 			}
+            <div id="mat_issued@(item.ID)">
+				@item.count_issued
+			</div>	
+					
+			<script>
+				function handleIssueSuccess@(item.ID)(editable)
+				{
+					var contents = editable.find(':first-child:input').val();
+					
+					if (" "+(parseInt( contents ))+" "!=" NaN ") {											
+						var count_delta = parseInt( contents );
+						contents = parseInt( contents ) + parseInt( content ) ;
+						contents = contents + " ";
+											
+						$("#mat@(item.ID)").html( parseInt($("#mat@(item.ID)").html()) - count_delta );
+
+						if (count_delta > 0) {
+							$.get('@Url.Action("MaterialsIssued", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: count_delta }, function(data) {	});
+						}
+						else {
+							$.get('@Url.Action("MaterialsIssuedDel", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: Math.abs(count_delta) }, function(data) {	});
+						}
+
+
+											
+					} else {
+						contents = content;
+					}
+
+					editable
+						.removeClass('active-inline')
+						.contents()
+						.replaceWith(contents);
+				}
+
+				function handleIssueFail(editable)
+				{
+					contents = content;
+					
+					editable
+							.removeClass('active-inline')
+							.contents()
+							.replaceWith(contents);
+				}
+
+				var clicked = 0;
+				var content=0;
+				$("#mat_issued@(item.ID)")
+					.hover(function() {
+						$(this).toggleClass("over-inline");
+					})
+					.unbind('click').click(function(e) {						
+
+						var $editable = $(this);
+						if ($editable.hasClass('active-inline')) {
+							return;
+						};
+						clicked = 0;
+						
+						content = $.trim($editable.html());
+						
+						$editable
+							.addClass("active-inline")
+							.empty();
+
+						var editElement = '<input type="text" />';
+						
+						$(editElement)
+							//.val(content)
+							.appendTo($editable)
+							.focus()
+							.blur(function(e) {
+								$editable.trigger('blur');
+							});
+					})
+					.unbind('blur').blur(function(e) {						
+						clicked = 1;
+						var $editable = $(this);
+						handleIssueFail($editable);
+					})
+					.keyup(function(event){
+						if(event.keyCode == 13){
+							if (clicked == 1) {
+								return;
+							};
+							clicked = 1;
+							var $editable = $(this);
+							handleIssueSuccess@(item.ID)($editable);
+						
+						}
+						if(event.keyCode == 27){
+								if (clicked == 1) {
+									return;
+								};
+								clicked = 1;
+								var $editable = $(this);
+								handleIssueFail($editable);						
+						}
+					})
+					;
+			</script>
+			
         </th>
 			
         <th>
@@ -402,73 +314,102 @@
 				@item.count_marriage
 			</div>
 
-			<div id="dialog_marriage@(item.ID)" title="Брак расходного материала" >
-				<p>
-					Укажите количество брака среди расходного материала:
-				</p>
-				<p>
-					<input type="text">
-				</p>
-			</div>
-			@{
-			// Брак
-			}
 			<script>
-			$('#dialog_marriage@(item.ID)').dialog({
-								autoOpen: false,
-								height: 280,
-								modal: true,
-								resizable: false,
-								buttons: {
-									Выдать: function() {
-										$(this).dialog('close');			
-
-										if (" "+(parseInt( $("#dialog_marriage@(item.ID)").find(':first-child:input').val() ))+" "!=" NaN ") {
-											$("#mat_marriage@(item.ID)").html( parseInt($("#dialog_marriage@(item.ID)").find(':first-child:input').val()) + parseInt( $("#mat_marriage@(item.ID)").html() ) );
-											$("#mat@(item.ID)").html( parseInt($("#mat@(item.ID)").html()) - parseInt($("#dialog_marriage@(item.ID)").find(':first-child:input').val()) );
-
-											$.get('@Url.Action("MaterialsMarriage", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: parseInt($("#dialog_marriage@(item.ID)").find(':first-child:input').val()) }, function(data) {
+				function handleMarriageSuccess@(item.ID)(editable)
+				{
+					var contents = editable.find(':first-child:input').val();
+					
+					if (" "+(parseInt( contents ))+" "!=" NaN ") {											
+						var count_delta = parseInt( contents );
+						contents = parseInt( contents ) + parseInt( content ) ;
+						contents = contents + " ";
 											
-											}
-											);
+						$("#mat@(item.ID)").html( parseInt($("#mat@(item.ID)").html()) - count_delta );
 
-										} else {
-											$("#mat_marriage@(item.ID)").html( "0" );
-										}										
-									},
-									'Отмена': function() {
-										$(this).dialog('close');
-									}
-								}
-							});
-			</script>
+						if (count_delta > 0) {
+							$.get('@Url.Action("MaterialsMarriage", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: count_delta }, function(data) {	});
+						}
+						else {
+							$.get('@Url.Action("MaterialsMarriageDel", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: Math.abs(count_delta) }, function(data) {	});
+						}
 
-			<script>
+
+											
+					} else {
+						contents = content;
+					}
+
+					editable
+						.removeClass('active-inline')
+						.contents()
+						.replaceWith(contents);
+				}
+
+				function handleMarriageFail(editable)
+				{
+					contents = content;
+					
+					editable
+							.removeClass('active-inline')
+							.contents()
+							.replaceWith(contents);
+				}
+
 				var clicked = 0;
+				var content=0;
 				$("#mat_marriage@(item.ID)")
 					.hover(function() {
 						$(this).toggleClass("over-inline");
 					})
-					.unbind('click').click(function(e) {
-						
-						$("#dialog_marriage@(item.ID)").find(':first-child:input').val( $("#mat_marriage@(item.ID)").html() );
-						
-						$('#dialog_marriage@(item.ID)').dialog('open');
-						return;
-					})
-					.blur(function(e) {
-						if (clicked == 1) {
+					.unbind('click').click(function(e) {						
+
+						var $editable = $(this);
+						if ($editable.hasClass('active-inline')) {
 							return;
 						};
+						clicked = 0;
+						
+						content = $.trim($editable.html());
+						
+						$editable
+							.addClass("active-inline")
+							.empty();
+
+						var editElement = '<input type="text" />';
+						
+						$(editElement)
+							//.val(content)
+							.appendTo($editable)
+							.focus()
+							.blur(function(e) {
+								$editable.trigger('blur');
+							});
+					})
+					.unbind('blur').blur(function(e) {						
 						clicked = 1;
 						var $editable = $(this);
-						var contents = $editable.find(':first-child:input').val();
-						alert(contents);
-						$editable
-							.removeClass('active-inline')
-							.contents()
-							.replaceWith(contents);
-					});
+						handleMarriageFail($editable);
+					})
+					.keyup(function(event){
+						if(event.keyCode == 13){
+							if (clicked == 1) {
+								return;
+							};
+							clicked = 1;
+							var $editable = $(this);
+							handleMarriageSuccess@(item.ID)($editable);
+						
+						}
+						if(event.keyCode == 27){
+								if (clicked == 1) {
+									return;
+								};
+								clicked = 1;
+								var $editable = $(this);
+								handleMarriageFail($editable);						
+						}
+					})
+					;
 			</script>
 
 			@{

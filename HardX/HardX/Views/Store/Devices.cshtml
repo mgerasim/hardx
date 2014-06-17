@@ -56,6 +56,14 @@
 		</th>
 
 		<th>
+			Выдача
+		</th>
+
+		<th>
+			Брак
+		</th>
+
+		<th>
             Действия
         </th>
     </tr>
@@ -83,66 +91,312 @@
 				@Model.Store.GetDeviceCount(@item.Devmodel.ID, 1)
 			</div>
 			
-			@{
-				// Наличие
-			}	
-			<div id="dialog@(item.ID)" title="Добавить технику на склад" >
-				<p>
-					Укажите количество техники:
-				</p>
-				<p>
-					<input type="text">
-				</p>
-			</div>			
-			@{
-				// Наличие
-			}	
 			<script>
-			$('#dialog@(item.ID)').dialog({
-								autoOpen: false,
-								height: 280,
-								modal: true,
-								resizable: false,
-								buttons: {
-									Сохранить: function() {
-										$(this).dialog('close');			
-
-										if (" "+(parseInt( $("#dialog@(item.ID)").find(':first-child:input').val() ))+" "!=" NaN ") {
-											$("#mat@(item.ID)").html( parseInt($("#dialog@(item.ID)").find(':first-child:input').val()) + parseInt( $("#mat@(item.ID)").html() ) );
-
-											$.get('@Url.Action("DevicesGet", "Store")', { repository_id: @(item.Store.ID), devmodel_id: @(item.Devmodel.ID), count_delta: parseInt($("#dialog@(item.ID)").find(':first-child:input').val()) }, function(data) {
+				function handleGetSuccess@(item.ID)(editable)
+				{
+					var contents = editable.find(':first-child:input').val();
+					
+					if (" "+(parseInt( contents ))+" "!=" NaN ") {											
+						var count_delta = parseInt( contents );
+						contents = parseInt( contents ) + parseInt( content ) ;
+						contents = contents + " ";
 											
-											}
-											);
+						if (count_delta > 0) {
+							$.get('@Url.Action("DevicesGet", "Store")', { repository_id: @(item.Store.ID), devmodel_id: @(item.Devmodel.ID), count_delta: count_delta }, function(data) {	});
+						} 
+						else {
+							$.get('@Url.Action("DevicesDel", "Store")', { repository_id: @(item.Store.ID), devmodel_id: @(item.Devmodel.ID), count_delta: Math.abs(count_delta) }, function(data) {	});
+						}
+											
+					} else {
+						contents = content;
+					}
 
-										} else {
-											$("#mat@(item.ID)").html( "0" );
-										}										
-									},
-									'Отмена': function() {
-										$(this).dialog('close');
-									}
-								}
-							});
-					</script>
-			@{
-				// Наличие
-			}
-			<script>
+					editable
+						.removeClass('active-inline')
+						.contents()
+						.replaceWith(contents);
+				}
+
+				function handleGetFail(editable)
+				{
+					contents = content;
+					
+					editable
+							.removeClass('active-inline')
+							.contents()
+							.replaceWith(contents);
+				}
+
 				var clicked = 0;
+				var content=0;
 				$("#mat@(item.ID)")
 					.hover(function() {
 						$(this).toggleClass("over-inline");
 					})
-					.unbind('click').click(function(e) {
+					.unbind('click').click(function(e) {						
+
+						var $editable = $(this);
+						if ($editable.hasClass('active-inline')) {
+							return;
+						};
+						clicked = 0;
 						
-						$("#dialog@(item.ID)").find(':first-child:input').val( $("#mat@(item.ID)").html() );
+						content = $.trim($editable.html());
 						
-						$('#dialog@(item.ID)').dialog('open');
-						return;
-					});
+						$editable
+							.addClass("active-inline")
+							.empty();
+
+						var editElement = '<input type="text" />';
+						
+						$(editElement)
+							//.val(content)
+							.appendTo($editable)
+							.focus()
+							.blur(function(e) {
+								$editable.trigger('blur');
+							});
+					})
+					.unbind('blur').blur(function(e) {						
+						clicked = 1;
+						var $editable = $(this);
+						handleGetFail($editable);
+					})
+					.keyup(function(event){
+						if(event.keyCode == 13){
+							if (clicked == 1) {
+								return;
+							};
+							clicked = 1;
+							var $editable = $(this);
+							handleGetSuccess@(item.ID)($editable);
+						
+						}
+						if(event.keyCode == 27){
+								if (clicked == 1) {
+									return;
+								};
+								clicked = 1;
+								var $editable = $(this);
+								handleGetFail($editable);						
+						}
+					})
+					;
 			</script>
 		</td>
+		<th>
+			@{
+			// Выдать
+			}
+            <div id="mat_issued@(item.ID)">
+				@Model.Store.GetDeviceCount(@item.Devmodel.ID, 2)
+			</div>	
+					
+			<script>
+				function handleIssueSuccess@(item.ID)(editable)
+				{
+					var contents = editable.find(':first-child:input').val();
+					
+					if (" "+(parseInt( contents ))+" "!=" NaN ") {											
+						var count_delta = parseInt( contents );
+						contents = parseInt( contents ) + parseInt( content ) ;
+						contents = contents + " ";
+											
+						$("#mat@(item.ID)").html( parseInt($("#mat@(item.ID)").html()) - count_delta );
+
+						if (count_delta > 0) {
+							$.get('@Url.Action("DevicesIssued", "Store")', { repository_id: @(item.Store.ID), devmodel_id: @(item.Devmodel.ID), count_delta: count_delta }, function(data) {	});
+						}
+						else {
+							$.get('@Url.Action("DevicesIssuedDel", "Store")', { repository_id: @(item.Store.ID), devmodel_id: @(item.Devmodel.ID), count_delta: Math.abs(count_delta) }, function(data) {	});
+						}											
+					} else {
+						contents = content;
+					}
+
+					editable
+						.removeClass('active-inline')
+						.contents()
+						.replaceWith(contents);
+				}
+
+				function handleIssueFail(editable)
+				{
+					contents = content;
+					
+					editable
+							.removeClass('active-inline')
+							.contents()
+							.replaceWith(contents);
+				}
+
+				var clicked = 0;
+				var content=0;
+				$("#mat_issued@(item.ID)")
+					.hover(function() {
+						$(this).toggleClass("over-inline");
+					})
+					.unbind('click').click(function(e) {						
+
+						var $editable = $(this);
+						if ($editable.hasClass('active-inline')) {
+							return;
+						};
+						clicked = 0;
+						
+						content = $.trim($editable.html());
+						
+						$editable
+							.addClass("active-inline")
+							.empty();
+
+						var editElement = '<input type="text" />';
+						
+						$(editElement)
+							//.val(content)
+							.appendTo($editable)
+							.focus()
+							.blur(function(e) {
+								$editable.trigger('blur');
+							});
+					})
+					.unbind('blur').blur(function(e) {						
+						clicked = 1;
+						var $editable = $(this);
+						handleIssueFail($editable);
+					})
+					.keyup(function(event){
+						if(event.keyCode == 13){
+							if (clicked == 1) {
+								return;
+							};
+							clicked = 1;
+							var $editable = $(this);
+							handleIssueSuccess@(item.ID)($editable);
+						
+						}
+						if(event.keyCode == 27){
+								if (clicked == 1) {
+									return;
+								};
+								clicked = 1;
+								var $editable = $(this);
+								handleIssueFail($editable);						
+						}
+					})
+					;
+			</script>
+			
+        </th>
+			
+        <th>
+            @{
+			// Брак
+			}
+            <div id="mat_marriage@(item.ID)">
+				@Model.Store.GetDeviceCount(@item.Devmodel.ID, 3)
+			</div>
+
+			<script>
+				function handleMarriageSuccess@(item.ID)(editable)
+				{
+					var contents = editable.find(':first-child:input').val();
+					
+					if (" "+(parseInt( contents ))+" "!=" NaN ") {											
+						var count_delta = parseInt( contents );
+						contents = parseInt( contents ) + parseInt( content ) ;
+						contents = contents + " ";
+											
+						$("#mat@(item.ID)").html( parseInt($("#mat@(item.ID)").html()) - count_delta );
+
+						if (count_delta > 0) {
+							$.get('@Url.Action("DevicesMarriage", "Store")', { repository_id: @(item.Store.ID), devmodel_id: @(item.Devmodel.ID), count_delta: count_delta }, function(data) {	});
+						}
+						else {
+							$.get('@Url.Action("DevicesMarriageDel", "Store")', { repository_id: @(item.Store.ID), devmodel_id: @(item.Devmodel.ID), count_delta: Math.abs(count_delta) }, function(data) {	});
+						}
+																	
+					} else {
+						contents = content;
+					}
+
+					editable
+						.removeClass('active-inline')
+						.contents()
+						.replaceWith(contents);
+				}
+
+				function handleMarriageFail(editable)
+				{
+					contents = content;
+					
+					editable
+							.removeClass('active-inline')
+							.contents()
+							.replaceWith(contents);
+				}
+
+				var clicked = 0;
+				var content=0;
+				$("#mat_marriage@(item.ID)")
+					.hover(function() {
+						$(this).toggleClass("over-inline");
+					})
+					.unbind('click').click(function(e) {						
+
+						var $editable = $(this);
+						if ($editable.hasClass('active-inline')) {
+							return;
+						};
+						clicked = 0;
+						
+						content = $.trim($editable.html());
+						
+						$editable
+							.addClass("active-inline")
+							.empty();
+
+						var editElement = '<input type="text" />';
+						
+						$(editElement)
+							//.val(content)
+							.appendTo($editable)
+							.focus()
+							.blur(function(e) {
+								$editable.trigger('blur');
+							});
+					})
+					.unbind('blur').blur(function(e) {						
+						clicked = 1;
+						var $editable = $(this);
+						handleMarriageFail($editable);
+					})
+					.keyup(function(event){
+						if(event.keyCode == 13){
+							if (clicked == 1) {
+								return;
+							};
+							clicked = 1;
+							var $editable = $(this);
+							handleMarriageSuccess@(item.ID)($editable);						
+						}
+						if(event.keyCode == 27){
+								if (clicked == 1) {
+									return;
+								};
+								clicked = 1;
+								var $editable = $(this);
+								handleMarriageFail($editable);						
+						}
+					})
+					;
+			</script>
+
+			@{
+			// Брак 
+			}
+        </th>
 		<th>
             @Html.ActionLink("Удалить", "DeleteDevDetail", new { id=item.ID }, new { onclick = "return confirm('Вы действительно хотите удалить?');" })
         </th>
@@ -164,11 +418,17 @@
 			Наличие
 		</th>
 		<th>
+			Выдача
+		</th>
+		<th>
+			Брак
+		</th>
+		<th>
 			Действие
 		</th>
 	</tr>
 	<tr>
-			<th colspan="5" class="ts-pager form-horizontal">
+			<th colspan="7" class="ts-pager form-horizontal">
 				<button type="button" class="btn first"><i class="icon-step-backward glyphicon glyphicon-step-backward"></i></button>
 				<button type="button" class="btn prev"><i class="icon-arrow-left glyphicon glyphicon-backward"></i></button>
 				<span class="pagedisplay"></span> <!-- this can be any element, including an input -->

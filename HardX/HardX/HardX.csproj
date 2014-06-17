@@ -317,6 +317,7 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\jquery-1.4.4.js" />
     <Content Include="Scripts\jquery-1.4.4.min.js" />
@@ -496,6 +497,30 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\DevicesGet.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\MaterialsDel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\DevicesDel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\DevicesIssued.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\DevicesMarriage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\MaterialsIssuedDel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\DevicesIssuedDel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\MaterialsMarriageDel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\DevicesMarriageDel.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -227,36 +227,40 @@ namespace HardX.Controllers
 
         }
 
-        public ActionResult MaterialsGet(int repository_id, int matmodel_id, int count)
+        public ActionResult MaterialsGet(int repository_id, int matmodel_id, int count_delta)
         {
             Material model = new Material();
             model.Store = (new Store()).GetById(repository_id);
-            int count_delta = count - model.Store.GetMaterialCount(matmodel_id, 1);
-            if (count_delta > 0)
+            
+            for (int i = 0; i < count_delta; i++)
             {
-                for (int i = 0; i < count_delta; i++)
-                {
-                    model.Matmodel = (new Matmodel()).GetById(matmodel_id);
-                    model.StatusID = 1;
-                    model.Save(model);
-                }
+                model.Matmodel = (new Matmodel()).GetById(matmodel_id);
+                model.StatusID = 1;
+                model.Save(model);
             }
-            else
-            {
-                count_delta = Math.Abs(count_delta);
-                List<Material> models = new List<Material>();
-                string s = "REPOSITORY_ID = " + repository_id.ToString() +
-                            " AND mat_model_id = " + matmodel_id.ToString() +
-                            " AND status_id = 1 " +
-                            " AND rownum < " + (count_delta + 1).ToString();
-                models = (List<Material>)model.GetAll(s);
-                foreach (Material item in models)
-                {
-                    item.Delete(item);
-                }
-            }
+            
             return View();
         }
+
+        public ActionResult MaterialsDel(int repository_id, int matmodel_id, int count_delta)
+        {
+            Material model = new Material();
+            model.Store = (new Store()).GetById(repository_id);
+            
+            List<Material> models = new List<Material>();
+            string s = "REPOSITORY_ID = " + repository_id.ToString() +
+                        " AND mat_model_id = " + matmodel_id.ToString() +
+                        " AND status_id = 1 " +
+                        " AND rownum < " + (count_delta + 1).ToString();
+            models = (List<Material>)model.GetAll(s);
+            foreach (Material item in models)
+            {
+                item.Delete(item);
+            }
+            
+            return View();
+        }
+
 
         public ActionResult DevicesGet(int repository_id, int devmodel_id, int count_delta)
         {
@@ -271,11 +275,109 @@ namespace HardX.Controllers
             return View();
         }
 
+        public ActionResult DevicesDel(int repository_id, int devmodel_id, int count_delta)
+        {
+            Device model = new Device();
+            model.Store = (new Store()).GetById(repository_id);
+
+            List<Device> models = new List<Device>();
+            string s = "REPOSITORY_ID = " + repository_id.ToString() +
+                        " AND dev_model_id = " + devmodel_id.ToString() +
+                        " AND status_id = 1 " +
+                        " AND rownum < " + (count_delta + 1).ToString();
+            models = (List<Device>)model.GetAll(s);
+            foreach (Device item in models)
+            {
+                item.Delete(item);
+            }
+
+            return View();
+        }
+
+        public ActionResult DevicesIssued(int repository_id, int devmodel_id, int count_delta)
+        {
+            Device model = new Device();
+
+            List<Device> models = new List<Device>();
+            string s = "REPOSITORY_ID = " + repository_id.ToString() +
+                        " AND dev_model_id = " + devmodel_id.ToString() +
+                        " AND status_id = 1 " +
+                        " AND rownum < " + (count_delta + 1).ToString();
+            models = (List<Device>)model.GetAll(s);
+
+            model.Store = (new Store()).GetById(repository_id);
+            foreach (Device item in models)
+            {
+                item.StatusID = 2;
+                item.Update(item);
+            }
+            return View();
+        }
+
+        public ActionResult DevicesMarriage(int repository_id, int devmodel_id, int count_delta)
+        {
+            Device model = new Device();
+
+            List<Device> models = new List<Device>();
+            string s = "REPOSITORY_ID = " + repository_id.ToString() +
+                        " AND dev_model_id = " + devmodel_id.ToString() +
+                        " AND status_id = 1 " +
+                        " AND rownum < " + (count_delta + 1).ToString();
+            models = (List<Device>)model.GetAll(s);
+
+            model.Store = (new Store()).GetById(repository_id);
+            foreach (Device item in models)
+            {
+                item.StatusID = 3;
+                item.Update(item);
+            }
+            return View();
+        }
+
+        public ActionResult DevicesIssuedDel(int repository_id, int devmodel_id, int count_delta)
+        {
+            Device model = new Device();
+
+            List<Device> models = new List<Device>();
+            string s = "REPOSITORY_ID = " + repository_id.ToString() +
+                        " AND dev_model_id = " + devmodel_id.ToString() +
+                        " AND status_id = 2 " +
+                        " AND rownum < " + (count_delta + 1).ToString();
+            models = (List<Device>)model.GetAll(s);
+
+            model.Store = (new Store()).GetById(repository_id);
+            foreach (Device item in models)
+            {
+                item.StatusID = 1;
+                item.Update(item);
+            }
+            return View();
+        }
+
+        public ActionResult DevicesMarriageDel(int repository_id, int devmodel_id, int count_delta)
+        {
+            Device model = new Device();
+
+            List<Device> models = new List<Device>();
+            string s = "REPOSITORY_ID = " + repository_id.ToString() +
+                        " AND dev_model_id = " + devmodel_id.ToString() +
+                        " AND status_id = 3 " +
+                        " AND rownum < " + (count_delta + 1).ToString();
+            models = (List<Device>)model.GetAll(s);
+
+            model.Store = (new Store()).GetById(repository_id);
+            foreach (Device item in models)
+            {
+                item.StatusID = 1;
+                item.Update(item);
+            }
+            return View();
+        }
+
+
         public ActionResult MaterialsMarriage(int repository_id, int matmodel_id, int count_delta)
         {
-
             Material model = new Material();
-
 
             List<Material> models = new List<Material>();
             string s = "REPOSITORY_ID = " + repository_id.ToString() +
@@ -295,9 +397,7 @@ namespace HardX.Controllers
 
         public ActionResult MaterialsIssued(int repository_id, int matmodel_id, int count_delta)
         {
-
             Material model = new Material();
-
 
             List<Material> models = new List<Material>();
             string s = "REPOSITORY_ID = " + repository_id.ToString() +
@@ -315,66 +415,45 @@ namespace HardX.Controllers
             return View();
         }
 
-        //
-        // GET: /Store/Matmodels/5
-
-        public ActionResult issue(int repository_id, int matmodel_id)
+        public ActionResult MaterialsIssuedDel(int repository_id, int matmodel_id, int count_delta)
         {
+            Material model = new Material();
 
-            ViewBag.repository_id = repository_id;
-            ViewBag.matmodel_id = matmodel_id;
+            List<Material> models = new List<Material>();
+            string s = "REPOSITORY_ID = " + repository_id.ToString() +
+                        " AND mat_model_id = " + matmodel_id.ToString() +
+                        " AND status_id = 2 " +
+                        " AND rownum < " + (count_delta + 1).ToString();
+            models = (List<Material>)model.GetAll(s);
 
+            model.Store = (new Store()).GetById(repository_id);
+            foreach (Material item in models)
+            {
+                item.StatusID = 1;
+                item.Update(item);
+            }
             return View();
         }
 
-        //
-        // POST: /Store/Matmodels/5
-
-        [HttpPost]
-        public ActionResult issue(int repository_id, int matmodel_id, FormCollection collection)
-        {
-            try
-            {
-                Material model = new Material();
-
-              
-
-                return View(model);
-            }
-            catch (Exception ex)
-            {
-                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
-                route.Add("err", ex.Message);
-                return RedirectToAction("Error", "Home", route);
-            }
-        }
-
-        public ActionResult marriage(int repository_id, int matmodel_id)
+        public ActionResult MaterialsMarriageDel(int repository_id, int matmodel_id, int count_delta)
         {
             Material model = new Material();
-            return View(model);
-        }
 
-        //
-        // POST: /Store/Matmodels/5
+            List<Material> models = new List<Material>();
+            string s = "REPOSITORY_ID = " + repository_id.ToString() +
+                        " AND mat_model_id = " + matmodel_id.ToString() +
+                        " AND status_id = 3 " +
+                        " AND rownum < " + (count_delta + 1).ToString();
+            models = (List<Material>)model.GetAll(s);
 
-        [HttpPost]
-        public ActionResult marriage(int repository_id, int matmodel_id, FormCollection collection)
-        {
-            try
+            model.Store = (new Store()).GetById(repository_id);
+            foreach (Material item in models)
             {
-                Material model = new Material();
-
-
-                return View(model);
+                item.StatusID = 1;
+                item.Update(item);
             }
-            catch (Exception ex)
-            {
-                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
-                route.Add("err", ex.Message);
-                return RedirectToAction("Error", "Home", route);
-            }
-        }
+            return View();
+        }        
                 
         public ActionResult Delete(int ID)
         {
