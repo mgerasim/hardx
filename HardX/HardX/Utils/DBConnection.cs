@@ -27,7 +27,7 @@ namespace HardX.Utils
             string USER = "hardx";
             string PASSWORD = "zaq12wsx";
             
-            string path = "SERVER = (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = 10.198.7.22)(PORT = 1521))(CONNECT_DATA = (SID = "+ SID +"))); uid = "+ USER.ToString()+ "; pwd = "+ PASSWORD.ToString()+ ""; //"Data Source=" + SID + "; User ID=" + USER + "; Password=" + PASSWORD + ";Unicode=true";
+            string path = "SERVER = (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = 10.198.1.40)(PORT = 1521))(CONNECT_DATA = (SID = "+ SID +"))); uid = "+ USER.ToString()+ "; pwd = "+ PASSWORD.ToString()+ ""; //"Data Source=" + SID + "; User ID=" + USER + "; Password=" + PASSWORD + ";Unicode=true";
 
             return path ;
         }
