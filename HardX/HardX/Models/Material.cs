@@ -51,11 +51,15 @@ namespace HardX.Models
         [Display(Name = "Удалить")]
         [Required(ErrorMessage = "* Укажите количество для удаления")]
         public int CountDelete { get; set; }
+                
+        public DateTime Created_At { get; set; }
 
-       
+        public DateTime Updated_At { get; set; }
                 
         public Material()
         {
+            this.Created_At = DateTime.Now;
+            this.Updated_At = DateTime.Now;
             MaterialFactory theFactory = new MaterialFactory();
             _repository = theFactory.createRepository();
             if (_repository == null)

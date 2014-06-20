@@ -309,6 +309,7 @@ namespace HardX.Controllers
             foreach (Device item in models)
             {
                 item.StatusID = 2;
+                item.Updated_At = DateTime.Now;
                 item.Update(item);
             }
             return View();
@@ -329,6 +330,7 @@ namespace HardX.Controllers
             foreach (Device item in models)
             {
                 item.StatusID = 3;
+                item.Updated_At = DateTime.Now;
                 item.Update(item);
             }
             return View();
@@ -349,6 +351,7 @@ namespace HardX.Controllers
             foreach (Device item in models)
             {
                 item.StatusID = 1;
+                item.Updated_At = DateTime.Now;
                 item.Update(item);
             }
             return View();
@@ -369,6 +372,7 @@ namespace HardX.Controllers
             foreach (Device item in models)
             {
                 item.StatusID = 1;
+                item.Updated_At = DateTime.Now;
                 item.Update(item);
             }
             return View();
@@ -390,6 +394,7 @@ namespace HardX.Controllers
             foreach (Material item in models)
             {
                 item.StatusID = 3;
+                item.Updated_At = DateTime.Now;
                 item.Update(item);
             }
             return View();
@@ -410,6 +415,7 @@ namespace HardX.Controllers
             foreach (Material item in models)
             {
                 item.StatusID = 2;
+                item.Updated_At = DateTime.Now;
                 item.Update(item);
             }
             return View();

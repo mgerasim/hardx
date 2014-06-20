@@ -15,6 +15,8 @@
     <many-to-one name="Devmodel" column="DEV_MODEL_ID" />
     <many-to-one name="Store" column="REPOSITORY_ID" />
     <property name="StatusID"  column="STATUS_ID" type="int"/>
+    <property name="Created_At" column="created_at" type="LocalDateTime" />
+    <property name="Updated_At" column="updated_at" type="LocalDateTime" />
 
   </class>
 </hibernate-mapping>

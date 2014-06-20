@@ -42,7 +42,7 @@ namespace HardX.Models
         [Display(Name = "Ресурс")]
         [Required(ErrorMessage = "* Укажите ресурс")]
         public virtual int Capacity { get; set; }
-
+        
         public virtual ICollection<Matmodel> Matmodels { get; protected set; }
 
         public string FullName

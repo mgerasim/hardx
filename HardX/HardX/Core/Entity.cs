@@ -9,7 +9,7 @@ namespace HardX.Core
     public class Entity<T>:IModel<T>
     {
         protected IRepository<T> _repository;
-
+        
         public virtual void Save(T entity)
         {
             _repository.Save(entity);            

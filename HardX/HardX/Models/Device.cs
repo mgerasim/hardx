@@ -31,10 +31,15 @@ namespace HardX.Models
         public Status Status { get; set; }
 
         public int StatusID { get; set; }
-        
+
+        public DateTime Created_At { get; set; }
+
+        public DateTime Updated_At { get; set; }
                 
         public Device()
         {
+            this.Created_At = DateTime.Now;
+            this.Updated_At = DateTime.Now;
             DeviceFactory theFactory = new DeviceFactory();
             _repository = theFactory.createRepository();
             if (_repository == null)
