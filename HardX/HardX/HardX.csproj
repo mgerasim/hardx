@@ -205,6 +205,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\jquerycssmenu.css" />
+    <Content Include="Content\tcal.css" />
     <Content Include="Content\themes\cap_style\capstyle.css" />
     <Content Include="Content\themes\cap_style\images\head.jpg" />
     <Content Include="Content\themes\pro_dropdown\pro_dropdown.css" />
@@ -333,6 +334,7 @@
     <Content Include="Scripts\jquery.tablesorter.js" />
     <Content Include="Scripts\jquery.tablesorter.pager.js" />
     <Content Include="Scripts\jquery.tablesorter.widgets.js" />
+    <Content Include="Scripts\tcal.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -545,6 +547,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\DevicesMarriageDel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Store\ReportMaterialsGet.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

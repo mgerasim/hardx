@@ -562,10 +562,12 @@ namespace HardX.Controllers
             filename = filename.Replace(' ', '-');
             Response.AddHeader("Content-Disposition", "attachment; filename=" + filename);
             Response.AddHeader("Content-Type", "application/vnd.ms-excel");
-                      
-                        
-
             return View(theList);
+        }
+
+        public ActionResult ReportMaterialsGet(int repository_id, string report_bgn, string report_end)
+        {
+            return View();
         }
     }
 }

@@ -35,7 +35,19 @@
     </style>
 
 	
-
+<p>
+	Отчет за период c &nbsp
+	<input type="text" id="report_bgn" class="tcal" readonly="readonly"  style="width: 70px" />
+	по &nbsp
+	<input type="text" id="report_end" class="tcal" readonly="readonly"  style="width: 70px" />
+	&nbsp
+	<a href="#" id="report_get">Выгрузить</a>
+	<script>
+		$("#report_get").click(function() {	
+			$.get('@Url.Action("ReportMaterialsGet", "Store")', { repository_id: @(Convert.ToInt32(Model.Store.ID)), report_bgn: $("#report_bgn").val(), report_end: $("#report_end").val() }, function(data) {	});			
+		});
+	</script>
+</p>
 <table class="tablesorter">
 <thead>
     <tr>     
