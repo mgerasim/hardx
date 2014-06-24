@@ -252,6 +252,7 @@
     <Content Include="Content\themes\base\jquery.ui.slider.css" />
     <Content Include="Content\themes\base\jquery.ui.tabs.css" />
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\ui-lightness\jquery-ui-1.10.4.custom.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\jquery-ui.css" />
@@ -298,6 +299,9 @@
     <EmbeddedResource Include="Mapping\Device.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <Content Include="Scripts\jquery-1.11.1.js" />
+    <Content Include="Scripts\jquery-ui-1.10.4.custom.js" />
+    <Content Include="Scripts\jquery.fileDownload.js" />
     <Content Include="Scripts\jquerycssmenu.js" />
     <Content Include="Scripts\stuHover.js" />
     <EmbeddedResource Include="Mapping\Role.hbm.xml">

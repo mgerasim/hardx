@@ -44,7 +44,15 @@
 	<a href="#" id="report_get">Выгрузить</a>
 	<script>
 		$("#report_get").click(function() {	
+			/*
 			$.get('@Url.Action("ReportMaterialsGet", "Store")', { repository_id: @(Convert.ToInt32(Model.Store.ID)), report_bgn: $("#report_bgn").val(), report_end: $("#report_end").val() }, function(data) {	});			
+			*/
+
+			$.fileDownload( '/Store/ReportMaterialsGet?repository_id=21&report_bgn='+$("#report_bgn").val()+'&report_end='+$("#report_end").val(), {
+			
+				preparingMessageHtml: "Происходит выгрузка отчёта, пожалуйста подождите...",
+				failMessageHtml: "Возникли проблемы при формировании отчёта, необходимо повторить попытку позже."
+			});
 		});
 	</script>
 </p>

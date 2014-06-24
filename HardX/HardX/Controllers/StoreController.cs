@@ -567,7 +567,29 @@ namespace HardX.Controllers
 
         public ActionResult ReportMaterialsGet(int repository_id, string report_bgn, string report_end)
         {
-            return View();
+            string strWhere = "repository_id="+repository_id.ToString();
+            strWhere += " AND to_date('" + report_bgn + "', 'DD.MM.YYYY') <= updated_at";
+            strWhere += " AND to_date('" + report_end + "', 'DD.MM.YYYY') >= updated_at";
+            Material theModel = new Material();
+            List<Material> theList = (List<Material>)theModel.GetAll(strWhere);
+            foreach (var g in theList.GroupBy(x => x.Matmodel.ID))
+            {
+                int i = g.Count();
+            }
+
+
+                /*
+            MaterialUchet model = new MaterialUchet();
+            List<MaterialUchet> theList = new List<MaterialUchet>();
+            theList = (List<MaterialUchet>)model.GetAll("repository_id = " + repository_id.ToString(), "VENDOR_NAME");
+                 * */
+            string filename = "Отчёт-Склад-" + (new Store()).GetById(repository_id).Name + "_" + DateTime.Now.ToString("yyyy-MM-dd")+".xls";
+            filename = filename.Replace(' ', '-');
+            Response.AddHeader("Content-Disposition", "attachment; filename=" + filename);
+            Response.AddHeader("Content-Type", "application/vnd.ms-excel");
+            Response.AddHeader("Set-Cookie", "fileDownload=true");
+            Response.AddHeader("Cache-Control", "max-age=60, must-revalidate");
+            return View(theList);
         }
     }
 }
