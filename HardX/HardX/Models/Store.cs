@@ -188,8 +188,33 @@ namespace HardX.Models
             return res;
         }
 
+        public virtual int GetMaterialCountFromList(List<Material> theList, int MatmodelID, int StatusID)
+        {
+            int res = 0;
+            foreach (var item in theList)
+            {
+                if (item.Matmodel.ID == MatmodelID && item.StatusID == StatusID)
+                {
+                    res++;
+                }
+            }
+            return res;
+        }
 
+        public virtual int GetDeviceCountFromList(List<Device> theList, int DevmodelID, int StatusID)
+        {
+            int res = 0;
+            foreach (var item in theList)
+            {
+                if (item.Devmodel.ID == DevmodelID && item.StatusID == StatusID)
+                {
+                    res++;
+                }
+            }
+            return res;
+        }
     }
+
 
     public class NewStore : Store
     {

@@ -163,9 +163,14 @@ namespace HardX.Controllers
 
         public ActionResult Materials(int id)
         {
-            Material model = new Material();
-            model.Store = (new Store()).GetById(id);
-            return View(model);
+            Material theModel = new Material();
+            List<Material> theList = (List<Material>)theModel.GetAll("REPOSITORY_ID="+id.ToString());
+
+            Store theStore = new Store();
+            theStore = theStore.GetById(id);
+            ViewBag.theStore = theStore;
+
+            return View(theList);
         }
 
         //
@@ -174,18 +179,14 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Materials(int id, FormCollection collection)
         {
-            Material model = new Material();
             try
             {
-                model.Store = (new Store()).GetById(id);
-
                 StoreMatDetail theMatDetail = new StoreMatDetail();
-                theMatDetail.Matmodel = (new Matmodel()).GetById(Convert.ToInt32(collection["MatmodelID"]));
+                theMatDetail.Matmodel = (new Matmodel()).GetById(Convert.ToInt32(collection["[0].MatmodelID"]));
                 theMatDetail.Store = (new Store()).GetById(id);
                 theMatDetail.Save(theMatDetail);
 
-                     
-                return View(model);
+                return this.Materials(id);
             }
             catch (Exception ex)
             {
@@ -193,7 +194,27 @@ namespace HardX.Controllers
                 route.Add("err", ex.Message);
                 return RedirectToAction("Error", "Home", route);
             }
-                 
+
+            /*
+             * string strWhere = "repository_id="+repository_id.ToString();
+            strWhere += " AND to_date('" + report_bgn + "', 'DD.MM.YYYY') <= updated_at";
+            strWhere += " AND to_date('" + report_end + "', 'DD.MM.YYYY') >= updated_at";
+            Material theModel = new Material();
+            List<Material> theList = (List<Material>)theModel.GetAll(strWhere);
+
+            Store theStore = new Store();
+            theStore = theStore.GetById(repository_id);
+            ViewBag.theStore = theStore;
+
+            string filename = "Отчёт-Склад-" + (new Store()).GetById(repository_id).Name + "_" + DateTime.Now.ToString("yyyy-MM-dd")+".xls";
+            filename = filename.Replace(' ', '-');
+            Response.AddHeader("Content-Disposition", "attachment; filename=" + filename);
+            Response.AddHeader("Content-Type", "application/vnd.ms-excel");
+            Response.AddHeader("Set-Cookie", "fileDownload=true");
+            Response.AddHeader("Cache-Control", "max-age=60, must-revalidate");
+            return View(theList);
+             * */
+
         }
 
         public ActionResult Devices(int id)
@@ -572,17 +593,11 @@ namespace HardX.Controllers
             strWhere += " AND to_date('" + report_end + "', 'DD.MM.YYYY') >= updated_at";
             Material theModel = new Material();
             List<Material> theList = (List<Material>)theModel.GetAll(strWhere);
-            foreach (var g in theList.GroupBy(x => x.Matmodel.ID))
-            {
-                int i = g.Count();
-            }
 
+            Store theStore = new Store();
+            theStore = theStore.GetById(repository_id);
+            ViewBag.theStore = theStore;
 
-                /*
-            MaterialUchet model = new MaterialUchet();
-            List<MaterialUchet> theList = new List<MaterialUchet>();
-            theList = (List<MaterialUchet>)model.GetAll("repository_id = " + repository_id.ToString(), "VENDOR_NAME");
-                 * */
             string filename = "Отчёт-Склад-" + (new Store()).GetById(repository_id).Name + "_" + DateTime.Now.ToString("yyyy-MM-dd")+".xls";
             filename = filename.Replace(' ', '-');
             Response.AddHeader("Content-Disposition", "attachment; filename=" + filename);

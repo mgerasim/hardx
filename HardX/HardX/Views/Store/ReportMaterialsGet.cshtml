@@ -1,5 +1,5 @@
 ﻿@using HardX.Models
-@model List<HardX.Models.MaterialUchet>
+@model List<HardX.Models.Material>
 
 @{
     Layout = "";
@@ -49,37 +49,38 @@
     </tr>
 
 	
-	@foreach(var item in Model) {
+	@foreach(var item in ViewBag.theStore.StoreMatDetails) {
     <tr> 
 
         <td>
-            @item.vendor_name
+            @item.Matmodel.Vendor.Name
         </td>
 		    
         <td>
-            @item.type_name
+            @item.Matmodel.Typedev.Name
         </td>
 	     
 		     
         <td>
-            @item.Name 
+            @item.Matmodel.FullName 
         </td>
 		          
         <td>
-            @item.devnames
+			@((new MaterialUchet()).GetAll("REPOSITORY_ID="+@ViewBag.theStore.ID+" AND MAT_MODEL_ID="+@item.Matmodel.ID)[0].devnames)
+            
         </td>
         
 		
-        <td>
-            @item.count_coming
+        <td>			
+            @item.Store.GetMaterialCountFromList(Model, @item.Matmodel.ID, 1)
         </td>
 		
         <td>
-            @item.count_issued
+            @item.Store.GetMaterialCountFromList(Model, @item.Matmodel.ID, 2)
         </td>
 		
         <td>
-            @item.count_marriage
+            @item.Store.GetMaterialCountFromList(Model, @item.Matmodel.ID, 3)
         </td>
 					
 

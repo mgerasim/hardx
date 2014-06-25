@@ -1,11 +1,9 @@
-﻿@model HardX.Models.Material
+﻿@model List<HardX.Models.Material>
 @using HardX.Models
 
 @{
     ViewBag.Title = "Расходные материалы";
 }
-
-
 
 
 <style type="text/css">
@@ -37,18 +35,15 @@
 	
 <p>
 	Отчет за период c &nbsp
-	<input type="text" id="report_bgn" class="tcal" readonly="readonly"  style="width: 70px" />
+	<input type="text" id="report_bgn" class="tcal" readonly="readonly"  style="width: 90px" />
 	по &nbsp
-	<input type="text" id="report_end" class="tcal" readonly="readonly"  style="width: 70px" />
+	<input type="text" id="report_end" class="tcal" readonly="readonly"  style="width: 90px" />
 	&nbsp
 	<a href="#" id="report_get">Выгрузить</a>
 	<script>
 		$("#report_get").click(function() {	
-			/*
-			$.get('@Url.Action("ReportMaterialsGet", "Store")', { repository_id: @(Convert.ToInt32(Model.Store.ID)), report_bgn: $("#report_bgn").val(), report_end: $("#report_end").val() }, function(data) {	});			
-			*/
-
-			$.fileDownload( '/Store/ReportMaterialsGet?repository_id=21&report_bgn='+$("#report_bgn").val()+'&report_end='+$("#report_end").val(), {
+			
+			$.fileDownload( '/Store/ReportMaterialsGet?repository_id=@ViewBag.theStore.ID&report_bgn='+$("#report_bgn").val()+'&report_end='+$("#report_end").val(), {
 			
 				preparingMessageHtml: "Происходит выгрузка отчёта, пожалуйста подождите...",
 				failMessageHtml: "Возникли проблемы при формировании отчёта, необходимо повторить попытку позже."
@@ -98,29 +93,32 @@
 </thead>
 
 <tbody>
-@foreach (var item in (new MaterialUchet()).GetAll("repository_id = " + Convert.ToInt32(Model.Store.ID)) ) {
+@foreach(var item in ViewBag.theStore.StoreMatDetails) {
     <tr> 
 
         <td>
-            @item.vendor_name
+            @item.Matmodel.Vendor.Name
         </td>
 		    
         <td>
-            @item.type_name
+            @item.Matmodel.Typedev.Name
         </td>
-	     <td>
-            @item.Name 
+	     
+		     
+        <td>
+            @item.Matmodel.FullName 
         </td>
 		          
         <td>
-            @item.devnames
+			@((new MaterialUchet()).GetAll("REPOSITORY_ID="+@ViewBag.theStore.ID+" AND MAT_MODEL_ID="+@item.Matmodel.ID)[0].devnames)
+            
         </td>
 		
         <td>
 			@{// Наличие
 			}
 			<div id="mat@(item.ID)">
-				@Model.Store.GetMaterialCount(@item.matmodel_id, 1)
+				@item.Store.GetMaterialCountFromList(Model, @item.Matmodel.ID, 1)
 			</div>
 			<script>
 				function handleGetSuccess@(item.ID)(editable)
@@ -133,10 +131,10 @@
 						contents = contents + " ";
 											
 						if (count_delta > 0) {
-							$.get('@Url.Action("MaterialsGet", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: count_delta }, function(data) {	});
+							$.get('@Url.Action("MaterialsGet", "Store")', { repository_id: @(ViewBag.theStore.ID), matmodel_id: @(item.Matmodel.ID), count_delta: count_delta }, function(data) {	});
 						} 
 						else {
-							$.get('@Url.Action("MaterialsDel", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: Math.abs(count_delta) }, function(data) {	});
+							$.get('@Url.Action("MaterialsDel", "Store")', { repository_id: @(ViewBag.theStore.ID), matmodel_id: @(item.Matmodel.ID), count_delta: Math.abs(count_delta) }, function(data) {	});
 						}
 											
 					} else {
@@ -223,7 +221,7 @@
 			// Выдать
 			}
             <div id="mat_issued@(item.ID)">
-				@item.count_issued
+				@item.Store.GetMaterialCountFromList(Model, @item.Matmodel.ID, 2)
 			</div>	
 					
 			<script>
@@ -239,14 +237,11 @@
 						$("#mat@(item.ID)").html( parseInt($("#mat@(item.ID)").html()) - count_delta );
 
 						if (count_delta > 0) {
-							$.get('@Url.Action("MaterialsIssued", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: count_delta }, function(data) {	});
+							$.get('@Url.Action("MaterialsIssued", "Store")', { repository_id: @(ViewBag.theStore.ID), matmodel_id: @(item.Matmodel.ID), count_delta: count_delta }, function(data) {	});
 						}
 						else {
-							$.get('@Url.Action("MaterialsIssuedDel", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: Math.abs(count_delta) }, function(data) {	});
-						}
-
-
-											
+							$.get('@Url.Action("MaterialsIssuedDel", "Store")', { repository_id: @(ViewBag.theStore.ID), matmodel_id: @(item.Matmodel.ID), count_delta: Math.abs(count_delta) }, function(data) {	});
+						}											
 					} else {
 						contents = content;
 					}
@@ -331,7 +326,7 @@
 			// Брак
 			}
             <div id="mat_marriage@(item.ID)">
-				@item.count_marriage
+				@item.Store.GetMaterialCountFromList(Model, @item.Matmodel.ID, 3)
 			</div>
 
 			<script>
@@ -347,10 +342,10 @@
 						$("#mat@(item.ID)").html( parseInt($("#mat@(item.ID)").html()) - count_delta );
 
 						if (count_delta > 0) {
-							$.get('@Url.Action("MaterialsMarriage", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: count_delta }, function(data) {	});
+							$.get('@Url.Action("MaterialsMarriage", "Store")', { repository_id: @(ViewBag.theStore.ID), matmodel_id: @(item.Matmodel.ID), count_delta: count_delta }, function(data) {	});
 						}
 						else {
-							$.get('@Url.Action("MaterialsMarriageDel", "Store")', { repository_id: @(item.repository_id), matmodel_id: @(item.matmodel_id), count_delta: Math.abs(count_delta) }, function(data) {	});
+							$.get('@Url.Action("MaterialsMarriageDel", "Store")', { repository_id: @(ViewBag.theStore.ID), matmodel_id: @(item.Matmodel.ID), count_delta: Math.abs(count_delta) }, function(data) {	});
 						}
 
 
@@ -513,10 +508,10 @@
 
 
 		<div class="editor-label">
-            @Html.LabelFor(model => model.Matmodel)
+            @Html.LabelFor(model => model[0].Matmodel)
         </div>
         <div class="editor-field">
-			@Html.DropDownListFor(model => model.MatmodelID, new SelectList((List<Matmodel>)(new Matmodel()).GetAll() , "ID", "FullName" ), new {@class="chosen-select", @style="width: 350px;" })
+			@Html.DropDownListFor(model => model[0].MatmodelID, new SelectList((List<Matmodel>)(new Matmodel()).GetAll() , "ID", "FullName" ), new {@class="chosen-select", @style="width: 350px;" })
         </div>
 		
 		<br />
