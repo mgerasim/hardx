@@ -1,0 +1,82 @@
+﻿@using HardX.Models
+@model List<HardX.Models.Device>
+
+@{
+    Layout = "";
+}
+<style type="text/css">
+    body {font-family: Tahoma;}
+    h2 {color:red}
+    table {border:1px solid black; border-spacing:0}
+    td {color:green; font-size:.8em; padding:5px}
+    .heading {background:#ccc}
+</style>
+
+<h2>Отчёт</h2>
+
+<table>
+
+	<tr class="heading">
+		
+		<th>
+            Производитель
+        </th>
+	
+        <th>
+            Тип
+        </th> 
+
+        <th>
+            Наименование
+        </th>
+				
+        <th>
+            Наличие
+        </th>
+		
+        <th>
+            Выдано
+        </th>
+
+        <th>
+            Брак
+        </th>
+    </tr>
+
+	
+	@foreach(var item in ViewBag.theStore.StoreDevDetails) {
+    <tr> 
+
+        <td>
+            @item.Devmodel.Vendor.Name
+        </td>
+		    
+        <td>
+            @item.Devmodel.Typedev.Name
+        </td>
+	     
+		     
+        <td>
+            @item.Devmodel.FullName 
+        </td>
+		     
+        
+		
+        <td>			
+            @item.Store.GetDeviceCountFromList(Model, @item.Devmodel.ID, 1)
+        </td>
+		
+        <td>
+            @item.Store.GetDeviceCountFromList(Model, @item.Devmodel.ID, 2)
+        </td>
+		
+        <td>
+            @item.Store.GetDeviceCountFromList(Model, @item.Devmodel.ID, 3)
+        </td>
+					
+
+    </tr>
+
+	}
+
+</table>

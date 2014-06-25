@@ -219,25 +219,27 @@ namespace HardX.Controllers
 
         public ActionResult Devices(int id)
         {
-            Device theDev = new Device();            
-            theDev.Store = (new Store()).GetById(id);
-            return View(theDev);
+            Device theModel = new Device();
+            List<Device> theList = (List<Device>)theModel.GetAll("REPOSITORY_ID=" + id.ToString());
+
+            Store theStore = new Store();
+            theStore = theStore.GetById(id);
+            ViewBag.theStore = theStore;
+
+            return View(theList);
         }
 
         [HttpPost]
         public ActionResult Devices(int id, FormCollection collection)
         {
-            Device theDev = new Device();
             try
             {
-                theDev.Store = (new Store()).GetById(id);
-
                 StoreDevDetail theDevDetail = new StoreDevDetail();
-                theDevDetail.Devmodel = (new Devmodel()).GetById(Convert.ToInt32(collection["Devmodel.ID"]));
+                theDevDetail.Devmodel = (new Devmodel()).GetById(Convert.ToInt32(collection["[0].Devmodel.ID"]));
                 theDevDetail.Store = (new Store()).GetById(id);
                 theDevDetail.Save(theDevDetail);
                 
-                return View(theDev);
+                return this.Devices(id);
             }
             catch (Exception ex)
             {
@@ -598,13 +600,39 @@ namespace HardX.Controllers
             theStore = theStore.GetById(repository_id);
             ViewBag.theStore = theStore;
 
-            string filename = "Отчёт-Склад-" + (new Store()).GetById(repository_id).Name + "_" + DateTime.Now.ToString("yyyy-MM-dd")+".xls";
+            string filename = "Отчёт-Склад-Материалы-" + (new Store()).GetById(repository_id).Name + "_" + DateTime.Now.ToString("yyyy-MM-dd")+".xls";
             filename = filename.Replace(' ', '-');
+            Response.Clear();
             Response.AddHeader("Content-Disposition", "attachment; filename=" + filename);
-            Response.AddHeader("Content-Type", "application/vnd.ms-excel");
+            Response.AddHeader("Content-Type", "application/ms-excel");
             Response.AddHeader("Set-Cookie", "fileDownload=true");
             Response.AddHeader("Cache-Control", "max-age=60, must-revalidate");
+            
+            return View(theList);
+        }
+
+        public ActionResult ReportDevicesGet(int repository_id, string report_bgn, string report_end)
+        {
+            string strWhere = "repository_id=" + repository_id.ToString();
+            strWhere += " AND to_date('" + report_bgn + "', 'DD.MM.YYYY') <= updated_at";
+            strWhere += " AND to_date('" + report_end + "', 'DD.MM.YYYY') >= updated_at";
+            Device theModel = new Device();
+            List<Device> theList = (List<Device>)theModel.GetAll(strWhere);
+
+            Store theStore = new Store();
+            theStore = theStore.GetById(repository_id);
+            ViewBag.theStore = theStore;
+
+            string filename = "Отчёт-Склад-Оборудование-" + (new Store()).GetById(repository_id).Name + "_" + DateTime.Now.ToString("yyyy-MM-dd") + ".xls";
+            filename = filename.Replace(' ', '-');
+            Response.Clear();
+            Response.AddHeader("Content-Disposition", "attachment; filename=" + filename);
+            Response.AddHeader("Content-Type", "application/ms-excel");
+            Response.AddHeader("Set-Cookie", "fileDownload=true");
+            Response.AddHeader("Cache-Control", "max-age=60, must-revalidate");
+            
             return View(theList);
         }
     }
 }
+

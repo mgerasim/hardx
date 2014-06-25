@@ -1,22 +1,13 @@
-﻿@model HardX.Models.Device
+﻿@model List<HardX.Models.Device>
 @using HardX.Models
 
 @{
     ViewBag.Title = "Оборудование";
 }
 
-
-
-
 <style type="text/css">
         .ui-dialog .ui-dialog-content
         {
-/*            position: relative;
-            border: 0;
-            padding: .5em 1em;
-            background: none;
-            overflow: auto;
-            zoom: 1;*/
             background-color: #ffd;
             border: solid 1px #ea7;
         }
@@ -35,7 +26,24 @@
     </style>
 
 	
-
+<p>
+	Отчет за период c &nbsp
+	<input type="text" id="report_bgn" class="tcal" readonly="readonly"  style="width: 90px" />
+	по &nbsp
+	<input type="text" id="report_end" class="tcal" readonly="readonly"  style="width: 90px" />
+	&nbsp
+	<a href="#" id="report_get">Выгрузить</a>
+	<script>
+		$("#report_get").click(function() {	
+			
+			$.fileDownload( '/Store/ReportDevicesGet?repository_id=@ViewBag.theStore.ID&report_bgn='+$("#report_bgn").val()+'&report_end='+$("#report_end").val(), {
+			
+				preparingMessageHtml: "Происходит выгрузка отчёта, пожалуйста подождите...",
+				failMessageHtml: "Возникли проблемы при формировании отчёта, необходимо повторить попытку позже."
+			});
+		});
+	</script>
+</p>
 <table class="tablesorter">
 <thead>
     <tr>     
@@ -71,7 +79,7 @@
 
 <tbody>
 
-@foreach (var item in (new Store()).GetById(Model.Store.ID).StoreDevDetails) {
+@foreach (var item in ViewBag.theStore.StoreDevDetails) {
     <tr> 
         <td>
             @item.Devmodel.Vendor.Name
@@ -87,8 +95,8 @@
 			@{
 				// Наличие
 			}	
-			<div id="mat@(item.ID)">
-				@Model.Store.GetDeviceCount(@item.Devmodel.ID, 1)
+			<div id="mat@(item.ID)">				
+				@item.Store.GetDeviceCountFromList(Model, @item.Devmodel.ID, 1)
 			</div>
 			
 			<script>
@@ -190,7 +198,7 @@
 			// Выдать
 			}
             <div id="mat_issued@(item.ID)">
-				@Model.Store.GetDeviceCount(@item.Devmodel.ID, 2)
+				@item.Store.GetDeviceCountFromList(Model, @item.Devmodel.ID, 2)
 			</div>	
 					
 			<script>
@@ -295,7 +303,7 @@
 			// Брак
 			}
             <div id="mat_marriage@(item.ID)">
-				@Model.Store.GetDeviceCount(@item.Devmodel.ID, 3)
+				@item.Store.GetDeviceCountFromList(Model, @item.Devmodel.ID, 3)
 			</div>
 
 			<script>
@@ -457,10 +465,10 @@
 
 
 		<div class="editor-label">
-            @Html.LabelFor(model => model.Devmodel)
+            @Html.LabelFor(model => model[0].Devmodel)
         </div>
         <div class="editor-field">
-			@Html.DropDownListFor(model => model.Devmodel.ID, new SelectList((List<Devmodel>)(new Devmodel()).GetAll() , "ID", "FullName" ), new {@class="chosen-select", @style="width: 350px;" })
+			@Html.DropDownListFor(model => model[0].Devmodel.ID, new SelectList((List<Devmodel>)(new Devmodel()).GetAll() , "ID", "FullName" ), new {@class="chosen-select", @style="width: 350px;" })
         </div>
 		
 		<br />
