@@ -39,6 +39,7 @@ namespace HardX
             new { controller = "Store", action = "marriage", repository_id = "0", matmodel_id = "0" }  // Parameter defaults
         );
 
+
         }
 
         protected void Application_Start()

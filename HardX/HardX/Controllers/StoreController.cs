@@ -633,6 +633,34 @@ namespace HardX.Controllers
             
             return View(theList);
         }
+
+        public ActionResult ShowMaterials(int id, int MatmodelID)
+        {
+            ViewBag.StoreID = id;
+            ViewBag.MatmodelID = MatmodelID;
+            return View();
+        }
+
+        public ActionResult ShowDevices(int id, int MatmodelID)
+        {
+            return View();
+        }
+        public ActionResult MaterialsUpdateStatus(int material_id, int status_id)
+        {
+            Material model = new Material();
+            model = model.GetById(material_id);
+            model.StatusID = status_id;
+            model.Update(model);
+            return View();
+        }
+        public ActionResult DevicesUpdateStatus(int device_id, int status_id)
+        {
+            Device model = new Device();
+            model = model.GetById(device_id);
+            model.StatusID = status_id;
+            model.Update(model);
+            return View();
+        }
     }
 }
 

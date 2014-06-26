@@ -100,7 +100,9 @@
 	     
 		     
         <td>
-            @item.Matmodel.FullName 
+			<a href="@Url.Action("ShowMaterials", new { id = item.Store.ID, MatmodelID = item.Matmodel.ID})">
+                @item.Matmodel.FullName
+            </a>			
         </td>
 		          
         <td>
