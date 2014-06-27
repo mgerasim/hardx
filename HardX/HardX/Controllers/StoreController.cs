@@ -641,8 +641,10 @@ namespace HardX.Controllers
             return View();
         }
 
-        public ActionResult ShowDevices(int id, int MatmodelID)
+        public ActionResult ShowDevices(int id, int DevmodelID)
         {
+            ViewBag.StoreID = id;
+            ViewBag.DevmodelID = DevmodelID;
             return View();
         }
         public ActionResult MaterialsUpdateStatus(int material_id, int status_id)
@@ -650,6 +652,7 @@ namespace HardX.Controllers
             Material model = new Material();
             model = model.GetById(material_id);
             model.StatusID = status_id;
+            model.Updated_At = DateTime.Now;
             model.Update(model);
             return View();
         }
@@ -658,9 +661,52 @@ namespace HardX.Controllers
             Device model = new Device();
             model = model.GetById(device_id);
             model.StatusID = status_id;
+            model.Updated_At = DateTime.Now;
             model.Update(model);
             return View();
         }
+
+        public ActionResult MaterialsSetCauseOfMarriage(int material_id, string cause_of_marriage)
+        {
+            Material model = new Material();
+            model = model.GetById(material_id);
+            model.StatusID = 3;
+            model.CauseOfMarriage = cause_of_marriage;
+            model.Updated_At = DateTime.Now;
+            model.Update(model);
+            return View();
+        }
+
+        public ActionResult MaterialsSetSetup(int material_id, int device_id)
+        {
+            Material model = new Material();
+            model = model.GetById(material_id);
+            model.DeviceID = device_id;
+            model.Updated_At = DateTime.Now;
+            model.Update(model);
+            return View();
+        }
+
+        public ActionResult DevicesSetCauseOfMarriage(int device_id, string cause_of_marriage)
+        {
+            Device model = new Device();
+            model = model.GetById(device_id);
+            model.StatusID = 3;
+            model.CauseOfMarriage = cause_of_marriage;
+            model.Updated_At = DateTime.Now;
+            model.Update(model);
+            return View();
+        }
+
+        public ActionResult DevicesSetSetup(int device_id, int room_id)
+        {
+            Device model = new Device();
+            model = model.GetById(device_id);
+            model.RoomID = room_id;
+            model.Updated_At = DateTime.Now;
+            model.Update(model);
+            return View();
+        }   
     }
 }
 

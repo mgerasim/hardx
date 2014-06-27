@@ -1,7 +1,131 @@
-﻿ShowMaterials
+﻿@using HardX.Models
 @{
-    ViewBag.Title = "ShowDevices";
+    ViewBag.Title = "Данные по оргтехники";
 }
 
-<h2>ShowDevices</h2>
+<script>
+	$(function() {
+		$( "#tabs" ).tabs();
+	});
+</script>
+
+@Html.ActionLink("Оборудование", "Devices", new { id=ViewBag.StoreID }) |
+@Html.ActionLink("Расходные материалы", "Materials", new { id=ViewBag.StoreID }) 
+
+<div id="tabs">
+	 <ul>
+		<li><a href="#tabs-1">Наличие</a></li>
+		<li><a href="#tabs-2">Выдано</a></li>
+		<li><a href="#tabs-3">Брак</a></li>
+	</ul>
+	<div id="tabs-1">
+		<table>
+			<tbody id="tbody_tab1">
+				@foreach( var item in (new Device()).GetAll("REPOSITORY_ID="+ViewBag.StoreID+" AND DEV_MODEL_ID="+ViewBag.DevmodelID+" AND STATUS_ID=1" ) )
+				{
+					<tr id="tr_tab1_@(item.ID)">
+						<td>@item.ID</td>
+						<td>@item.Devmodel.FullName</td>
+						<td>@item.Updated_At.ToString()</td>
+						<td>
+							<a href="#" id="issue@(item.ID)">Выдать</a>|
+							<a href="#" id="marriage@(item.ID)">Брак</a>
+							<script>
+								function AjaxUpdateStatus@(item.ID)(status) {
+									$.get('@Url.Action("DevicesUpdateStatus", "Store")', { device_id: @(item.ID), status_id: status }, function(data) {	});
+								}
+								$("#issue@(item.ID.ToString())").click(function() {
+									AjaxUpdateStatus@(item.ID)( 2 );									
+									$(this).parent().parent().remove();
+								});
+								$("#marriage@(item.ID.ToString())").click(function() {
+									$.get('@Url.Action("DevicesSetCauseOfMarriage", "Store")', { device_id: @(item.ID), cause_of_marriage: $("#cause_of_marriage_@(item.ID)").val() }, function(data) {	});									
+									$(this).parent().parent().remove();
+								});
+							</script>
+							<input id="cause_of_marriage_@(item.ID)" type="text" value="@(item.CauseOfMarriage)" placeholder="Причина брака" >
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div> <!-- tabs-1 -->
+
+	<div id="tabs-2">
+		<table>
+			<tbody id="tbody_tab2">
+				@foreach( var item in (new Device()).GetAll("REPOSITORY_ID="+ViewBag.StoreID+" AND DEV_MODEL_ID="+ViewBag.DevmodelID+" AND STATUS_ID=2" ) )
+				{
+					<tr id="tr_tab2_@(item.ID)">
+						<td>@item.ID</td>
+						<td>@item.Devmodel.FullName</td>
+						<td>@item.Updated_At.ToString()</td>
+						<td>							
+							<a href="#" id="tab2_marriage@(item.ID)">Брак</a>
+							<input id="cause_of_marriage_@(item.ID)" type="text" value="@(item.CauseOfMarriage)" placeholder="Причина брака" >
+							<script>
+								function tab2_AjaxUpdateStatus@(item.ID)(status) {
+									$.get('@Url.Action("DevicesUpdateStatus", "Store")', { device_id: @(item.ID), status_id: status }, function(data) {	});
+								}
+								$("#tab2_marriage@(item.ID.ToString())").click(function() {
+											$.get('@Url.Action("DevicesSetCauseOfMarriage", "Store")', { device_id: @(item.ID), cause_of_marriage: $("#cause_of_marriage_@(item.ID)").val() }, function(data) {	});
+									$(this).parent().parent().remove();
+								});
+							</script>
+							Куда установить?											
+							<select id="tab2_select_setup_room" class="chosen-select" name="[0].RoomID" style="width: 250px;">
+								@foreach(var room in (new Room()).GetAll())
+								{
+									if (room.ID == item.RoomID)  {
+										<option selected="selected" value="@(room.ID)">@room.FullName</option>
+									}
+									else {
+										<option value="@(room.ID)">@room.FullName</option>
+									}
+								}								
+							</select>
+							<a href="#" id="tab2_setup@(item.ID)">Установить</a>
+							<script>
+								$("#tab2_setup@(item.ID.ToString())").click(function() {									
+									$.get('@Url.Action("DevicesSetSetup", "Store")', { device_id: @(item.ID), room_id: $("#tab2_select_setup_room").val() }, function(data) {	});
+									$(this).text("Сохранено");
+								});
+							</script>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+	
+	<div id="tabs-3">
+		<table>
+			<tbody id="tbody_tab3">
+				@foreach( var item in (new Device()).GetAll("REPOSITORY_ID="+ViewBag.StoreID+" AND DEV_MODEL_ID="+ViewBag.DevmodelID+" AND STATUS_ID=3" ) )
+				{
+					<tr id="tr_tab3_@(item.ID)">
+						<td>@item.ID</td>
+						<td>@item.Devmodel.FullName</td>
+						<td>@item.Updated_At.ToString()</td>
+						<td>@item.CauseOfMarriage</td>
+						<td>							
+							<a href="#" id="tab3_marriage@(item.ID)">На склад</a>
+							<script>
+								function tab3_AjaxUpdateStatus@(item.ID)(status) {
+									$.get('@Url.Action("DevicesUpdateStatus", "Store")', { device_id: @(item.ID), status_id: status }, function(data) {	});
+								}
+								$("#tab3_marriage@(item.ID)").click(function() {								
+									tab3_AjaxUpdateStatus@(item.ID)( 1 );		
+									$(this).parent().parent().remove();									
+								});
+							</script>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+
+</div>
+
 

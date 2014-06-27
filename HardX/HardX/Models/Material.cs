@@ -55,6 +55,10 @@ namespace HardX.Models
         public DateTime Created_At { get; set; }
 
         public DateTime Updated_At { get; set; }
+
+        public String CauseOfMarriage { get; set; }
+
+        public int DeviceID { get; set; }
                 
         public Material()
         {

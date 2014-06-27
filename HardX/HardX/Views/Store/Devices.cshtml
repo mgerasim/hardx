@@ -88,8 +88,10 @@
         <td>
             @item.Devmodel.Typedev.Name
         </td>
-	     <td>
-            @item.Devmodel.Name
+	     <td>            
+			<a href="@Url.Action("ShowDevices", new { id = item.Store.ID, DevmodelID = item.Devmodel.ID})">                
+				@item.Devmodel.Name
+            </a>	
         </td>
 		<td>
 			@{

@@ -17,6 +17,8 @@
     <property name="StatusID"  column="STATUS_ID" type="int"/>
     <property name="Created_At" column="created_at" type="LocalDateTime" />
     <property name="Updated_At" column="updated_at" type="LocalDateTime" />
-    
+    <property name="CauseOfMarriage" column="cause_of_marriage" type="String" length="255" />
+    <property name="DeviceID" column="DEVICE_ID" type="int" />
+
   </class>
 </hibernate-mapping>

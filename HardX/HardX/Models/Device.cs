@@ -35,6 +35,18 @@ namespace HardX.Models
         public DateTime Created_At { get; set; }
 
         public DateTime Updated_At { get; set; }
+
+        public String CauseOfMarriage { get; set; }
+
+        public int RoomID { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return this.Devmodel.FullName + "(#" + this.ID + ")";
+            }
+        }
                 
         public Device()
         {

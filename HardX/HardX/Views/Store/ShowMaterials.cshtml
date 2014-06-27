@@ -1,6 +1,6 @@
 ﻿@using HardX.Models
 @{
-    ViewBag.Title = "ShowMaterials";
+    ViewBag.Title = "Данные по расходным материалам";
 }
 
 <script>
@@ -8,6 +8,9 @@
 		$( "#tabs" ).tabs();
 	});
 </script>
+
+@Html.ActionLink("Расходные материалы", "Materials", new { id=ViewBag.StoreID }) |
+@Html.ActionLink("Оборудование", "Devices", new { id=ViewBag.StoreID }) 
 
 <div id="tabs">
 	 <ul>
@@ -21,6 +24,7 @@
 				@foreach( var item in (new Material()).GetAll("REPOSITORY_ID="+ViewBag.StoreID+" AND MAT_MODEL_ID="+ViewBag.MatmodelID+" AND STATUS_ID=1" ) )
 				{
 					<tr id="tr_tab1_@(item.ID)">
+						<td>@item.ID</td>
 						<td>@item.Matmodel.FullName</td>
 						<td>@item.Updated_At.ToString()</td>
 						<td>
@@ -31,16 +35,15 @@
 									$.get('@Url.Action("MaterialsUpdateStatus", "Store")', { material_id: @(item.ID), status_id: status }, function(data) {	});
 								}
 								$("#issue@(item.ID.ToString())").click(function() {
-									AjaxUpdateStatus@(item.ID)( 2 );
-									$("#tbody_tab2").append( $(this).parent().parent() );
+									AjaxUpdateStatus@(item.ID)( 2 );									
 									$(this).parent().parent().remove();
 								});
 								$("#marriage@(item.ID.ToString())").click(function() {
-									AjaxUpdateStatus@(item.ID)( 3 );
-									$("#tbody_tab3").append( $(this).parent().parent() );
+									$.get('@Url.Action("MaterialsSetCauseOfMarriage", "Store")', { material_id: @(item.ID), cause_of_marriage: $("#cause_of_marriage_@(item.ID)").val() }, function(data) {	});									
 									$(this).parent().parent().remove();
 								});
 							</script>
+							<input id="cause_of_marriage_@(item.ID)" type="text" value="@(item.CauseOfMarriage)" placeholder="Причина брака" >
 						</td>
 					</tr>
 				}
@@ -54,18 +57,38 @@
 				@foreach( var item in (new Material()).GetAll("REPOSITORY_ID="+ViewBag.StoreID+" AND MAT_MODEL_ID="+ViewBag.MatmodelID+" AND STATUS_ID=2" ) )
 				{
 					<tr id="tr_tab2_@(item.ID)">
+						<td>@item.ID</td>
 						<td>@item.Matmodel.FullName</td>
 						<td>@item.Updated_At.ToString()</td>
 						<td>							
 							<a href="#" id="tab2_marriage@(item.ID)">Брак</a>
+							<input id="cause_of_marriage_@(item.ID)" type="text" value="@(item.CauseOfMarriage)" placeholder="Причина брака" >
 							<script>
 								function tab2_AjaxUpdateStatus@(item.ID)(status) {
 									$.get('@Url.Action("MaterialsUpdateStatus", "Store")', { material_id: @(item.ID), status_id: status }, function(data) {	});
 								}
 								$("#tab2_marriage@(item.ID.ToString())").click(function() {
-									tab2_AjaxUpdateStatus@(item.ID)( 3 );
-									$("#tbody_tab3").add( $(this).parent().parent() );
+											$.get('@Url.Action("MaterialsSetCauseOfMarriage", "Store")', { material_id: @(item.ID), cause_of_marriage: $("#cause_of_marriage_@(item.ID)").val() }, function(data) {	});
 									$(this).parent().parent().remove();
+								});
+							</script>
+							Куда установить?											
+							<select id="tab2_select_setup_device" class="chosen-select" name="[0].MatmodelID" style="width: 250px;">
+								@foreach(var device in (new Device()).GetAll())
+								{
+									if (device.ID == item.DeviceID)  {
+										<option selected="selected" value="@(device.ID)">@device.FullName</option>
+									}
+									else {
+										<option value="@(device.ID)">@device.FullName</option>
+									}
+								}								
+							</select>
+							<a href="#" id="tab2_setup@(item.ID)">Установить</a>
+							<script>
+								$("#tab2_setup@(item.ID.ToString())").click(function() {									
+									$.get('@Url.Action("MaterialsSetSetup", "Store")', { material_id: @(item.ID), device_id: $("#tab2_select_setup_device").val() }, function(data) {	});
+									$(this).text("Сохранено");
 								});
 							</script>
 						</td>
@@ -78,23 +101,22 @@
 	<div id="tabs-3">
 		<table>
 			<tbody id="tbody_tab3">
-				@foreach( var item in (new Material()).GetAll("REPOSITORY_ID="+ViewBag.StoreID+" AND MAT_MODEL_ID="+ViewBag.MatmodelID+" AND STATUS_ID=2" ) )
+				@foreach( var item in (new Material()).GetAll("REPOSITORY_ID="+ViewBag.StoreID+" AND MAT_MODEL_ID="+ViewBag.MatmodelID+" AND STATUS_ID=3" ) )
 				{
 					<tr id="tr_tab3_@(item.ID)">
+						<td>@item.ID</td>
 						<td>@item.Matmodel.FullName</td>
 						<td>@item.Updated_At.ToString()</td>
+						<td>@item.CauseOfMarriage</td>
 						<td>							
 							<a href="#" id="tab3_marriage@(item.ID)">На склад</a>
 							<script>
 								function tab3_AjaxUpdateStatus@(item.ID)(status) {
 									$.get('@Url.Action("MaterialsUpdateStatus", "Store")', { material_id: @(item.ID), status_id: status }, function(data) {	});
 								}
-								$("#tab3_marriage@(item.ID)").click(function() {
-								
-									tab3_AjaxUpdateStatus@(item.ID)( 1 );
-									$("#tbody_tab1").add( $(this).parent().parent() );
-									alert( $("#tbody_tab1").prop("id") );
-									//$(this).parent().parent().remove();									
+								$("#tab3_marriage@(item.ID)").click(function() {								
+									tab3_AjaxUpdateStatus@(item.ID)( 1 );		
+									$(this).parent().parent().remove();									
 								});
 							</script>
 						</td>
@@ -106,5 +128,4 @@
 
 </div>
 
-<h2>ShowMaterials</h2>
 
