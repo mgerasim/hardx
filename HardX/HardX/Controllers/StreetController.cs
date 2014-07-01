@@ -48,6 +48,7 @@ namespace HardX.Controllers
             {
                 Street model = new Street();
                 model.Name = collection["Name"];
+                model.Town = (new Town()).GetById(Convert.ToInt32(collection["Town"]));
                 model.Save(model);
                 return RedirectToAction("Index");
             }
@@ -78,6 +79,7 @@ namespace HardX.Controllers
                 Street model = new Street();
                 model = model.GetById(id);
                 model.Name = collection["Name"];
+                model.Town = (new Town()).GetById(Convert.ToInt32(collection["Town"]));
                 model.Update(model);
 
                 return RedirectToAction("Index");
