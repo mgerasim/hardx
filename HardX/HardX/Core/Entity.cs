@@ -6,18 +6,22 @@ using Core;
 
 namespace HardX.Core
 {
+    public delegate void EntityEventHandler(Object e);
+    
     public class Entity<T>:IModel<T>
     {
         protected IRepository<T> _repository;
         
         public virtual void Save(T entity)
         {
-            _repository.Save(entity);            
+            _repository.Save(entity);
+
         }
 
         public virtual void Update(T entity)
         {
             _repository.Update(entity);
+
         }
 
         public virtual void Delete(T entity)

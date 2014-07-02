@@ -117,11 +117,13 @@
     <Compile Include="Factories\ActionFactory.cs" />
     <Compile Include="Factories\AreaFactory.cs" />
     <Compile Include="Factories\BrancheFactory.cs" />
+    <Compile Include="Factories\DevhistoryFactory.cs" />
     <Compile Include="Factories\DeviceFactory.cs" />
     <Compile Include="Factories\DevmodelFactory.cs" />
     <Compile Include="Factories\HouseFactory.cs" />
     <Compile Include="Factories\MaterialFactory.cs" />
     <Compile Include="Factories\MaterialUchetFactory.cs" />
+    <Compile Include="Factories\MathistoryFactory.cs" />
     <Compile Include="Factories\MatmodelFactory.cs" />
     <Compile Include="Factories\RegionFactory.cs" />
     <Compile Include="Factories\RoleFactory.cs" />
@@ -146,12 +148,15 @@
     </EmbeddedResource>
     <Compile Include="Models\Action.cs" />
     <Compile Include="Models\Area.cs" />
+    <Compile Include="Models\Base\DeviceBase.cs" />
     <Compile Include="Models\Branche.cs" />
+    <Compile Include="Models\Devhistory.cs" />
     <Compile Include="Models\Device.cs" />
     <Compile Include="Models\Devmodel.cs" />
     <Compile Include="Models\House.cs" />
     <Compile Include="Models\Material.cs" />
     <Compile Include="Models\MaterialUchet.cs" />
+    <Compile Include="Models\Mathistory.cs" />
     <Compile Include="Models\Matmodel.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Role.cs" />
@@ -171,11 +176,13 @@
     <Compile Include="Repositories\ActionRepository.cs" />
     <Compile Include="Repositories\AreaRepository.cs" />
     <Compile Include="Repositories\BrancheRepository.cs" />
+    <Compile Include="Repositories\DevhistoryRepository.cs" />
     <Compile Include="Repositories\DeviceRepository.cs" />
     <Compile Include="Repositories\DevmodelRepository.cs" />
     <Compile Include="Repositories\HouseRepository.cs" />
     <Compile Include="Repositories\MaterialRepository.cs" />
     <Compile Include="Repositories\MaterialUchetRepository.cs" />
+    <Compile Include="Repositories\MathistoryRepository.cs" />
     <Compile Include="Repositories\MatmodelRepository.cs" />
     <Compile Include="Repositories\RegionRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
@@ -299,6 +306,12 @@
     <EmbeddedResource Include="Mapping\Device.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Mapping\Devhistory.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mapping\Mathistory.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.custom.js" />
     <Content Include="Scripts\jquery.fileDownload.js" />
@@ -406,7 +419,7 @@
     <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Matmodel\Index.cshtml" />
+    <Content Include="Views\Region\Matmodel\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Devmodel\Index.cshtml" />
@@ -415,7 +428,7 @@
     <Content Include="Views\Devmodel\Compatibility.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Matmodel\Compatibility.cshtml" />
+    <Content Include="Views\Region\Matmodel\Compatibility.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Devmodel\Create.cshtml" />
@@ -424,10 +437,10 @@
     <Content Include="Views\Devmodel\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Matmodel\Create.cshtml" />
+    <Content Include="Views\Region\Matmodel\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Matmodel\Edit.cshtml" />
+    <Content Include="Views\Region\Matmodel\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\Index.cshtml" />
@@ -451,7 +464,7 @@
     <Content Include="Views\Devmodel\_create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Matmodel\_create.cshtml" />
+    <Content Include="Views\Region\Matmodel\_create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\issue.cshtml" />

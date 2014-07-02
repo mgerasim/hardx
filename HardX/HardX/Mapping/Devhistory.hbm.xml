@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                    assembly="HardX"
+                   namespace="HardX.Models">
+
+  <class name="Devhistory" table="DEV_HISTORY" lazy="false">
+
+    <id name="ID" column="id" type="int">
+
+      <generator class="sequence">
+        <param name="sequence">SEQ_DEVHISTORY</param>
+      </generator>
+    </id>
+    
+    <property name="DeviceID" column="DEVICE_ID"  type="int"/>
+    <property name="RoomID"   column="ROOM_ID"    type="int"/>
+    <property name="StoreID"  column="STORE_ID"   type="int"/>
+    <property name="StatusID"  column="STATUS_ID"   type="int"/>    
+    <property name="Created_At" column="created_at" type="LocalDateTime" />
+  </class>
+</hibernate-mapping>

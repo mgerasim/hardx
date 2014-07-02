@@ -62,7 +62,7 @@ namespace HardX.Controllers
  
         public ActionResult Edit(int id)
         {
-            Street model = new Street();
+            Town model = new Town();
             model = model.GetById(id);
             return View(model);
         }
