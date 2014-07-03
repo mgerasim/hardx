@@ -29,5 +29,14 @@ namespace HardX.Models
             if (_repository == null)
                 throw new NotImplementedException();
         }
+
+        public Mathistory(Material entity) : this()
+        {
+            this.MaterialID = entity.ID;
+            this.DeviceID = entity.DeviceID;
+            this.Created_At = entity.Created_At;            
+            this.StoreID = entity.Store.ID;
+            this.StatusID = entity.StatusID;
+        }
     }
 }

@@ -21,6 +21,8 @@ namespace HardX.Models
         public override void Update(Device entity)
         {
             base.Update(entity);
+            Devhistory theHistory = new Devhistory(entity);
+            theHistory.Save(theHistory);           
         }
 
         public Device()

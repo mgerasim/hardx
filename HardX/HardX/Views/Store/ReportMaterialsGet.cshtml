@@ -42,9 +42,13 @@
         <th>
             Выдано
         </th>
+				
+        <th>
+            Установлено
+        </th>
 
         <th>
-            Брак
+            Забраковано
         </th>
     </tr>
 
@@ -79,6 +83,10 @@
             @item.Store.GetMaterialCountFromList(Model, @item.Matmodel.ID, 2)
         </td>
 		
+        <td>
+            @item.Store.GetMaterialCountFromList(Model, @item.Matmodel.ID, 22)
+        </td>
+
         <td>
             @item.Store.GetMaterialCountFromList(Model, @item.Matmodel.ID, 3)
         </td>

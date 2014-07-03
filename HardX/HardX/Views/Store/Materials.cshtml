@@ -70,11 +70,16 @@
         </th>
 
 		<th>
-            Выдача
+            Выдано
+        </th>
+
+		
+		<th>
+            Установлено
         </th>
 					
         <th>
-            Брак
+            Забраковано
         </th>
 
 		<th>
@@ -316,6 +321,111 @@
 			</script>
 			
         </th>
+
+		<th>
+			@{
+			// Установлено
+			}
+            <div id="mat_setup@(item.ID)">
+				@item.Store.GetMaterialCountFromList(Model, @item.Matmodel.ID, 22)
+			</div>	
+					
+			<script>
+				function handleSetupSuccess@(item.ID)(editable)
+				{
+					var contents = editable.find(':first-child:input').val();
+					
+					if (" "+(parseInt( contents ))+" "!=" NaN ") {											
+						var count_delta = parseInt( contents );
+						contents = parseInt( contents ) + parseInt( content ) ;
+						contents = contents + " ";
+											
+						$("#mat@(item.ID)").html( parseInt($("#mat@(item.ID)").html()) - count_delta );
+
+						if (count_delta > 0) {
+							$.get('@Url.Action("MaterialsSetup", "Store")', { repository_id: @(ViewBag.theStore.ID), matmodel_id: @(item.Matmodel.ID), count_delta: count_delta }, function(data) {	});
+						}
+						else {
+							$.get('@Url.Action("MaterialsSetupDel", "Store")', { repository_id: @(ViewBag.theStore.ID), matmodel_id: @(item.Matmodel.ID), count_delta: Math.abs(count_delta) }, function(data) {	});
+						}											
+					} else {
+						contents = content;
+					}
+
+					editable
+						.removeClass('active-inline')
+						.contents()
+						.replaceWith(contents);
+				}
+
+				function handleSetupFail(editable)
+				{
+					contents = content;
+					
+					editable
+							.removeClass('active-inline')
+							.contents()
+							.replaceWith(contents);
+				}
+
+				var clicked = 0;
+				var content=0;
+				$("#mat_issued@(item.ID)")
+					.hover(function() {
+						$(this).toggleClass("over-inline");
+					})
+					.unbind('click').click(function(e) {						
+
+						var $editable = $(this);
+						if ($editable.hasClass('active-inline')) {
+							return;
+						};
+						clicked = 0;
+						
+						content = $.trim($editable.html());
+						
+						$editable
+							.addClass("active-inline")
+							.empty();
+
+						var editElement = '<input type="text" />';
+						
+						$(editElement)
+							//.val(content)
+							.appendTo($editable)
+							.focus()
+							.blur(function(e) {
+								$editable.trigger('blur');
+							});
+					})
+					.unbind('blur').blur(function(e) {						
+						clicked = 1;
+						var $editable = $(this);
+						handleIssueFail($editable);
+					})
+					.keyup(function(event){
+						if(event.keyCode == 13){
+							if (clicked == 1) {
+								return;
+							};
+							clicked = 1;
+							var $editable = $(this);
+							handleIssueSuccess@(item.ID)($editable);
+						
+						}
+						if(event.keyCode == 27){
+								if (clicked == 1) {
+									return;
+								};
+								clicked = 1;
+								var $editable = $(this);
+								handleIssueFail($editable);						
+						}
+					})
+					;
+			</script>
+			
+        </th>
 			
         <th>
             @{
@@ -458,15 +568,16 @@
         </th>
 				
         <th>
-            Наличие
+            Выдано
+        </th>
+
+		
+		<th>
+            Установлено
         </th>
 					
         <th>
-            Выдача
-        </th>
-			
-        <th>
-            Брак
+            Забраковано
         </th>
       
         <td>
@@ -475,7 +586,7 @@
         
     </tr>
 	<tr>
-			<th colspan="8" class="ts-pager form-horizontal">
+			<th colspan="9" class="ts-pager form-horizontal">
 				<button type="button" class="btn first"><i class="icon-step-backward glyphicon glyphicon-step-backward"></i></button>
 				<button type="button" class="btn prev"><i class="icon-arrow-left glyphicon glyphicon-backward"></i></button>
 				<span class="pagedisplay"></span> <!-- this can be any element, including an input -->

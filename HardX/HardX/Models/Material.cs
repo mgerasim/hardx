@@ -5,69 +5,45 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using HardX.Core;
 using HardX.Factories;
+using HardX.Models.Base;
 
 namespace HardX.Models
 {
-    public class Material : Entity<Material>
+    public class Material : MaterialBase
     {
-        public int ID { get; set; }
-
-        [Display(Name = "Модель расходного материала")]
-        [Required(ErrorMessage = "* Укажите модель расходного материала")]
-        public Matmodel Matmodel { get; set; }
-
-        public int MatmodelID;
-
-
-        [Display(Name = "Склад")]
-        [Required(ErrorMessage = "* Укажите склад")]
-        public Store Store { get; set; }
-
-        public int StoreID;
-
-
-        [Display(Name = "Статус")]
-        [Required(ErrorMessage = "* Укажите статус")]
-        public Status Status { get; set; }
-
-        public int StatusID { get; set; }
         
-        [Display(Name = "Добавить позицию этого материала")]        
-        public bool fAdded { get; set; }
+        public override void Save(Material entity)
+        {
+            base.Save(entity);
+            Mathistory theHistory = new Mathistory(entity);
+            theHistory.Save(theHistory);            
+        }
+
+        public override void Update(Material entity)
+        {
+            Mathistory theHistory = new Mathistory(entity);            
+            base.Update(entity);            
+            theHistory.Save(theHistory);           
+        }
         
-        [Display(Name = "Количество")]
-        [Required(ErrorMessage = "* Укажите количество")]
-        public int Count { get; set; }
-
-
-        [Display(Name = "Выдать")]
-        [Required(ErrorMessage = "* Укажите количество для выдачи")]
-        public int CountIssued { get; set; }
-        
-        [Display(Name = "В брак")]
-        [Required(ErrorMessage = "* Укажите количество как брак")]
-        public int CountMarriage { get; set; }
-
-        [Display(Name = "Удалить")]
-        [Required(ErrorMessage = "* Укажите количество для удаления")]
-        public int CountDelete { get; set; }
-                
-        public DateTime Created_At { get; set; }
-
-        public DateTime Updated_At { get; set; }
-
-        public String CauseOfMarriage { get; set; }
-
-        public int DeviceID { get; set; }
-                
         public Material()
         {
             this.Created_At = DateTime.Now;
             this.Updated_At = DateTime.Now;
+            this.StatusID = 1;
             MaterialFactory theFactory = new MaterialFactory();
             _repository = theFactory.createRepository();
             if (_repository == null)
                 throw new NotImplementedException();
+        }
+
+        public Material(Material model)
+            : this()
+        {
+            this.Matmodel = (new Matmodel()).GetById(model.Matmodel.ID);
+            this.Store = (new Store()).GetById(model.Store.ID);
+            this.fAdded = model.fAdded;
+            this.DeviceID = model.DeviceID;
         }
     }
 }

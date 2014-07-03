@@ -380,6 +380,48 @@ namespace HardX.Controllers
             return View();
         }
 
+        public ActionResult DevicesSetup(int repository_id, int devmodel_id, int count_delta)
+        {
+            Device model = new Device();
+
+            List<Device> models = new List<Device>();
+            string s = "REPOSITORY_ID = " + repository_id.ToString() +
+                        " AND dev_model_id = " + devmodel_id.ToString() +
+                        " AND status_id = 1 " +
+                        " AND rownum < " + (count_delta + 1).ToString();
+            models = (List<Device>)model.GetAll(s);
+
+            model.Store = (new Store()).GetById(repository_id);
+            foreach (Device item in models)
+            {
+                item.StatusID = 22;
+                item.Updated_At = DateTime.Now;
+                item.Update(item);
+            }
+            return View();
+        }
+
+        public ActionResult DevicesSetupDel(int repository_id, int devmodel_id, int count_delta)
+        {
+            Device model = new Device();
+
+            List<Device> models = new List<Device>();
+            string s = "REPOSITORY_ID = " + repository_id.ToString() +
+                        " AND dev_model_id = " + devmodel_id.ToString() +
+                        " AND status_id = 22 " +
+                        " AND rownum < " + (count_delta + 1).ToString();
+            models = (List<Device>)model.GetAll(s);
+
+            model.Store = (new Store()).GetById(repository_id);
+            foreach (Device item in models)
+            {
+                item.StatusID = 1;
+                item.Updated_At = DateTime.Now;
+                item.Update(item);
+            }
+            return View();
+        }
+
         public ActionResult DevicesMarriageDel(int repository_id, int devmodel_id, int count_delta)
         {
             Device model = new Device();
@@ -452,6 +494,47 @@ namespace HardX.Controllers
             string s = "REPOSITORY_ID = " + repository_id.ToString() +
                         " AND mat_model_id = " + matmodel_id.ToString() +
                         " AND status_id = 2 " +
+                        " AND rownum < " + (count_delta + 1).ToString();
+            models = (List<Material>)model.GetAll(s);
+
+            model.Store = (new Store()).GetById(repository_id);
+            foreach (Material item in models)
+            {
+                item.StatusID = 1;
+                item.Update(item);
+            }
+            return View();
+        }
+
+        public ActionResult MaterialsSetup(int repository_id, int matmodel_id, int count_delta)
+        {
+            Material model = new Material();
+
+            List<Material> models = new List<Material>();
+            string s = "REPOSITORY_ID = " + repository_id.ToString() +
+                        " AND mat_model_id = " + matmodel_id.ToString() +
+                        " AND status_id = 1 " +
+                        " AND rownum < " + (count_delta + 1).ToString();
+            models = (List<Material>)model.GetAll(s);
+
+            model.Store = (new Store()).GetById(repository_id);
+            foreach (Material item in models)
+            {
+                item.StatusID = 22;
+                item.Updated_At = DateTime.Now;
+                item.Update(item);
+            }
+            return View();
+        }
+
+        public ActionResult MaterialsSetupDel(int repository_id, int matmodel_id, int count_delta)
+        {
+            Material model = new Material();
+
+            List<Material> models = new List<Material>();
+            string s = "REPOSITORY_ID = " + repository_id.ToString() +
+                        " AND mat_model_id = " + matmodel_id.ToString() +
+                        " AND status_id = 22 " +
                         " AND rownum < " + (count_delta + 1).ToString();
             models = (List<Material>)model.GetAll(s);
 
@@ -638,6 +721,44 @@ namespace HardX.Controllers
         {
             ViewBag.StoreID = id;
             ViewBag.MatmodelID = MatmodelID;
+            ViewBag.Stores = (new Store()).GetAll();
+            ViewBag.Devices = (new Device()).GetAll();
+            ViewBag.Materials = (new Material()).GetAll("REPOSITORY_ID="+ViewBag.StoreID+" AND MAT_MODEL_ID="+ViewBag.MatmodelID) ;
+            ViewBag.Materials1 = ((List<Material>) ViewBag.Materials).Where(x => x.StatusID==1);
+            ViewBag.Materials2 = ((List<Material>)ViewBag.Materials).Where(x => x.StatusID == 2);
+            ViewBag.Materials3 = ((List<Material>)ViewBag.Materials).Where(x => x.StatusID == 3);
+            
+            ViewBag.MaterialsSetup = (new Mathistory()).GetAll("STORE_ID=" + ViewBag.StoreID + " AND STATUS_ID=22");
+            ViewBag.Materials22 = from material in ((List<Material>)ViewBag.Materials).Where(x => x.StatusID == 22)
+                                  join mathist in (List<Mathistory>)(new Mathistory()).GetAll("STORE_ID=" + ViewBag.StoreID + " AND STATUS_ID=22") on material.ID equals mathist.MaterialID
+                                  join store in ((List<Store>)ViewBag.Stores) on mathist.StoreID equals store.ID
+                                  //from item in matGroup.DefaultIfEmpty(new Material { StatusID=1 })
+                                  select new
+                                  {
+                                      ID = material.ID,
+                                      Matmodel = material.Matmodel,
+                                      Updated_At = material.Updated_At,
+                                      StoreID = mathist.StoreID,                                      
+                                      StoreName = store.Name,
+                                      CauseOfMarriage = material.CauseOfMarriage,
+                                  }
+
+                                  ;
+
+            /*
+            ViewBag.Materials22 = from material in ((List<Material>)ViewBag.Materials22)
+                                  join store in ((List<Material>)ViewBag.Stores) on material.StoreID equals store.ID                                  
+                                  select new
+                                  {
+                                      ID = material.ID,
+                                      Matmodel = material.Matmodel,
+                                      Updated_At = material.Updated_At,
+                                      StoreID = material.StoreID,                                      
+                                      StoreName = store.
+                                  }
+
+                                  ;*/
+
             return View();
         }
 
@@ -683,10 +804,25 @@ namespace HardX.Controllers
             model = model.GetById(material_id);
             model.DeviceID = device_id;
             model.Updated_At = DateTime.Now;
+            model.StatusID = 22;
             model.Update(model);
             return View();
         }
 
+        public ActionResult MaterialsSetIssue(int material_id, int store_id)
+        {
+            Material model = new Material();
+            model = model.GetById(material_id);            
+            model.Updated_At = DateTime.Now;
+            model.StatusID = 22;            
+            model.Store = (new Store()).GetById(store_id);            
+            model.Update(model);
+
+            Material model2 = new Material(model);
+            model2.StatusID = 1;
+            model2.Save(model2);
+            return View();
+        }
         public ActionResult DevicesSetCauseOfMarriage(int device_id, string cause_of_marriage)
         {
             Device model = new Device();
@@ -697,8 +833,17 @@ namespace HardX.Controllers
             model.Update(model);
             return View();
         }
-
         public ActionResult DevicesSetSetup(int device_id, int room_id)
+        {
+            Device model = new Device();
+            model = model.GetById(device_id);
+            model.RoomID = room_id;
+            model.Updated_At = DateTime.Now;
+            model.Update(model);
+            return View();
+        }   
+        
+        public ActionResult DevicesSetIssue(int device_id, int room_id)
         {
             Device model = new Device();
             model = model.GetById(device_id);
