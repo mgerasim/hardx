@@ -16,28 +16,68 @@
 	 <ul>
 		<li><a href="#tabs-1">Наличие</a></li>
 		<li><a href="#tabs-2">Выдано</a></li>
-		<li><a href="#tabs-3">Брак</a></li>
+		<li><a href="#tabs-22">Установлено</a></li>
+		<li><a href="#tabs-3">Забраковано</a></li>
 	</ul>
 	<div id="tabs-1">
 		<table>
 			<tbody id="tbody_tab1">
-				@foreach( var item in (new Device()).GetAll("REPOSITORY_ID="+ViewBag.StoreID+" AND DEV_MODEL_ID="+ViewBag.DevmodelID+" AND STATUS_ID=1" ) )
+				@foreach( var item in (ViewBag.Devices1) )
 				{
 					<tr id="tr_tab1_@(item.ID)">
 						<td>@item.ID</td>
 						<td>@item.Devmodel.FullName</td>
 						<td>@item.Updated_At.ToString()</td>
 						<td>
-							<a href="#" id="issue@(item.ID)">Выдать</a>|
+							Выдать на склад: 
+							<select id="tab1_select_setup_store_@(item.ID)" class="chosen-select" placeholder="Выбрать..." name="[0].MatmodelID" style="width: 250px;">
+								<option value=""></option>
+								@foreach(var store in ViewBag.Stores)
+								{
+									if (store.ID == item.StoreID)  {
+										<option selected="selected" value="@(store.ID)">@store.Name</option>
+									}
+									else {
+										<option value="@(store.ID)">@store.Name</option>
+									}
+								}								
+							</select>
+							<a href="#" id="issue@(item.ID)">Выдать</a><br/>
+							<script>
+								$("#issue@(item.ID.ToString())").click(function() {
+									$.get('@Url.Action("DevicesSetIssue", "Store")', { device_id: @(item.ID), store_id: $("#tab1_select_setup_store_@(item.ID)").val() }, function(data) {	});
+									$(this).text("Сохранено");
+								});
+							</script>
+
+							Установить в кабинет:
+							<select id="tab1_select_setup_room_@(item.ID)" class="chosen-select" placeholder="Выбрать..." name="[0].RoomID" style="width: 250px;">
+								<option value=""></option>
+								@foreach(var room in ViewBag.Rooms)
+								{
+									if (room.ID == item.RoomID)  {
+										<option selected="selected" value="@(room.ID)">@room.FullName</option>
+									}
+									else {
+										<option value="@(room.ID)">@room.FullName</option>
+									}
+								}								
+							</select>
+							<a href="#" id="tab1_setup@(item.ID)">Установить</a><br/>
+							<script>
+								$("#tab1_setup@(item.ID.ToString())").click(function() {									
+									$.get('@Url.Action("DevicesSetSetup", "Store")', { device_id: @(item.ID), room_id: $("#tab1_select_setup_room_@(item.ID)").val() }, function(data) {	});
+									$(this).text("Сохранено");
+								});
+							</script>
+
+
 							<a href="#" id="marriage@(item.ID)">Брак</a>
 							<script>
 								function AjaxUpdateStatus@(item.ID)(status) {
 									$.get('@Url.Action("DevicesUpdateStatus", "Store")', { device_id: @(item.ID), status_id: status }, function(data) {	});
 								}
-								$("#issue@(item.ID.ToString())").click(function() {
-									AjaxUpdateStatus@(item.ID)( 2 );									
-									$(this).parent().parent().remove();
-								});
+								
 								$("#marriage@(item.ID.ToString())").click(function() {
 									$.get('@Url.Action("DevicesSetCauseOfMarriage", "Store")', { device_id: @(item.ID), cause_of_marriage: $("#cause_of_marriage_@(item.ID)").val() }, function(data) {	});									
 									$(this).parent().parent().remove();
@@ -54,43 +94,32 @@
 	<div id="tabs-2">
 		<table>
 			<tbody id="tbody_tab2">
-				@foreach( var item in (new Device()).GetAll("REPOSITORY_ID="+ViewBag.StoreID+" AND DEV_MODEL_ID="+ViewBag.DevmodelID+" AND STATUS_ID=2" ) )
+				@foreach( var item in (
+										  from devhist in (List<Devhistory>)ViewBag.Devhistory 
+										  join device in ( (List<Device>)ViewBag.Devices ) on devhist.DeviceID equals device.ID
+										  join store in ( (List<Store>)ViewBag.Stores ) on device.Store.ID equals store.ID
+                                  
+										  select new
+										  {
+											  ID = device.ID,
+											  Devmodel = device.Devmodel,
+											  Updated_At = device.Updated_At,
+											  StoreID = store.ID,                                      
+											  StoreName = store.Name,
+											  CauseOfMarriage = device.CauseOfMarriage,
+											  RoomID = device.RoomID,
+										  }				
+				
+										) )
 				{
 					<tr id="tr_tab2_@(item.ID)">
 						<td>@item.ID</td>
 						<td>@item.Devmodel.FullName</td>
 						<td>@item.Updated_At.ToString()</td>
 						<td>							
-							<a href="#" id="tab2_marriage@(item.ID)">Брак</a>
-							<input id="cause_of_marriage_@(item.ID)" type="text" value="@(item.CauseOfMarriage)" placeholder="Причина брака" >
-							<script>
-								function tab2_AjaxUpdateStatus@(item.ID)(status) {
-									$.get('@Url.Action("DevicesUpdateStatus", "Store")', { device_id: @(item.ID), status_id: status }, function(data) {	});
-								}
-								$("#tab2_marriage@(item.ID.ToString())").click(function() {
-											$.get('@Url.Action("DevicesSetCauseOfMarriage", "Store")', { device_id: @(item.ID), cause_of_marriage: $("#cause_of_marriage_@(item.ID)").val() }, function(data) {	});
-									$(this).parent().parent().remove();
-								});
-							</script>
-							Куда установить?											
-							<select id="tab2_select_setup_room" class="chosen-select" name="[0].RoomID" style="width: 250px;">
-								@foreach(var room in (new Room()).GetAll())
-								{
-									if (room.ID == item.RoomID)  {
-										<option selected="selected" value="@(room.ID)">@room.FullName</option>
-									}
-									else {
-										<option value="@(room.ID)">@room.FullName</option>
-									}
-								}								
-							</select>
-							<a href="#" id="tab2_setup@(item.ID)">Установить</a>
-							<script>
-								$("#tab2_setup@(item.ID.ToString())").click(function() {									
-									$.get('@Url.Action("DevicesSetSetup", "Store")', { device_id: @(item.ID), room_id: $("#tab2_select_setup_room").val() }, function(data) {	});
-									$(this).text("Сохранено");
-								});
-							</script>
+							
+							Выдан на склад: @item.StoreName											
+							
 						</td>
 					</tr>
 				}
@@ -98,10 +127,50 @@
 		</table>
 	</div>
 	
+	<div id="tabs-22">
+		<table>
+			<tbody id="tbody_tab22">
+				@foreach( var item in (
+										  ViewBag.Devices22
+								      ) 
+						)
+
+				{
+					<tr id="tr_tab22_@(item.ID)">
+						<td>@item.ID</td>
+						<td>@item.Devmodel.FullName</td>
+						<td>@item.Updated_At.ToString()</td>
+						<td>
+							Установлен в кабинете: 
+							@foreach(var room2 in ((List<Room>)ViewBag.Rooms).Where(x => x.ID==item.RoomID))
+							{
+								@room2.FullName
+							}
+
+							<input id="tab22_cause_of_marriage_@(item.ID)" type="text" value="@(item.CauseOfMarriage)" placeholder="Причина брака" >
+							<a href="#" id="tab22_marriage@(item.ID)">Брак</a>
+							<script>
+								function tab22_AjaxUpdateStatus@(item.ID)(status) {
+									$.get('@Url.Action("DevicesUpdateStatus", "Store")', { device_id: @(item.ID), status_id: status }, function(data) {	});
+								}
+								$("#tab22_marriage@(item.ID)").click(function() {
+										$.get('@Url.Action("DevicesSetCauseOfMarriage", "Store")', { device_id: @(item.ID), cause_of_marriage: $("#tab22_cause_of_marriage_@(item.ID)").val() }, function(data) {	});
+									$(this).parent().parent().remove();
+								});
+							</script>
+							
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+
+
 	<div id="tabs-3">
 		<table>
 			<tbody id="tbody_tab3">
-				@foreach( var item in (new Device()).GetAll("REPOSITORY_ID="+ViewBag.StoreID+" AND DEV_MODEL_ID="+ViewBag.DevmodelID+" AND STATUS_ID=3" ) )
+				@foreach( var item in (ViewBag.Devices3) )
 				{
 					<tr id="tr_tab3_@(item.ID)">
 						<td>@item.ID</td>

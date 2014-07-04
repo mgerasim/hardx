@@ -165,7 +165,7 @@ namespace HardX.Controllers
         {
             Material theModel = new Material();
             List<Material> theList = (List<Material>)theModel.GetAll("REPOSITORY_ID="+id.ToString());
-
+            
             Store theStore = new Store();
             theStore = theStore.GetById(id);
             ViewBag.theStore = theStore;
@@ -723,42 +723,11 @@ namespace HardX.Controllers
             ViewBag.MatmodelID = MatmodelID;
             ViewBag.Stores = (new Store()).GetAll();
             ViewBag.Devices = (new Device()).GetAll();
-            ViewBag.Materials = (new Material()).GetAll("REPOSITORY_ID="+ViewBag.StoreID+" AND MAT_MODEL_ID="+ViewBag.MatmodelID) ;
-            ViewBag.Materials1 = ((List<Material>) ViewBag.Materials).Where(x => x.StatusID==1);
-            ViewBag.Materials2 = ((List<Material>)ViewBag.Materials).Where(x => x.StatusID == 2);
-            ViewBag.Materials3 = ((List<Material>)ViewBag.Materials).Where(x => x.StatusID == 3);
-            
-            ViewBag.MaterialsSetup = (new Mathistory()).GetAll("STORE_ID=" + ViewBag.StoreID + " AND STATUS_ID=22");
-            ViewBag.Materials22 = from material in ((List<Material>)ViewBag.Materials).Where(x => x.StatusID == 22)
-                                  join mathist in (List<Mathistory>)(new Mathistory()).GetAll("STORE_ID=" + ViewBag.StoreID + " AND STATUS_ID=22") on material.ID equals mathist.MaterialID
-                                  join store in ((List<Store>)ViewBag.Stores) on mathist.StoreID equals store.ID
-                                  //from item in matGroup.DefaultIfEmpty(new Material { StatusID=1 })
-                                  select new
-                                  {
-                                      ID = material.ID,
-                                      Matmodel = material.Matmodel,
-                                      Updated_At = material.Updated_At,
-                                      StoreID = mathist.StoreID,                                      
-                                      StoreName = store.Name,
-                                      CauseOfMarriage = material.CauseOfMarriage,
-                                  }
-
-                                  ;
-
-            /*
-            ViewBag.Materials22 = from material in ((List<Material>)ViewBag.Materials22)
-                                  join store in ((List<Material>)ViewBag.Stores) on material.StoreID equals store.ID                                  
-                                  select new
-                                  {
-                                      ID = material.ID,
-                                      Matmodel = material.Matmodel,
-                                      Updated_At = material.Updated_At,
-                                      StoreID = material.StoreID,                                      
-                                      StoreName = store.
-                                  }
-
-                                  ;*/
-
+            ViewBag.Materials = (new Material()).GetAll("MAT_MODEL_ID="+ViewBag.MatmodelID) ;
+            ViewBag.Materials1 = ((List<Material>) ViewBag.Materials).Where(x => x.StatusID==1 ).Where(x => x.Store.ID==ViewBag.StoreID);
+            ViewBag.Materials2 = ((List<Material>)ViewBag.Materials).Where(x => x.StatusID == 2).Where(x => x.Store.ID == ViewBag.StoreID);
+            ViewBag.Materials3 = ((List<Material>)ViewBag.Materials).Where(x => x.StatusID == 3).Where(x => x.Store.ID == ViewBag.StoreID);            
+            ViewBag.Mathistory = (new Mathistory()).GetAll("STORE_ID=" + ViewBag.StoreID + " AND STATUS_ID=2");           
             return View();
         }
 
@@ -766,6 +735,15 @@ namespace HardX.Controllers
         {
             ViewBag.StoreID = id;
             ViewBag.DevmodelID = DevmodelID;
+            ViewBag.Stores = (new Store()).GetAll();
+            ViewBag.Rooms = (new Room()).GetAll();
+            ViewBag.Devices = (new Device()).GetAll("DEV_MODEL_ID="+ViewBag.DevmodelID) ;
+            ViewBag.Devices1 = ((List<Device>) ViewBag.Devices).Where(x => x.StatusID==1 ).Where(x => x.Store.ID==ViewBag.StoreID);
+            ViewBag.Devices22 = ((List<Device>)ViewBag.Devices).Where(x => x.StatusID == 22).Where(x => x.Store.ID == ViewBag.StoreID);
+            ViewBag.Devices3 = ((List<Device>)ViewBag.Devices).Where(x => x.StatusID == 3).Where(x => x.Store.ID == ViewBag.StoreID);
+            
+            ViewBag.Devhistory = (new Devhistory()).GetAll("STORE_ID=" + ViewBag.StoreID + " AND STATUS_ID=2");
+            
             return View();
         }
         public ActionResult MaterialsUpdateStatus(int material_id, int status_id)
@@ -814,13 +792,13 @@ namespace HardX.Controllers
             Material model = new Material();
             model = model.GetById(material_id);            
             model.Updated_At = DateTime.Now;
-            model.StatusID = 22;            
-            model.Store = (new Store()).GetById(store_id);            
+            model.StatusID = 2;                        
             model.Update(model);
 
-            Material model2 = new Material(model);
-            model2.StatusID = 1;
-            model2.Save(model2);
+            
+            model.StatusID = 1;
+            model.Store = (new Store()).GetById(store_id);            
+            model.Update(model);
             return View();
         }
         public ActionResult DevicesSetCauseOfMarriage(int device_id, string cause_of_marriage)
@@ -838,19 +816,25 @@ namespace HardX.Controllers
             Device model = new Device();
             model = model.GetById(device_id);
             model.RoomID = room_id;
+            model.StatusID = 22;
             model.Updated_At = DateTime.Now;
             model.Update(model);
             return View();
         }   
         
-        public ActionResult DevicesSetIssue(int device_id, int room_id)
+        public ActionResult DevicesSetIssue(int device_id, int store_id)
         {
             Device model = new Device();
             model = model.GetById(device_id);
-            model.RoomID = room_id;
             model.Updated_At = DateTime.Now;
+            model.StatusID = 2;
             model.Update(model);
-            return View();
+
+            model.StatusID = 1;
+            model.Store = (new Store()).GetById(store_id);            
+            
+            model.Update(model);
+            return View();            
         }   
     }
 }
