@@ -1,4 +1,5 @@
 ﻿@model HardX.Models.Town
+@using HardX.Models
 
 @{
     ViewBag.Title = "Редактирование населённого пункта";
@@ -21,6 +22,13 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+		<div class="editor-label">
+            @Html.LabelFor(model => model.Region)
+        </div>
+        <div class="editor-field">
+			@Html.DropDownListFor(model => model.Region.ID, new SelectList((List<Region>)(new Region()).GetAll() , "ID", "FullName" ), new {@class="chosen-select", @style="width: 350px;" })
         </div>
 
         <p>

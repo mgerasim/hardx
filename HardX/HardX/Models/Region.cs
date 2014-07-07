@@ -21,6 +21,14 @@ namespace HardX.Models
         [Display(Name = "Регион")]
         [Required(ErrorMessage = "* Укажите регион")]
         public State State { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return this.State.Name + ", " + this.Name;
+            }
+        }
                                 
         public Region()
         {
