@@ -26,7 +26,7 @@
             @Html.LabelFor(model => model.Region)
         </div>
         <div class="editor-field">
-			@Html.DropDownListFor(model => model.Region, new SelectList((List<Region>)(new Region()).GetAll() , "ID", "FullName" ), new {@class="chosen-select", @style="width: 350px;" })
+			@Html.DropDownListFor(model => model.Region.ID, new SelectList((List<Region>)(new Region()).GetAll() , "ID", "FullName" ), new {@class="chosen-select", @style="width: 350px;" })
         </div>
 
         <p>

@@ -21,6 +21,14 @@ namespace HardX.Models
         [Display(Name = "Филиал")]
         [Required(ErrorMessage = "* Укажите филиал")]
         public Branche Branche { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return this.Name;
+            }
+        }
                                 
         public State()
         {

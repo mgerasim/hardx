@@ -48,6 +48,7 @@ namespace HardX.Controllers
             {
                 Region model = new Region();
                 model.Name = collection["Name"];
+                model.State = (new State()).GetById(Convert.ToInt32(collection["State.ID"]));
                 model.Save(model);
                 return RedirectToAction("Index");
             }
@@ -78,6 +79,7 @@ namespace HardX.Controllers
                 Region model = new Region();
                 model = model.GetById(id);
                 model.Name = collection["Name"];
+                model.State = (new State()).GetById(Convert.ToInt32(collection["State.ID"]));
                 model.Update(model);
 
                 return RedirectToAction("Index");
