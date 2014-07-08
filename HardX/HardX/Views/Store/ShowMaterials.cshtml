@@ -85,6 +85,15 @@
 
 
 						</td>
+						<td>
+							<a href="#" id="delete@(item.ID)">Удалить</a>
+							<script>
+								$("#delete@(item.ID)").click(function() {
+									$.get('@Url.Action("Delete", "Material")', { id: @(item.ID) }, function(data) {	});									
+									$(this).parent().parent().remove();
+								});
+							</script>
+						</td>
 					</tr>
 				}
 			</tbody>

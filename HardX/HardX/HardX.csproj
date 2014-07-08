@@ -96,9 +96,11 @@
   <ItemGroup>
     <Compile Include="Controllers\AreaController.cs" />
     <Compile Include="Controllers\BrancheController.cs" />
+    <Compile Include="Controllers\DeviceController.cs" />
     <Compile Include="Controllers\DevmodelController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HouseController.cs" />
+    <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Controllers\MaterialUchetController.cs" />
     <Compile Include="Controllers\MatmodelController.cs" />
     <Compile Include="Controllers\RegionController.cs" />

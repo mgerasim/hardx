@@ -86,6 +86,15 @@
 							</script>
 							<input id="cause_of_marriage_@(item.ID)" type="text" value="@(item.CauseOfMarriage)" placeholder="Причина брака" >
 						</td>
+						<td>
+							<a href="#" id="delete@(item.ID)">Удалить</a>
+							<script>
+								$("#delete@(item.ID)").click(function() {
+									$.get('@Url.Action("Delete", "Device")', { id: @(item.ID) }, function(data) {	});									
+									$(this).parent().parent().remove();
+								});
+							</script>
+						</td>
 					</tr>
 				}
 			</tbody>
