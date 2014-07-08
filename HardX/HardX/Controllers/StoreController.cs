@@ -589,8 +589,20 @@ namespace HardX.Controllers
             try
             {
                 StoreMatDetail theMD = new StoreMatDetail();
-                theMD = theMD.GetById(ID);              
-                
+                theMD = theMD.GetById(ID);
+
+                Store theStore = new Store();
+                theStore = theStore.GetById(theMD.Store.ID);
+
+                int nCount = theStore.StoreMatDetails.Count(x => x.Matmodel.ID == theMD.Matmodel.ID);
+                if (nCount == 1) // Удаляется последняя позиция модели (S0029)
+                {                                                            // => удаляем все устройства по данной позиции (S0029)
+                    foreach (var item in (new Material()).GetAll("REPOSITORY_ID=" + theMD.Store.ID + " AND MAT_MODEL_ID=" + theMD.Matmodel.ID))
+                    {
+                        item.Delete(item);
+                    }
+                }
+
                 theMD.Delete(theMD);
 
                 return RedirectToAction("Materials", new  { id = theMD.Store.ID });
@@ -610,7 +622,18 @@ namespace HardX.Controllers
                 StoreDevDetail theDD = new StoreDevDetail();
                 theDD = theDD.GetById(ID);
 
-                theDD.Delete(theDD);
+                Store theStore = new Store();
+                theStore = theStore.GetById(theDD.Store.ID); 
+                int nCount = theStore.StoreDevDetails.Count(x => x.Devmodel.ID == theDD.Devmodel.ID);
+                if (nCount == 1) // Удаляется последняя позиция модели (S0029)
+                {                                                            // => удаляем все устройства по данной позиции (S0029)
+                    foreach (var item in (new Device()).GetAll("REPOSITORY_ID=" + theDD.Store.ID + " AND DEV_MODEL_ID=" + theDD.Devmodel.ID))
+                    {
+                        item.Delete(item);
+                    }
+                }
+
+                theDD.Delete(theDD); // удаляем саму позиция (S0029)
 
                 return RedirectToAction("Devices", new { id = theDD.Store.ID });
             }
