@@ -799,6 +799,15 @@ namespace HardX.Controllers
             model.StatusID = 1;
             model.Store = (new Store()).GetById(store_id);            
             model.Update(model);
+
+            // Проверяем есть ли дня нового склада - позиция добавляемых моделей материалов (S0026)
+            if ( model.Store.StoreMatDetails.Count(x => x.Matmodel.ID == model.Matmodel.ID) == 0 )
+            {
+                StoreMatDetail detail = new StoreMatDetail();
+                detail.Matmodel = (new Matmodel()).GetById(model.Matmodel.ID);
+                detail.Store = (new Store()).GetById(store_id);
+                detail.Save(detail);
+            }
             return View();
         }
         public ActionResult DevicesSetCauseOfMarriage(int device_id, string cause_of_marriage)
@@ -834,6 +843,16 @@ namespace HardX.Controllers
             model.Store = (new Store()).GetById(store_id);            
             
             model.Update(model);
+
+            // Проверяем есть ли дня нового склада - позиция добавляемых моделей оборудования (S0026)
+            if (model.Store.StoreDevDetails.Count(x => x.Devmodel.ID == model.Devmodel.ID) == 0)
+            {
+                StoreDevDetail detail = new StoreDevDetail();
+                detail.Devmodel = (new Devmodel()).GetById(model.Devmodel.ID);
+                detail.Store = (new Store()).GetById(store_id);
+                detail.Save(detail);
+            }
+
             return View();            
         }   
     }
