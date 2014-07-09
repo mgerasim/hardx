@@ -47,11 +47,21 @@
 			theListRole = (List<HardX.Models.Role>) theRole.GetAll();
 		}
 		<h5>Роли:</h5>
+
+
+					<table border="1" cellspacing="0" cellpadding="0" width="780" style="table-layout:fixed">
+<col width="80">
+<tbody>
+
 		@foreach (var item in theListRole)
-		{				 
+		{
+				 
 			var roleID = "RoleID_" + item.Id; 
 			
-				if (Model.IsExistRole(Convert.ToInt32(item.Id))) {
+<tr>
+  <td style="width: 20px; height: 2px; overflow:hidden;">
+    		@if (Model.IsExistRole(Convert.ToInt32(item.Id))) {
+			
 					<input type="checkbox"
 					checked="true" 
 					id=@roleID
@@ -60,17 +70,33 @@
 				}
 				else
 				{
+				
 					<input type="checkbox"
 				
 					id=@roleID
 					name="Roles"
 					value="@item.Id"/>				
 				}
-			    
-					
-			@item.Name
-			<br />
+  </td>
+
+  <td style="width: 350px; height: 3px; overflow:hidden;">
+    
+        @item.Name
+    
+  </td>
+
+</tr>
+				
+			
 		}
+</tbody>
+</table>
+
+
+
+
+
+		<br/>
 
         <p>
             <input type="submit" value="Сохранить" />

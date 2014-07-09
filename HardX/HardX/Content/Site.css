@@ -66,3 +66,11 @@ textarea
 {
     display: none;
 }
+
+
+.checkboxtext
+{
+  /* Checkbox text */
+  font-size: 110%;
+  display: inline;
+}

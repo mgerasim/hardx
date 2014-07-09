@@ -45,18 +45,42 @@
 			theListRole = (List<HardX.Models.Role>) theRole.GetAll();
 		}
 		<h5>Роли:</h5>
+
+
+		
+			<table border="1" cellspacing="0" cellpadding="0" width="780" style="table-layout:fixed">
+<col width="60">
+<tbody>
+
 		@foreach (var item in theListRole)
 		{
 				 
 			var RoleID = "RoleID_" + item.Id; 
+			
+<tr>
+  <td style="width: 10px; height: 2px; overflow:hidden;">
+    
+        				<input type="checkbox" 
+							id=@RoleID
+							name="Roles"
+							value="@item.Id"/>
+    
+  </td>
+
+  <td style="width: 350px; height: 3px; overflow:hidden;">
+    
+        @item.Name
+    
+  </td>
+
+</tr>
 				
-			<input type="checkbox"
-			    id=@RoleID
-				name="Roles"
-				value="@item.Id"/>
-			@item.Name
-			<br />
+			
 		}
+</tbody>
+</table>
+
+<br/>
 
         <p>
             <input type="submit" value="Создать" />
