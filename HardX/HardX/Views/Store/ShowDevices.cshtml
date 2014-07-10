@@ -64,10 +64,14 @@
 									}
 								}								
 							</select>
+							<input id="serial_@(item.ID)" type="text" value="@(item.Serial)" placeholder="Серийный номер" >
+							<input id="ipaddr_@(item.ID)" type="text" value="@(item.IPAddr)" placeholder="IP адрес" >
+							<input id="host_@(item.ID)" type="text" value="@(item.Host)" placeholder="Хост" >
+
 							<a href="#" id="tab1_setup@(item.ID)">Установить</a><br/>
 							<script>
 								$("#tab1_setup@(item.ID.ToString())").click(function() {									
-									$.get('@Url.Action("DevicesSetSetup", "Store")', { device_id: @(item.ID), room_id: $("#tab1_select_setup_room_@(item.ID)").val() }, function(data) {	});
+									$.get('@Url.Action("DevicesSetSetup", "Store")', { device_id: @(item.ID), room_id: $("#tab1_select_setup_room_@(item.ID)").val(), serial: $("#serial_@(item.ID)").val(), ipaddr: $("#ipaddr_@(item.ID)").val(), host: $("#host_@(item.ID)").val() }, function(data) {	});
 									$(this).text("Сохранено");
 								});
 							</script>
@@ -151,13 +155,15 @@
 						<td>@item.Devmodel.FullName</td>
 						<td>@item.Updated_At.ToString()</td>
 						<td>
-							Установлен в кабинете: 
+							Установлен в кабинете: <br />
 							@foreach(var room2 in ((List<Room>)ViewBag.Rooms).Where(x => x.ID==item.RoomID))
 							{
 								@room2.FullName
 							}
-
+						</td>
+						<td>
 							<input id="tab22_cause_of_marriage_@(item.ID)" type="text" value="@(item.CauseOfMarriage)" placeholder="Причина брака" >
+							<br />
 							<a href="#" id="tab22_marriage@(item.ID)">Брак</a>
 							<script>
 								function tab22_AjaxUpdateStatus@(item.ID)(status) {
@@ -167,9 +173,46 @@
 										$.get('@Url.Action("DevicesSetCauseOfMarriage", "Store")', { device_id: @(item.ID), cause_of_marriage: $("#tab22_cause_of_marriage_@(item.ID)").val() }, function(data) {	});
 									$(this).parent().parent().remove();
 								});
-							</script>
-							
+							</script>							
 						</td>
+						
+						<td>
+							
+							<a href="#" id="tab22_serial_save@(item.ID)">Сохранить серийный номер</a>
+							<script>								
+								$("#tab22_serial_save@(item.ID)").click(function() {
+									$.get('@Url.Action("DevicesSaveSerial", "Store")', { device_id: @(item.ID), serial: $("#tab22_serial_@(item.ID)").val() }, function(data) {	});
+									$(this).text("Сохранено");
+								});
+							</script>							
+							<br />
+							<input id="tab22_serial_@(item.ID)" type="text" value="@(item.Serial)" placeholder="Серийный номер" >
+							<br />
+						
+							
+							<a href="#" id="tab22_ipaddr_save@(item.ID)">Сохранить IP адрес</a>
+							<script>								
+								$("#tab22_ipaddr_save@(item.ID)").click(function() {
+									$.get('@Url.Action("DevicesSaveIPAddr", "Store")', { device_id: @(item.ID), ipaddr: $("#tab22_ipaddr_@(item.ID)").val() }, function(data) {	});
+									$(this).text("Сохранено");
+								});
+							</script>							
+							<br />
+							<input id="tab22_ipaddr_@(item.ID)" type="text" value="@(item.IPAddr)" placeholder="IP адрес" >
+							<br />
+													
+							<a href="#" id="tab22_host_save@(item.ID)">Сохранить хост</a>
+							<script>								
+								$("#tab22_host_save@(item.ID)").click(function() {
+									$.get('@Url.Action("DevicesSaveHost", "Store")', { device_id: @(item.ID), host: $("#tab22_host_@(item.ID)").val() }, function(data) {	});
+									$(this).text("Сохранено");
+								});
+							</script>							
+							<br />
+							<input id="tab22_host_@(item.ID)" type="text" value="@(item.Host)" placeholder="Хост" >
+							<br />
+						</td>
+
 					</tr>
 				}
 			</tbody>

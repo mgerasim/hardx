@@ -19,6 +19,9 @@
     <property name="Updated_At" column="updated_at" type="LocalDateTime" />
     <property name="CauseOfMarriage" column="cause_of_marriage" type="String" length="255" />
     <property name="RoomID" column="ROOM_ID" type="int" />
+    <property name="Serial" column="SERIAL" type="String" length="255" />
+    <property name="IPAddr" column="IPADDR" type="String" length="255" />
+    <property name="Host" column="HOST" type="String" length="255" />
 
   </class>
 </hibernate-mapping>

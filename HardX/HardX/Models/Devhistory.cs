@@ -22,6 +22,12 @@ namespace HardX.Models
         public DateTime Created_At { get; set; }
         
         public int RoomID { get; set; }
+
+        public String Serial { get; set; }
+
+        public String IPAddr { get; set; }
+
+        public String Host { get; set; }
         
         public Devhistory()
         {
@@ -40,6 +46,9 @@ namespace HardX.Models
             this.RoomID = entity.RoomID;
             this.StoreID = entity.Store.ID;
             this.StatusID = entity.StatusID;
+            this.Serial = entity.Serial;
+            this.IPAddr = entity.IPAddr;
+            this.Host = entity.Host;
         }
     }
 }

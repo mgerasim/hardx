@@ -832,13 +832,16 @@ namespace HardX.Controllers
             model.Update(model);
             return View();
         }
-        public ActionResult DevicesSetSetup(int device_id, int room_id)
+        public ActionResult DevicesSetSetup(int device_id, int room_id, string serial, string ipaddr, string host)
         {
             Device model = new Device();
             model = model.GetById(device_id);
             model.RoomID = room_id;
             model.StatusID = 22;
             model.Updated_At = DateTime.Now;
+            model.IPAddr = ipaddr;
+            model.Host = host;
+            model.Serial = serial;
             model.Update(model);
             return View();
         }   
@@ -866,7 +869,39 @@ namespace HardX.Controllers
             }
 
             return View();            
-        }   
+        }
+
+        public ActionResult DevicesSaveSerial(int device_id, string serial)
+        {
+            Device model = new Device();
+            model = model.GetById(device_id);            
+            model.Serial = serial;
+            model.Updated_At = DateTime.Now;
+            model.Update(model);
+            return View();
+        }
+
+        public ActionResult DevicesSaveIPAddr(int device_id, string ipaddr)
+        {
+            Device model = new Device();
+            model = model.GetById(device_id);
+            model.IPAddr = ipaddr;
+            model.Updated_At = DateTime.Now;
+            model.Update(model);
+            return View();
+        }
+
+        public ActionResult DevicesSaveHost(int device_id, string host)
+        {
+            Device model = new Device();
+            model = model.GetById(device_id);
+            model.Host = host;
+            model.Updated_At = DateTime.Now;
+            model.Update(model);
+            return View();
+        }
+
+
     }
 }
 

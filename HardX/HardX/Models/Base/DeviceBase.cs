@@ -16,6 +16,18 @@ namespace HardX.Models.Base
         [Required(ErrorMessage = "* Укажите модель оборудования")]
         public Devmodel Devmodel { get; set; }
 
+        [Display(Name = "Серийный номер")]
+        [Required(ErrorMessage = "* Укажите серийный номер")]
+        public String Serial { get; set; }
+        
+        [Display(Name = "IP Адрес")]
+        [Required(ErrorMessage = "* Укажите IP адрес")]
+        public String IPAddr { get; set; }
+        
+        [Display(Name = "Хост")]
+        [Required(ErrorMessage = "* Укажите хост")]
+        public String Host{ get; set; }
+
         public int DevmodelID;
 
 
