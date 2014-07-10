@@ -100,10 +100,44 @@
 		</table>
 	</div> <!-- tabs-1 -->
 
+	<div id="tabs-22">
+		<table>
+			<tbody id="tbody_tab22">			
+				@foreach( var item in from mathist in (List<Mathistory>)ViewBag.Mathistory 
+                                  join material in ( (List<Material>)ViewBag.Materials ) on  mathist.MaterialID equals material.ID
+								  join store in ( (List<Store>)ViewBag.Stores ) on material.Store.ID equals store.ID
+                                  
+                                  select new
+                                  {
+                                      ID = material.ID,
+                                      Matmodel = material.Matmodel,
+                                      Updated_At = material.Updated_At,
+                                      StoreID = store.ID,                                      
+                                      StoreName = store.Name,
+									  CauseOfMarriage = material.CauseOfMarriage,
+									  DeviceID = material.DeviceID,
+                                  }
+
+                                   )
+				{
+					<tr id="tr_tab22_@(item.ID)">
+						<td>@item.ID</td>
+						<td>@item.Matmodel.FullName</td>
+						<td>@item.Updated_At.ToString()</td>
+						<td>							
+							
+							Выдано на склад: @item.StoreName (# @item.StoreID)
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+
 	<div id="tabs-2">
 		<table>
 			<tbody id="tbody_tab2">
-				@foreach( var item in ViewBag.Materials2 )
+				@foreach( var item in ViewBag.Materials22 )
 				{
 					<tr id="tr_tab2_@(item.ID)">
 						<td>@item.ID</td>
@@ -148,39 +182,7 @@
 		</table>
 	</div>
 
-	<div id="tabs-22">
-		<table>
-			<tbody id="tbody_tab22">			
-				@foreach( var item in from mathist in (List<Mathistory>)ViewBag.Mathistory 
-                                  join material in ( (List<Material>)ViewBag.Materials ) on  mathist.MaterialID equals material.ID
-								  join store in ( (List<Store>)ViewBag.Stores ) on material.Store.ID equals store.ID
-                                  
-                                  select new
-                                  {
-                                      ID = material.ID,
-                                      Matmodel = material.Matmodel,
-                                      Updated_At = material.Updated_At,
-                                      StoreID = store.ID,                                      
-                                      StoreName = store.Name,
-									  CauseOfMarriage = material.CauseOfMarriage,
-									  DeviceID = material.DeviceID,
-                                  }
-
-                                   )
-				{
-					<tr id="tr_tab22_@(item.ID)">
-						<td>@item.ID</td>
-						<td>@item.Matmodel.FullName</td>
-						<td>@item.Updated_At.ToString()</td>
-						<td>							
-							
-							Выдано на склад: @item.StoreName (# @item.StoreID)
-						</td>
-					</tr>
-				}
-			</tbody>
-		</table>
-	</div>
+	
 	
 	<div id="tabs-3">
 		<table>

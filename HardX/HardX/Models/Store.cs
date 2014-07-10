@@ -213,6 +213,29 @@ namespace HardX.Models
             }
             return res;
         }
+
+        public virtual int GetMaterialsCountFromHistory(List<Mathistory> theHistory, int MatmodelID, int StatusID)
+        {
+            int res = 0;
+            
+                res = theHistory.Where(x => x.StatusID == StatusID)
+                    .Where(x => x.MatmodelID == MatmodelID)
+                    .Where(x => x.StoreID == this.ID)
+                    .Count();
+            return res;
+        }
+
+        public virtual int GetDevicesCountFromHistory(List<Devhistory> theHistory, int DevmodelID, int StatusID)
+        {
+            int res = 0;
+            
+                res = theHistory.Where(x => x.StatusID == StatusID)
+                    .Where(x => x.DevmodelID == DevmodelID)
+                    .Where(x => x.StoreID == this.ID)
+                    .Count();
+            
+            return res;
+        }
     }
 
 

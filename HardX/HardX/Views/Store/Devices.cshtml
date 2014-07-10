@@ -203,8 +203,8 @@
 			@{
 			// Выдать
 			}
-            <div id="mat_issued@(item.ID)">
-				@item.Store.GetDeviceCountFromList(Model, @item.Devmodel.ID, 2)
+            <div id="mat_issued@(item.ID)">				
+				@ViewBag.theStore.GetDevicesCountFromHistory(ViewBag.Devhistory, @item.Devmodel.ID, 2)
 			</div>	
 					
 			<script>

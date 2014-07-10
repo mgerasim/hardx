@@ -17,6 +17,8 @@ namespace HardX.Models
 
         public int StatusID { get; set; }
 
+        public int DevmodelID { get; set; }
+
         public DateTime Created_At { get; set; }
         
         public int RoomID { get; set; }

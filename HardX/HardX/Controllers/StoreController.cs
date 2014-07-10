@@ -170,6 +170,10 @@ namespace HardX.Controllers
             theStore = theStore.GetById(id);
             ViewBag.theStore = theStore;
 
+
+            ViewBag.Mathistory = ((List<Mathistory>)(new Mathistory()).GetAll());
+            ViewBag.Materials = (new Material()).GetAll();
+                        
             return View(theList);
         }
 
@@ -186,6 +190,9 @@ namespace HardX.Controllers
                 theMatDetail.Store = (new Store()).GetById(id);
                 theMatDetail.Save(theMatDetail);
 
+
+                
+
                 return this.Materials(id);
             }
             catch (Exception ex)
@@ -194,27 +201,6 @@ namespace HardX.Controllers
                 route.Add("err", ex.Message);
                 return RedirectToAction("Error", "Home", route);
             }
-
-            /*
-             * string strWhere = "repository_id="+repository_id.ToString();
-            strWhere += " AND to_date('" + report_bgn + "', 'DD.MM.YYYY') <= updated_at";
-            strWhere += " AND to_date('" + report_end + "', 'DD.MM.YYYY') >= updated_at";
-            Material theModel = new Material();
-            List<Material> theList = (List<Material>)theModel.GetAll(strWhere);
-
-            Store theStore = new Store();
-            theStore = theStore.GetById(repository_id);
-            ViewBag.theStore = theStore;
-
-            string filename = "Отчёт-Склад-" + (new Store()).GetById(repository_id).Name + "_" + DateTime.Now.ToString("yyyy-MM-dd")+".xls";
-            filename = filename.Replace(' ', '-');
-            Response.AddHeader("Content-Disposition", "attachment; filename=" + filename);
-            Response.AddHeader("Content-Type", "application/vnd.ms-excel");
-            Response.AddHeader("Set-Cookie", "fileDownload=true");
-            Response.AddHeader("Cache-Control", "max-age=60, must-revalidate");
-            return View(theList);
-             * */
-
         }
 
         public ActionResult Devices(int id)
@@ -225,6 +211,9 @@ namespace HardX.Controllers
             Store theStore = new Store();
             theStore = theStore.GetById(id);
             ViewBag.theStore = theStore;
+
+            ViewBag.Devices = ((List<Devhistory>)(new Devhistory()).GetAll()).Where(x => x.StatusID == 2).Where(x => x.StoreID == id);
+            ViewBag.Devhistory = ((List<Devhistory>)(new Devhistory()).GetAll());
 
             return View(theList);
         }
@@ -748,7 +737,7 @@ namespace HardX.Controllers
             ViewBag.Devices = (new Device()).GetAll();
             ViewBag.Materials = (new Material()).GetAll("MAT_MODEL_ID="+ViewBag.MatmodelID) ;
             ViewBag.Materials1 = ((List<Material>) ViewBag.Materials).Where(x => x.StatusID==1 ).Where(x => x.Store.ID==ViewBag.StoreID);
-            ViewBag.Materials2 = ((List<Material>)ViewBag.Materials).Where(x => x.StatusID == 2).Where(x => x.Store.ID == ViewBag.StoreID);
+            ViewBag.Materials22 = ((List<Material>)ViewBag.Materials).Where(x => x.StatusID == 22).Where(x => x.Store.ID == ViewBag.StoreID);
             ViewBag.Materials3 = ((List<Material>)ViewBag.Materials).Where(x => x.StatusID == 3).Where(x => x.Store.ID == ViewBag.StoreID);            
             ViewBag.Mathistory = (new Mathistory()).GetAll("STORE_ID=" + ViewBag.StoreID + " AND STATUS_ID=2");           
             return View();

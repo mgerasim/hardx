@@ -18,6 +18,8 @@ namespace HardX.Models
 
         public int StatusID { get; set; }
 
+        public int MatmodelID { get; set; }
+
         public DateTime Created_At { get; set; }
 
         public Mathistory()

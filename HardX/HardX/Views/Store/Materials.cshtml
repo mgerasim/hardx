@@ -222,7 +222,10 @@
 			// Выдать
 			}
             <div id="mat_issued@(item.ID)">
-				@item.Store.GetMaterialCountFromList(Model, @item.Matmodel.ID, 2)
+				
+				
+				@ViewBag.theStore.GetMaterialsCountFromHistory(ViewBag.Mathistory, @item.Matmodel.ID, 2)
+
 			</div>	
 					
 			<script>

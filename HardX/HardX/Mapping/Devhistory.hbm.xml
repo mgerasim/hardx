@@ -16,6 +16,7 @@
     <property name="RoomID"   column="ROOM_ID"    type="int"/>
     <property name="StoreID"  column="STORE_ID"   type="int"/>
     <property name="StatusID"  column="STATUS_ID"   type="int"/>    
+    <property name="DevmodelID"  column="DEV_MODEL_ID"   type="int"/>
     <property name="Created_At" column="created_at" type="LocalDateTime" />
   </class>
 </hibernate-mapping>
