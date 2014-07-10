@@ -10,52 +10,92 @@
 <p>
     @Html.ActionLink("Добавить Кабинет", "Create")
 </p>
-<table>
-    <tr>
-        <th>
-			Имя
-        </th>
+<table class="tablesorter">
+	<thead>
+		<tr>
+			<th>
+				Имя
+			</th>
 
-		<th>
-			Здание
-        </th>
+			<th>
+				Здание
+			</th>
 		
-		<th>
-			Улица
-        </th>
+			<th>
+				Улица
+			</th>
 
-        <th>
-			Населённый пункт
-        </th>
-				
+			<th>
+				Населённый пункт
+			</th>
         
+			<th></th>
+		</tr>
+	</thead>
 
+	<tbody>
+
+		@foreach (var item in Model) {
+			<tr>
+				<td>
+					@item.Name
+				</td>
+				<td>
+					@item.House.Name
+				</td>
+				<td>
+					@item.House.Street.Name
+				</td>
+				<td>
+					@item.House.Street.Town.Name
+				</td>
+				<td>
+					@Html.ActionLink("Редактировать", "Edit", new { id=item.ID }) |
+					@Html.ActionLink("Просмотр", "Details", new { id=item.ID }) |
+					@Html.ActionLink("Удалить", "Delete", new { id=item.ID }, new { onclick = "return confirm('Вы действительно хотите удалить?');" })
+				</td>        
+			</tr>
+		}
+	</tbody>
+
+	<tfoot>
+		<tr>
+			<th>
+				Имя
+			</th>
+
+			<th>
+				Здание
+			</th>
 		
-        
-        <th></th>
-    </tr>
+			<th>
+				Улица
+			</th>
 
-@foreach (var item in Model) {
-    <tr>
-		<td>
-            @item.Name
-        </td>
-		<td>
-            @item.House.Name
-        </td>
-		<td>
-            @item.House.Street.Name
-        </td>
-		<td>
-            @item.House.Street.Town.Name
-        </td>
-        <td>
-            @Html.ActionLink("Редактировать", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Просмотр", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Удалить", "Delete", new { id=item.ID }, new { onclick = "return confirm('Вы действительно хотите удалить?');" })
-        </td>        
-    </tr>
-}
+			<th>
+				Населённый пункт
+			</th>
+        
+			<th></th>
+		</tr>
+		<tr>
+			<th colspan="5" class="ts-pager form-horizontal">
+				<button type="button" class="btn first"><i class="icon-step-backward glyphicon glyphicon-step-backward"></i></button>
+				<button type="button" class="btn prev"><i class="icon-arrow-left glyphicon glyphicon-backward"></i></button>
+				<span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+				<button type="button" class="btn next"><i class="icon-arrow-right glyphicon glyphicon-forward"></i></button>
+				<button type="button" class="btn last"><i class="icon-step-forward glyphicon glyphicon-step-forward"></i></button>
+				<select class="pagesize input-mini" title="Select page size">
+					<option selected="selected" value="10">10</option>
+					<option value="20">20</option>
+					<option value="30">30</option>
+					<option value="40">40</option>
+					<option value="9999">Все</option>
+				</select>
+				<select class="pagenum input-mini" title="Select page number"></select>
+			</th>
+		</tr>
+	</tfoot>
 
 </table>
 
