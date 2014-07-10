@@ -699,7 +699,7 @@ namespace HardX.Controllers
             filename = filename.Replace(' ', '-');
             Response.Clear();
             Response.AddHeader("Content-Disposition", "attachment; filename=" + filename);
-            Response.AddHeader("Content-Type", "application/ms-excel");
+            Response.AddHeader("Content-Type", "application/ms-excel; charset=utf-8");
             Response.AddHeader("Set-Cookie", "fileDownload=true");
             Response.AddHeader("Cache-Control", "max-age=60, must-revalidate");
             
@@ -722,7 +722,7 @@ namespace HardX.Controllers
             filename = filename.Replace(' ', '-');
             Response.Clear();
             Response.AddHeader("Content-Disposition", "attachment; filename=" + filename);
-            Response.AddHeader("Content-Type", "application/ms-excel");
+            Response.AddHeader("Content-Type", "application/ms-excel; charset=utf-8");
             Response.AddHeader("Set-Cookie", "fileDownload=true");
             Response.AddHeader("Cache-Control", "max-age=60, must-revalidate");
             

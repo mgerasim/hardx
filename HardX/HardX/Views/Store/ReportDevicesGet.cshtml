@@ -1,4 +1,4 @@
-@using HardX.Models
+﻿@using HardX.Models
 @model List<HardX.Models.Device>
 
 @{
@@ -27,20 +27,24 @@
         </th> 
 
         <th>
-            Наименование
-        </th>
-				
-        <th>
-            Наличие
-        </th>
-		
-        <th>
-            Выдано
-        </th>
+			Наличие
+		</th>
 
-        <th>
-            Брак
-        </th>
+		<th>
+			Имя модели
+		</th>
+				
+		<th>
+			Выдано
+		</th>
+
+		<th>
+			Установлено
+		</th>
+
+		<th>
+			Забраковано
+		</th>
     </tr>
 
 	
@@ -68,6 +72,10 @@
 		
         <td>
             @item.Store.GetDeviceCountFromList(Model, @item.Devmodel.ID, 2)
+        </td>
+
+		<td>
+            @item.Store.GetDeviceCountFromList(Model, @item.Devmodel.ID, 22)
         </td>
 		
         <td>
