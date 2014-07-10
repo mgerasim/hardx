@@ -18,6 +18,7 @@ namespace HardX.Models
         [Editable(true)]
         private string _Name;
 
+
         private Iesi.Collections.Generic.ISet<Material> _Materials;
 
         public virtual Iesi.Collections.Generic.ISet<Material> Materials
