@@ -695,6 +695,9 @@ namespace HardX.Controllers
             theStore = theStore.GetById(repository_id);
             ViewBag.theStore = theStore;
 
+            ViewBag.Mathistory = ((List<Mathistory>)(new Mathistory()).GetAll());
+            ViewBag.Materials = (new Material()).GetAll();
+
             string filename = "Отчёт-Склад-Материалы-" + (new Store()).GetById(repository_id).Name + "_" + DateTime.Now.ToString("yyyy-MM-dd")+".xls";
             filename = filename.Replace(' ', '-');
             Response.Clear();
