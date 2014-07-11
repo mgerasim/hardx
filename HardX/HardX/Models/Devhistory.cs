@@ -49,6 +49,7 @@ namespace HardX.Models
             this.Serial = entity.Serial;
             this.IPAddr = entity.IPAddr;
             this.Host = entity.Host;
+            this.DevmodelID = entity.Devmodel.ID;
         }
     }
 }

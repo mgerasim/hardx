@@ -39,6 +39,7 @@ namespace HardX.Models
             this.Created_At = entity.Created_At;            
             this.StoreID = entity.Store.ID;
             this.StatusID = entity.StatusID;
+            this.MatmodelID = entity.Matmodel.ID;
         }
     }
 }
