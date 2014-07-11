@@ -54,7 +54,7 @@ namespace HardX.Models.Base
         {
             get
             {
-                return this.Devmodel.FullName + "(#" + this.ID + ")";
+                return this.Devmodel.FullName + " # " + this.ID ;                
             }
         }
 

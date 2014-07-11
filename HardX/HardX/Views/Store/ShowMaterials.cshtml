@@ -52,9 +52,20 @@
 							</script>
 
 							Установить в оборудование:											
-							<select id="tab1_select_setup_device_@(item.ID)" class="chosen-select" placeholder="Выбрать..." name="[0].MatmodelID" style="width: 250px;">
+							<br />
+							<select id="tab1_select_setup_device_@(item.ID)" class="chosen-select" placeholder="Выбрать..." name="[0].MatmodelID" style="width: 450px;">
 								<option value=""></option>
-								@foreach(var device in ViewBag.Devices)
+								@foreach(var device in from dev in (List<Device>)ViewBag.Devices
+																join room in (List<Room>)ViewBag.Rooms on dev.RoomID equals room.ID
+																select new
+																{
+																	ID = dev.ID,
+																	RoomID = room.ID,
+																	FullName = dev.FullName + " - " + room.FullName,
+																	RoomFullName = room.FullName
+																}
+								)
+
 								{
 									if (device.ID == item.DeviceID)  {
 										<option selected="selected" value="@(device.ID)">@device.FullName</option>

@@ -738,8 +738,10 @@ namespace HardX.Controllers
             ViewBag.MatmodelID = MatmodelID;
             ViewBag.Stores = (new Store()).GetAll();
             ViewBag.Devices = (new Device()).GetAll();
+            ViewBag.Rooms = (new Room()).GetAll();
             ViewBag.Materials = (new Material()).GetAll("MAT_MODEL_ID="+ViewBag.MatmodelID) ;
-            ViewBag.Materials1 = ((List<Material>)ViewBag.Materials).Where(x => x.StoreID == ViewBag.StoreID).Where(x => x.StatusID == 1);
+            List<Material> theMaterials1 = (new Material()).GetAll("MAT_MODEL_ID=" + ViewBag.MatmodelID+" AND REPOSITORY_ID="+ ViewBag.StoreID+" AND STATUS_ID=1");                
+            ViewBag.Materials1 = theMaterials1;
             ViewBag.Materials22 = ((List<Material>)ViewBag.Materials).Where(x => x.StatusID == 22).Where(x => x.Store.ID == ViewBag.StoreID);
             ViewBag.Materials3 = ((List<Material>)ViewBag.Materials).Where(x => x.StatusID == 3).Where(x => x.Store.ID == ViewBag.StoreID);            
             ViewBag.Mathistory = (new Mathistory()).GetAll("STORE_ID=" + ViewBag.StoreID + " AND STATUS_ID=2");           
