@@ -25,8 +25,12 @@
         }
     </style>
 
-	
+<h1>Склад @ViewBag.theStore.Name</h1>	
 <p>
+	@Html.ActionLink("Назад к списку складов", "Index") |
+
+	@Html.ActionLink("Перейти к расходным материалам", "Materials", new { id=ViewBag.theStore.ID }) |
+
 	Отчет за период c &nbsp
 	<input type="text" id="report_bgn" class="tcal" readonly="readonly"  style="width: 90px" />
 	по &nbsp
