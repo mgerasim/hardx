@@ -533,12 +533,6 @@
     <Content Include="Views\Store\MaterialsGet.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Store\MaterialsIssued.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Store\MaterialsMarriage.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Store\Devices.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -549,24 +543,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\DevicesDel.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Store\DevicesIssued.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Store\DevicesMarriage.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Store\MaterialsIssuedDel.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Store\DevicesIssuedDel.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Store\MaterialsMarriageDel.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Store\DevicesMarriageDel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\ReportMaterialsGet.cshtml" />
@@ -594,18 +570,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Street\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Store\MaterialsSetup.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Store\MaterialsSetupDel.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Store\DevicesSetup.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Store\DevicesSetupDel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\DevicesSaveHost.cshtml" />

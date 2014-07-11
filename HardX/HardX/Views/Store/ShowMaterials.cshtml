@@ -35,11 +35,14 @@
 								<option value=""></option>
 								@foreach(var store in ViewBag.Stores)
 								{
-									if (store.ID == item.StoreID)  {
-										<option selected="selected" value="@(store.ID)">@store.Name</option>
-									}
-									else {
-										<option value="@(store.ID)">@store.Name</option>
+									if (ViewBag.StoreID != store.ID)
+									{
+										if (store.ID == item.StoreID)  {
+											<option selected="selected" value="@(store.ID)">@store.Name</option>
+										}
+										else {
+											<option value="@(store.ID)">@store.Name</option>
+										}
 									}
 								}								
 							</select>
