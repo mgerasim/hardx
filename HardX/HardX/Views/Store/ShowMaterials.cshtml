@@ -57,6 +57,7 @@
 								<option value=""></option>
 								@foreach(var device in from dev in (List<Device>)ViewBag.Devices
 																join room in (List<Room>)ViewBag.Rooms on dev.RoomID equals room.ID
+																join compability in (NHibernate.Collection.Generic.PersistentGenericSet<HardX.Models.Devmodel>)ViewBag.Matmodel.Devmodels on dev.Devmodel.ID equals compability.ID
 																select new
 																{
 																	ID = dev.ID,
