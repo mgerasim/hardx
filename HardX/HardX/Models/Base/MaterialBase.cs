@@ -52,8 +52,9 @@ namespace HardX.Models.Base
         public int CountDelete { get; set; }
 
         public DateTime Created_At { get; set; }
-
         public DateTime Updated_At { get; set; }
+        public int Creater { get; set; }
+        public int Updater { get; set; }
 
         public String CauseOfMarriage { get; set; }
 

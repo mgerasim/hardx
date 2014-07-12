@@ -19,6 +19,11 @@
       <key column = "user_id" />
       <many-to-many class="Role" column="role_id" />
     </set>
+    
+    <property name="Created_At" column="created_at" type="LocalDateTime" />
+    <property name="Updated_At" column="updated_at" type="LocalDateTime" />
+    <property name="Creater" column="CREATER" type="int" />
+    <property name="Updater" column="UPDATER" type="int" />
   
 
   </class>

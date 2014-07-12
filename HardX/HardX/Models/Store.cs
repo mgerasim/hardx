@@ -89,8 +89,27 @@ namespace HardX.Models
                 this._StoreMatDetails = value;
             }
         }
+                
+        protected internal virtual DateTime Created_At { get; set; }
+        protected internal virtual DateTime Updated_At { get; set; }
+        protected internal virtual int Creater { get; set; }
+        protected internal virtual int Updater { get; set; }
 
-       
+        public override void Save(Store entity)
+        {
+            this.Created_At = DateTime.Now;
+            this.Updated_At = DateTime.Now;
+            this.Creater = User.CurrentUserId;
+            this.Updater = User.CurrentUserId;
+            base.Save(entity);
+        }
+
+        public override void Update(Store entity)
+        {
+            this.Updated_At = DateTime.Now;
+            this.Updater = User.CurrentUserId;
+            base.Update(entity);
+        }
 
         public Store()
         {

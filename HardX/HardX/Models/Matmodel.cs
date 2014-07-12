@@ -61,6 +61,29 @@ namespace HardX.Models
             }
         }
 
+
+        public DateTime Created_At { get; set; }
+        public DateTime Updated_At { get; set; }
+        public int Creater { get; set; }
+        public int Updater { get; set; }
+
+        public override void Save(Matmodel entity)
+        {
+            this.Created_At = DateTime.Now;
+            this.Updated_At = DateTime.Now;
+            this.Creater = User.CurrentUserId;
+            this.Updater = User.CurrentUserId;
+            base.Save(entity);
+        }
+
+        public override void Update(Matmodel entity)
+        {
+            this.Updated_At = DateTime.Now;
+            this.Updater = User.CurrentUserId;
+            base.Update(entity);
+        }
+
+
         public Matmodel()
         {
             Devmodels = new HashedSet<Devmodel>();

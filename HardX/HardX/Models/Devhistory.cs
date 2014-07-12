@@ -18,9 +18,7 @@ namespace HardX.Models
         public int StatusID { get; set; }
 
         public int DevmodelID { get; set; }
-
-        public DateTime Created_At { get; set; }
-        
+                
         public int RoomID { get; set; }
 
         public String Serial { get; set; }
@@ -28,6 +26,27 @@ namespace HardX.Models
         public String IPAddr { get; set; }
 
         public String Host { get; set; }
+
+        public DateTime Created_At { get; set; }
+        public DateTime Updated_At { get; set; }
+        public int Creater { get; set; }
+        public int Updater { get; set; }
+
+        public override void Save(Devhistory entity)
+        {
+            this.Created_At = DateTime.Now;
+            this.Updated_At = DateTime.Now;
+            this.Creater = User.CurrentUserId;
+            this.Updater = User.CurrentUserId;
+            base.Save(entity);
+        }
+
+        public override void Update(Devhistory entity)
+        {
+            this.Updated_At = DateTime.Now;
+            this.Updater = User.CurrentUserId;
+            base.Update(entity);
+        }
         
         public Devhistory()
         {

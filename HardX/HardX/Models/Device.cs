@@ -13,6 +13,10 @@ namespace HardX.Models
     {
         public override void Save(Device entity)
         {
+            this.Created_At = DateTime.Now;
+            this.Updated_At = DateTime.Now;
+            this.Creater = User.CurrentUserId;
+            this.Updater = User.CurrentUserId;
             base.Save(entity);
             Devhistory theHistory = new Devhistory(entity);
             theHistory.Save(theHistory);            
@@ -20,6 +24,8 @@ namespace HardX.Models
 
         public override void Update(Device entity)
         {
+            this.Updated_At = DateTime.Now;
+            this.Updater = User.CurrentUserId;
             base.Update(entity);
             Devhistory theHistory = new Devhistory(entity);
             theHistory.Save(theHistory);           
@@ -27,8 +33,6 @@ namespace HardX.Models
 
         public Device()
         {
-            this.Created_At = DateTime.Now;
-            this.Updated_At = DateTime.Now;
             DeviceFactory theFactory = new DeviceFactory();
             _repository = theFactory.createRepository();
             if (_repository == null)

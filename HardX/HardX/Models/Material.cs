@@ -14,6 +14,10 @@ namespace HardX.Models
         
         public override void Save(Material entity)
         {
+            this.Created_At = DateTime.Now;
+            this.Updated_At = DateTime.Now;
+            this.Creater = User.CurrentUserId;
+            this.Updater = User.CurrentUserId;
             base.Save(entity);
             Mathistory theHistory = new Mathistory(entity);
             theHistory.Save(theHistory);            
@@ -21,11 +25,14 @@ namespace HardX.Models
 
         public override void Update(Material entity)
         {
+            this.Updated_At = DateTime.Now;
+            this.Updater = User.CurrentUserId;
             Mathistory theHistory = new Mathistory(entity);            
             base.Update(entity);            
             theHistory.Save(theHistory);           
         }
-        
+
+
         public Material()
         {
             this.Created_At = DateTime.Now;
