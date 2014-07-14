@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using HardX.Models;
+using HardX.Utils;
 
 namespace HardX.Controllers
 {
@@ -14,6 +15,12 @@ namespace HardX.Controllers
 
         public ActionResult Index()
         {
+            if (!Access.HasAccess(66))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             Store theStore = new Store();
             List<Store> theListStore = new List<Store>();
             theListStore = (List<Store>)theStore.GetAll();
@@ -26,6 +33,12 @@ namespace HardX.Controllers
 
         public ActionResult Details(int id)
         {
+            if (!Access.HasAccess(69))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             return View();
         }
 
@@ -34,9 +47,13 @@ namespace HardX.Controllers
 
         public ActionResult Create()
         {
+            if (!Access.HasAccess(67))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             NewStore model = new NewStore();
-
-
             return View(model);
         } 
 
@@ -46,13 +63,16 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
+            if (!Access.HasAccess(67))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             try
             {
-
                 Store model = new Store();
-
-                model.Name = collection["Name"];
-                
+                model.Name = collection["Name"];                
                 if (collection["User.Id"] != "")
                 {
                     model.User = (new User()).GetById(Convert.ToInt32(collection["User.Id"]));
@@ -97,6 +117,12 @@ namespace HardX.Controllers
  
         public ActionResult Edit(int id)
         {
+            if (!Access.HasAccess(68))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             Store model = new Store();
             model = model.GetById(id);
             return View(model);
@@ -108,15 +134,17 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
+            if (!Access.HasAccess(68))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             try
             {
-
                 Store model = new Store();
-
                 model = model.GetById(id);
-
                 model.Name = collection["Name"];
-
                 if (collection["User.Id"] != "")
                 {
                     model.User = (new User()).GetById(Convert.ToInt32(collection["User.Id"]));
@@ -163,6 +191,12 @@ namespace HardX.Controllers
 
         public ActionResult Materials(int id)
         {
+            if (!Access.HasAccess(66))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             Material theModel = new Material();
             List<Material> theList = (List<Material>)theModel.GetAll("REPOSITORY_ID="+id.ToString());
             
@@ -185,14 +219,16 @@ namespace HardX.Controllers
         {
             try
             {
+                if (!Access.HasAccess(66))
+                {
+                    System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                    route.Add("err", "Нет доступа!");
+                    return RedirectToAction("Error", "Home", route);
+                }
                 StoreMatDetail theMatDetail = new StoreMatDetail();
                 theMatDetail.Matmodel = (new Matmodel()).GetById(Convert.ToInt32(collection["[0].MatmodelID"]));
                 theMatDetail.Store = (new Store()).GetById(id);
                 theMatDetail.Save(theMatDetail);
-
-
-                
-
                 return this.Materials(id);
             }
             catch (Exception ex)
@@ -205,6 +241,12 @@ namespace HardX.Controllers
 
         public ActionResult Devices(int id)
         {
+            if (!Access.HasAccess(66))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             Device theModel = new Device();
             List<Device> theList = (List<Device>)theModel.GetAll("REPOSITORY_ID=" + id.ToString());
 
@@ -221,6 +263,12 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Devices(int id, FormCollection collection)
         {
+            if (!Access.HasAccess(66))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             try
             {
                 StoreDevDetail theDevDetail = new StoreDevDetail();
@@ -308,6 +356,12 @@ namespace HardX.Controllers
         
         public ActionResult Delete(int ID)
         {
+            if (!Access.HasAccess(70))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             try
             {
                 Store model = new Store();
@@ -471,6 +525,9 @@ namespace HardX.Controllers
             theStore = theStore.GetById(repository_id);
             ViewBag.theStore = theStore;
 
+            ViewBag.Devices = ((List<Devhistory>)(new Devhistory()).GetAll()).Where(x => x.StatusID == 2).Where(x => x.StoreID == repository_id);
+            ViewBag.Devhistory = ((List<Devhistory>)(new Devhistory()).GetAll());
+
             string filename = "Отчёт-Склад-Оборудование-" + (new Store()).GetById(repository_id).Name + "_" + DateTime.Now.ToString("yyyy-MM-dd") + ".xls";
             filename = filename.Replace(' ', '-');
             Response.Clear();
@@ -484,6 +541,12 @@ namespace HardX.Controllers
 
         public ActionResult ShowMaterials(int id, int MatmodelID)
         {
+            if (!Access.HasAccess(66))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             ViewBag.StoreID = id;
             ViewBag.MatmodelID = MatmodelID;
             Matmodel theMatmodel = (new Matmodel()).GetById(MatmodelID);
@@ -503,6 +566,12 @@ namespace HardX.Controllers
 
         public ActionResult ShowDevices(int id, int DevmodelID)
         {
+            if (!Access.HasAccess(66))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             ViewBag.StoreID = id;
             ViewBag.DevmodelID = DevmodelID;
             ViewBag.Stores = (new Store()).GetAll();

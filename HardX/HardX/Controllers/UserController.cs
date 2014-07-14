@@ -52,8 +52,7 @@ namespace HardX.Controllers
         // GET: /User/Create
 
         public ActionResult Create()
-        {
-            
+        {            
             if (!Access.HasAccess(2))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
