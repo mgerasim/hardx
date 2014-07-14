@@ -15,14 +15,14 @@ namespace HardX.Controllers
 
         public ActionResult Index()
         {
-            /*
+            
             if (!Access.HasAccess(6))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
-                return RedirectToAction("Error", "Capital", route);
+                return RedirectToAction("Error", "Home", route);
             }
-            */
+            
             Branche theBranche = new Branche();
             List<Branche> theListBranche = new List<Branche>();
             theListBranche = (List<Branche>)theBranche.GetAll();
@@ -35,11 +35,11 @@ namespace HardX.Controllers
 
         public ActionResult Details(int id)
         {
-            if (!Access.HasAccess(6))
+            if (!Access.HasAccess(9))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
-                return RedirectToAction("Error", "Capital", route);
+                return RedirectToAction("Error", "Home", route);
             }
             Branche theBranche = new Branche();            
             return View(theBranche.GetById(id));
@@ -50,11 +50,11 @@ namespace HardX.Controllers
 
         public ActionResult Create()
         {
-            if (!Access.HasAccess(5))
+            if (!Access.HasAccess(7))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
-                return RedirectToAction("Error", "Capital", route);
+                return RedirectToAction("Error", "Home", route);
             }
             BrancheNew theBranch = new BrancheNew();  
             return View(theBranch);
@@ -66,11 +66,11 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
-            if (!Access.HasAccess(5))
+            if (!Access.HasAccess(7))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
-                return RedirectToAction("Error", "Capital", route);
+                return RedirectToAction("Error", "Home", route);
             }
             try
             {
@@ -94,11 +94,11 @@ namespace HardX.Controllers
  
         public ActionResult Edit(int id)
         {
-            if (!Access.HasAccess(7))
+            if (!Access.HasAccess(8))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
-                return RedirectToAction("Error", "Capital", route);
+                return RedirectToAction("Error", "Home", route);
             }
             Branche theBranche = new Branche();
             theBranche = theBranche.GetById(id);
@@ -111,11 +111,11 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
-            if (!Access.HasAccess(7))
+            if (!Access.HasAccess(8))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
-                return RedirectToAction("Error", "Capital", route);
+                return RedirectToAction("Error", "Home", route);
             }
             try
             {
@@ -141,11 +141,11 @@ namespace HardX.Controllers
  
         public ActionResult Delete(int id)
         {
-            if (!Access.HasAccess(8))
+            if (!Access.HasAccess(10))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
-                return RedirectToAction("Error", "Capital", route);
+                return RedirectToAction("Error", "Home", route);
             }
             Branche theBranche = new Branche();
             theBranche = theBranche.GetById(id);
@@ -160,11 +160,11 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
-            if (!Access.HasAccess(8))
+            if (!Access.HasAccess(10))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
-                return RedirectToAction("Error", "Capital", route);
+                return RedirectToAction("Error", "Home", route);
             }
             try
             {

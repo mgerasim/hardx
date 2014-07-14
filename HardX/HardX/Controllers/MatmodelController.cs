@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using HardX.Models;
+using HardX.Utils;
 
 namespace HardX.Controllers
 {
@@ -14,6 +15,12 @@ namespace HardX.Controllers
 
         public ActionResult Index()
         {
+            if (!Access.HasAccess(61))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             List<Matmodel> theListMatmodel = new List<Matmodel>();
             Matmodel theMatmodel = new Matmodel();
             theListMatmodel = (List<Matmodel>)theMatmodel.GetAll();
@@ -23,6 +30,12 @@ namespace HardX.Controllers
 
         public ActionResult Compatibility(int ID)
         {
+            if (!Access.HasAccess(61))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             Matmodel model = new Matmodel();
             model = model.GetById(ID);
 
@@ -32,6 +45,12 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Compatibility(int ID, FormCollection collection)
         {
+            if (!Access.HasAccess(61))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             Matmodel model = new Matmodel();
             model = model.GetById(ID);
 
@@ -52,19 +71,27 @@ namespace HardX.Controllers
 
         public ActionResult Create()
         {
+            if (!Access.HasAccess(62))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             NewMatmodel model = new NewMatmodel();
-            
-
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
+            if (!Access.HasAccess(62))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             try {
-
                 Matmodel model = new Matmodel();
-
                 model.Name = collection["Name"];
                 model.Partnumber = collection["Partnumber"];
                 model.Capacity = Convert.ToInt32(collection["Capacity"]);
@@ -84,6 +111,12 @@ namespace HardX.Controllers
 
         public ActionResult Edit(int ID)
         {
+            if (!Access.HasAccess(63))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             Matmodel model = new Matmodel();
             model = model.GetById(ID);
             return View(model);
@@ -92,11 +125,15 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Edit(int ID, FormCollection collection)
         {
+            if (!Access.HasAccess(63))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             try
             {
-
                 Matmodel model = new Matmodel();
-
                 model = model.GetById(ID);
 
                 model.Name = collection["Name"];
@@ -118,6 +155,12 @@ namespace HardX.Controllers
 
         public ActionResult Delete(int ID)
         {
+            if (!Access.HasAccess(65))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             try
             {
                 Matmodel model = new Matmodel();

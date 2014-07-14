@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using HardX.Models;
+using HardX.Utils;
 
 namespace HardX.Controllers
 {
@@ -14,6 +15,12 @@ namespace HardX.Controllers
 
         public ActionResult Index()
         {
+            if (!Access.HasAccess(56))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             return View();
         }
 
@@ -22,6 +29,12 @@ namespace HardX.Controllers
 
         public ActionResult Details(int id)
         {
+            if (!Access.HasAccess(59))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             return View();
         }
 
@@ -30,6 +43,12 @@ namespace HardX.Controllers
 
         public ActionResult Create()
         {
+            if (!Access.HasAccess(57))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             return View();
         } 
 
@@ -41,8 +60,12 @@ namespace HardX.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
-
+                if (!Access.HasAccess(57))
+                {
+                    System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                    route.Add("err", "Нет доступа!");
+                    return RedirectToAction("Error", "Home", route);
+                }
                 return RedirectToAction("Index");
             }
             catch
@@ -56,6 +79,12 @@ namespace HardX.Controllers
  
         public ActionResult Edit(int id)
         {
+            if (!Access.HasAccess(58))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             return View();
         }
 
@@ -67,8 +96,12 @@ namespace HardX.Controllers
         {
             try
             {
-                // TODO: Add update logic here
- 
+                if (!Access.HasAccess(58))
+                {
+                    System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                    route.Add("err", "Нет доступа!");
+                    return RedirectToAction("Error", "Home", route);
+                }
                 return RedirectToAction("Index");
             }
             catch
@@ -82,6 +115,12 @@ namespace HardX.Controllers
  
         public ActionResult Delete(int id)
         {
+            if (!Access.HasAccess(60))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             Material item = new Material();
             item = item.GetById(id);
             item.Delete(item);
@@ -96,8 +135,12 @@ namespace HardX.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
- 
+                if (!Access.HasAccess(60))
+                {
+                    System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                    route.Add("err", "Нет доступа!");
+                    return RedirectToAction("Error", "Home", route);
+                }
                 return RedirectToAction("Index");
             }
             catch

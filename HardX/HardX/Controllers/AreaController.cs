@@ -14,15 +14,14 @@ namespace HardX.Controllers
         // GET: /Area/
 
         public ActionResult Index()
-        {
-            /*
-            if (!Access.HasAccess(6))
+        {            
+            if (!Access.HasAccess(41))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
-                return RedirectToAction("Error", "Capital", route);
+                return RedirectToAction("Error", "Home", route);
             }
-            */
+            
             Area model = new Area();
             List<Area> theListModel = new List<Area>();
             theListModel = (List<Area>)model.GetAll();
@@ -35,14 +34,12 @@ namespace HardX.Controllers
 
         public ActionResult Details(int id)
         {
-            /*
-            if (!Access.HasAccess(6))
+            if (!Access.HasAccess(44))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
-                return RedirectToAction("Error", "Capital", route);
+                return RedirectToAction("Error", "Home", route);
             }
-            */
             Area model = new Area();
             return View(model.GetById(id));
         }
@@ -52,14 +49,12 @@ namespace HardX.Controllers
 
         public ActionResult Create()
         {
-            /*
-            if (!Access.HasAccess(5))
+            if (!Access.HasAccess(42))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
-                return RedirectToAction("Error", "Capital", route);
+                return RedirectToAction("Error", "Home", route);
             }
-            */
             AreaNew model = new AreaNew();
             return View(model);
         }
@@ -70,14 +65,12 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
-            /*
-            if (!Access.HasAccess(5))
+            if (!Access.HasAccess(42))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
-                return RedirectToAction("Error", "Capital", route);
+                return RedirectToAction("Error", "Home", route);
             }
-            */
             try
             {
                 // TODO: Add insert logic here
@@ -120,14 +113,12 @@ namespace HardX.Controllers
 
         public ActionResult Edit(int id)
         {
-            /*
-            if (!Access.HasAccess(7))
+            if (!Access.HasAccess(43))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
-                return RedirectToAction("Error", "Capital", route);
+                return RedirectToAction("Error", "Home", route);
             }
-            */
             Area model = new Area();
             model = model.GetById(id);
             return View(model);
@@ -139,14 +130,12 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
-            /*
-            if (!Access.HasAccess(7))
+            if (!Access.HasAccess(43))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
-                return RedirectToAction("Error", "Capital", route);
+                return RedirectToAction("Error", "Home", route);
             }
-            */
             try
             {
                 // TODO: Add update logic here
@@ -193,13 +182,12 @@ namespace HardX.Controllers
 
         public ActionResult Delete(int id)
         {
-            /*
-            if (!Access.HasAccess(8))
+            if (!Access.HasAccess(45))
             {
                 System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
                 route.Add("err", "Нет доступа!");
-                return RedirectToAction("Error", "Capital", route);
-            }*/
+                return RedirectToAction("Error", "Home", route);
+            }
             Area model = new Area();
             model = model.GetById(id);
             model.Delete(model);

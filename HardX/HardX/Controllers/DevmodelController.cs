@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using HardX.Models;
 using HardX.ViewModels;
+using HardX.Utils;
 
 namespace HardX.Controllers
 {
@@ -15,6 +16,12 @@ namespace HardX.Controllers
 
         public ActionResult Index()
         {
+            if (!Access.HasAccess(51))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             List<Devmodel> theListDevmodel = new List<Devmodel>();
             Devmodel theDevmodel = new Devmodel();
             theListDevmodel = (List<Devmodel>)theDevmodel.GetAll();
@@ -25,6 +32,12 @@ namespace HardX.Controllers
 
         public ActionResult Compatibility(int ID)
         {
+            if (!Access.HasAccess(51))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             Devmodel model = new Devmodel();
             model = model.GetById(ID);
 
@@ -39,6 +52,12 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Compatibility(int ID, FormCollection collection)
         {
+            if (!Access.HasAccess(51))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             Devmodel model = new Devmodel();
             model = model.GetById(ID);
 
@@ -59,6 +78,12 @@ namespace HardX.Controllers
 
         public ActionResult Create()
         {
+            if (!Access.HasAccess(52))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             NewDevmodel model = new NewDevmodel();
             return View(model);
         }
@@ -66,6 +91,12 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
+            if (!Access.HasAccess(52))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             try{
                 Devmodel model = new Devmodel();
                 model.Name = collection["Name"];
@@ -87,6 +118,12 @@ namespace HardX.Controllers
 
         public ActionResult Edit(int ID)
         {
+            if (!Access.HasAccess(53))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             Devmodel model = new Devmodel();
             model = model.GetById(ID);
             return View(model);
@@ -95,6 +132,12 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Edit(int ID, FormCollection collection)
         {
+            if (!Access.HasAccess(53))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             try
             {
                 Devmodel model = new Devmodel();
@@ -119,6 +162,12 @@ namespace HardX.Controllers
 
         public ActionResult Delete(int ID)
         {
+            if (!Access.HasAccess(55))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             try
             {
                 Devmodel model = new Devmodel();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using HardX.Models;
+using HardX.Utils;
 
 namespace HardX.Controllers
 {
@@ -14,6 +15,12 @@ namespace HardX.Controllers
 
         public ActionResult Index()
         {
+            if (!Access.HasAccess(36))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             Room model = new Room();
             List<Room> theListModel = new List<Room>();
             theListModel = (List<Room>)model.GetAll();
@@ -26,6 +33,12 @@ namespace HardX.Controllers
 
         public ActionResult Details(int id)
         {
+            if (!Access.HasAccess(39))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             return View();
         }
 
@@ -34,6 +47,12 @@ namespace HardX.Controllers
 
         public ActionResult Create()
         {
+            if (!Access.HasAccess(37))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             RoomNew model = new RoomNew();
             return View(model);
         } 
@@ -44,6 +63,12 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
+            if (!Access.HasAccess(37))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             try
             {
                 Room model = new Room();
@@ -63,6 +88,12 @@ namespace HardX.Controllers
  
         public ActionResult Edit(int id)
         {
+            if (!Access.HasAccess(38))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             Room model = new Room();
             model = model.GetById(id);
             return View(model);
@@ -74,6 +105,12 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
+            if (!Access.HasAccess(38))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             try
             {
                 Room model = new Room();
@@ -97,6 +134,12 @@ namespace HardX.Controllers
  
         public ActionResult Delete(int id)
         {
+            if (!Access.HasAccess(40))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             Room model = new Room();
             model = model.GetById(id);
 
@@ -111,6 +154,12 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
+            if (!Access.HasAccess(40))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             try
             {
                 // TODO: Add delete logic here

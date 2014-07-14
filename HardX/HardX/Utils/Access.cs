@@ -13,12 +13,12 @@ namespace HardX.Utils
             List<HardX.Models.User> theUserList = new List<Models.User>();
             if (HttpContext.Current.User.Identity.Name == "")
             {
-                return true;
+                return false;
             }
             theUserList = (List<HardX.Models.User>)theUser.GetAll("UPPER(LOGIN) = '" + HttpContext.Current.User.Identity.Name.ToUpper() + "'");
-            if (theUserList.Count == 0)
+            if (theUserList.Count == 1)
             {
-                return false;
+                return true;
             }
             /*
             foreach (var theAction in theUserList[0].Role.Actions)
