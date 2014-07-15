@@ -36,11 +36,22 @@
 	по &nbsp
 	<input type="text" id="report_end" class="tcal" readonly="readonly"  style="width: 90px" />
 	&nbsp
-	<a href="#" id="report_get">Выгрузить</a>
+	<a href="#" id="report_get">Выгрузить итоговый отчёт</a>
 	<script>
 		$("#report_get").click(function() {	
 			
 			$.fileDownload( '/Store/ReportDevicesGet?repository_id=@ViewBag.theStore.ID&report_bgn='+$("#report_bgn").val()+'&report_end='+$("#report_end").val(), {
+			
+				preparingMessageHtml: "Происходит выгрузка отчёта, пожалуйста подождите...",
+				failMessageHtml: "Возникли проблемы при формировании отчёта, необходимо повторить попытку позже."
+			});
+		});
+	</script>
+	<a href="#" id="report_get_device">Выгрузить список устройств</a>
+	<script>
+		$("#report_get_device").click(function() {	
+			
+			$.fileDownload( '/Store/ReportDevicesGetList?repository_id=@ViewBag.theStore.ID&report_bgn='+$("#report_bgn").val()+'&report_end='+$("#report_end").val(), {
 			
 				preparingMessageHtml: "Происходит выгрузка отчёта, пожалуйста подождите...",
 				failMessageHtml: "Возникли проблемы при формировании отчёта, необходимо повторить попытку позже."

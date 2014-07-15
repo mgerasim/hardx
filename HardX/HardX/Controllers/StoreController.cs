@@ -530,7 +530,7 @@ namespace HardX.Controllers
             ViewBag.theStore = theStore;
 
             ViewBag.Devices = ((List<Devhistory>)(new Devhistory()).GetAll()).Where(x => x.StatusID == 2).Where(x => x.StoreID == repository_id);
-            ViewBag.Devhistory = ((List<Devhistory>)(new Devhistory()).GetAll());
+            ViewBag.Devhistory = ((List<Devhistory>)(new Devhistory()).GetAll());            
 
             string filename = "Отчёт-Склад-Оборудование-" + (new Store()).GetById(repository_id).Name + "_" + DateTime.Now.ToString("yyyy-MM-dd") + ".xls";
             filename = filename.Replace(' ', '-');
@@ -542,7 +542,32 @@ namespace HardX.Controllers
             
             return View(theList);
         }
+        public ActionResult ReportDevicesGetList(int repository_id, string report_bgn, string report_end)
+        {
+            string strWhere = "repository_id=" + repository_id.ToString();
+            strWhere += " AND to_date('" + report_bgn + "', 'DD.MM.YYYY') <= updated_at";
+            strWhere += " AND to_date('" + report_end + "', 'DD.MM.YYYY') >= updated_at";
+            Device theModel = new Device();
+            List<Device> theList = (List<Device>)theModel.GetAll(strWhere);
+            
+            Store theStore = new Store();
+            theStore = theStore.GetById(repository_id);
+            ViewBag.theStore = theStore;
 
+            ViewBag.Devices = ((List<Devhistory>)(new Devhistory()).GetAll()).Where(x => x.StatusID == 2).Where(x => x.StoreID == repository_id);
+            ViewBag.Devhistory = ((List<Devhistory>)(new Devhistory()).GetAll());
+            ViewBag.Stores = ((List<Store>)(new Store()).GetAll());
+
+            string filename = "Отчёт-Склад-Оборудование-" + (new Store()).GetById(repository_id).Name + "_" + DateTime.Now.ToString("yyyy-MM-dd") + ".xls";
+            filename = filename.Replace(' ', '-');
+            Response.Clear();
+            Response.AddHeader("Content-Disposition", "attachment; filename=" + filename);
+            Response.AddHeader("Content-Type", "application/ms-excel; charset=utf-8");
+            Response.AddHeader("Set-Cookie", "fileDownload=true");
+            Response.AddHeader("Cache-Control", "max-age=60, must-revalidate");
+            
+            return View(theList);
+        }
         public ActionResult ShowMaterials(int id, int MatmodelID)
         {
             if (!Access.HasAccess(66))
@@ -730,7 +755,7 @@ namespace HardX.Controllers
                  item.Updated_At = DateTime.Now;
                  item.StatusID = 2;
                  item.Update(item);
-
+                 item.StatusID = 1;
                  item.Store = (new Store()).GetById(store_id);
                  item.Update(item);
              }
@@ -753,7 +778,7 @@ namespace HardX.Controllers
                 item.Updated_At = DateTime.Now;
                 item.StatusID = 2;
                 item.Update(item);
-
+                item.StatusID = 1;
                 item.Store = (new Store()).GetById(store_id);
                 item.Update(item);
             }

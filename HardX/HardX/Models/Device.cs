@@ -58,5 +58,45 @@ namespace HardX.Models
                 throw new NotImplementedException();
 
         }
+
+        public int GetStoreIDFromHistory(List<Devhistory> theHistory)
+        {
+            int res = 0;
+            var list1 = theHistory.Where(x => x.StoreID == this.Store.ID);
+            int list_count1 = list1.Count();
+            
+            var list2 = list1.Where(x => x.DeviceID == this.ID);
+            int list_count2 = list2.Count();
+
+            var list3 = list2.Where(x => x.StatusID == 2);
+            int list_count3 = list3.Count();
+
+            if (list_count3 == 0)
+            {
+                res = -1;
+            }
+            else
+            {
+                res = theHistory.Where(x => x.StoreID == this.Store.ID).Where(x => x.DeviceID == this.ID).Where(x => x.StatusID == 2).Last().StoreID;
+            }
+            return res;
+        }
+
+        public string GetStoreName(int StoreID, List<Store> theStore)
+        {
+            if (StoreID == -1)
+            {
+                return "не установлен";
+            }
+            if (theStore.Where(x => x.ID == StoreID).Count() == 1)
+            {
+                foreach(var item in theStore.Where(x => x.ID == StoreID))
+                {
+                    return item.Name;
+                }
+            }
+           
+            return "e";
+        }
     }
 }
