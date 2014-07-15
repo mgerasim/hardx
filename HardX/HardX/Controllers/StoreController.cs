@@ -207,6 +207,8 @@ namespace HardX.Controllers
 
             ViewBag.Mathistory = ((List<Mathistory>)(new Mathistory()).GetAll());
             ViewBag.Materials = (new Material()).GetAll();
+            
+            ViewBag.Stores = (new Store()).GetAll();
                         
             return View(theList);
         }
@@ -256,6 +258,8 @@ namespace HardX.Controllers
 
             ViewBag.Devices = ((List<Devhistory>)(new Devhistory()).GetAll()).Where(x => x.StatusID == 2).Where(x => x.StoreID == id);
             ViewBag.Devhistory = ((List<Devhistory>)(new Devhistory()).GetAll());
+                        
+            ViewBag.Stores = (new Store()).GetAll();
 
             return View(theList);
         }
@@ -639,14 +643,6 @@ namespace HardX.Controllers
             model.Store = (new Store()).GetById(store_id);            
             model.Update(model);
 
-            // Проверяем есть ли дня нового склада - позиция добавляемых моделей материалов (S0026)
-            if ( model.Store.StoreMatDetails.Count(x => x.Matmodel.ID == model.Matmodel.ID) == 0 )
-            {
-                StoreMatDetail detail = new StoreMatDetail();
-                detail.Matmodel = (new Matmodel()).GetById(model.Matmodel.ID);
-                detail.Store = (new Store()).GetById(store_id);
-                detail.Save(detail);
-            }
             return View();
         }
         public ActionResult DevicesSetCauseOfMarriage(int device_id, string cause_of_marriage)
@@ -686,15 +682,6 @@ namespace HardX.Controllers
             
             model.Update(model);
 
-            // Проверяем есть ли дня нового склада - позиция добавляемых моделей оборудования (S0026)
-            if (model.Store.StoreDevDetails.Count(x => x.Devmodel.ID == model.Devmodel.ID) == 0)
-            {
-                StoreDevDetail detail = new StoreDevDetail();
-                detail.Devmodel = (new Devmodel()).GetById(model.Devmodel.ID);
-                detail.Store = (new Store()).GetById(store_id);
-                detail.Save(detail);
-            }
-
             return View();            
         }
 
@@ -728,7 +715,51 @@ namespace HardX.Controllers
             return View();
         }
 
+        public ActionResult MaterialsIssued(int repository_id, int matmodel_id, int store_id, int count_delta)
+         {
+             Material model = new Material();
+             List<Material> models = new List<Material>();
+             string s = "REPOSITORY_ID = " + repository_id.ToString() +
+                 " AND mat_model_id = " + matmodel_id.ToString() +
+                 " AND status_id = 1 " +
+                 " AND rownum < " + (count_delta + 1).ToString();
+             models = (List<Material>)model.GetAll(s);
+             model.Store = (new Store()).GetById(repository_id);
+             foreach (Material item in models) 
+             {
+                 item.Updated_At = DateTime.Now;
+                 item.StatusID = 2;
+                 item.Update(item);
 
+                 item.Store = (new Store()).GetById(store_id);
+                 item.Update(item);
+             }
+             
+             return View();
+         }
+
+        public ActionResult DevicesIssued(int repository_id, int devmodel_id, int store_id, int count_delta)
+        {
+            Device model = new Device();
+            List<Device> models = new List<Device>();
+            string s = "REPOSITORY_ID = " + repository_id.ToString() +
+                " AND dev_model_id = " + devmodel_id.ToString() +
+                " AND status_id = 1 " +
+                " AND rownum < " + (count_delta + 1).ToString();
+            models = (List<Device>)model.GetAll(s);
+            model.Store = (new Store()).GetById(repository_id);
+            foreach (Device item in models)
+            {
+                item.Updated_At = DateTime.Now;
+                item.StatusID = 2;
+                item.Update(item);
+
+                item.Store = (new Store()).GetById(store_id);
+                item.Update(item);
+            }
+
+            return View();
+        } 
     }
 }
 

@@ -49,6 +49,9 @@
 		});
 	</script>
 </p>
+
+
+
 <table class="tablesorter">
 <thead>
     <tr>     
@@ -225,9 +228,66 @@
 			@{
 			// Выдать
 			}
+			<div id="dialog@(item.ID)" title="Выдать партию">
+				<p>
+					Выдать на склад:
+					<select id="dialog_select_store_@(item.ID)" >
+						<option value="0">Выберите склад</option>
+						@foreach(var store in ViewBag.Stores)
+						{
+							if (ViewBag.theStore.ID != store.ID)
+							{
+								if (store.ID == ViewBag.theStore.ID)  {
+									<option selected="selected" value="@(store.ID)">@store.Name</option>
+								}
+								else {
+									<option value="@(store.ID)">@store.Name</option>
+								}
+							}
+						}								
+					</select>
+				</p>
+				
+				<p>
+					<input id="dialog_issue@(item.ID)" type="text" placeholder="Количество" >
+				</p>
+				
+			</div>
+
+			<script>
+				$("#dialog@(item.ID)").dialog({
+					autoOpen: false,
+					height: 280,
+					modal: true,
+					resizable: false,
+					buttons: {
+						'Выдать': function() {
+							$(this).dialog('close');
+
+							if (  parseInt( $("#dialog_select_store_@(item.ID)").val() ) > 0 && parseInt($("#dialog_issue@(item.ID)").val()) )
+							{
+								$.get('@Url.Action("MaterialsIssued", "Store")', { repository_id: @(ViewBag.theStore.ID), matmodel_id: @(item.Matmodel.ID), store_id: parseInt( $("#dialog_select_store_@(item.ID)").val() ), count_delta: parseInt( $("#dialog_issue@(item.ID)").val() ) }, function(data) {	});
+								
+								$("#mat_issued@(item.ID)").html( parseInt($("#mat_issued@(item.ID)").html()) + parseInt($("#dialog_issue@(item.ID)").val()) );
+								$("#mat@(item.ID)").html( parseInt($("#mat@(item.ID)").html()) - parseInt($("#dialog_issue@(item.ID)").val()) );
+								
+							}
+						},
+						'Отмена':function() {
+							$(this).dialog('close');
+						}
+					}
+				});
+			</script>
             <div id="mat_issued@(item.ID)">
 				@ViewBag.theStore.GetMaterialsCountFromHistory(ViewBag.Mathistory, @item.Matmodel.ID, 2)
 			</div>	
+			<script>
+				$("#mat_issued@(item.ID)").click(function() {
+					
+					$("#dialog@(item.ID)").dialog('open');
+				});
+			</script>
 
         </th>
 
@@ -277,6 +337,10 @@
 		
 		<th>
             Совместимая техника
+        </th>
+		
+		<th>
+            Наличие
         </th>
 				
         <th>

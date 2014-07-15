@@ -19,16 +19,35 @@ namespace HardX.Models
             this.Updater = User.CurrentUserId;
             base.Save(entity);
             Devhistory theHistory = new Devhistory(entity);
-            theHistory.Save(theHistory);            
+            theHistory.Save(theHistory);
+            // Проверяем есть ли дня нового склада - позиция добавляемых моделей оборудования (S0026)
+            if (entity.Store.StoreDevDetails.Count(x => x.Devmodel.ID == entity.Devmodel.ID) == 0)
+            {
+                StoreDevDetail detail = new StoreDevDetail();
+                detail.Devmodel = (new Devmodel()).GetById(entity.Devmodel.ID);
+                detail.Store = (new Store()).GetById(entity.Store.ID);
+                detail.Save(detail);
+            }
         }
 
         public override void Update(Device entity)
         {
+            Store theStore = new Store();
+            theStore = theStore.GetById(entity.Store.ID);
+            // Проверяем есть ли дня нового склада - позиция добавляемых моделей оборудования (S0026)
+            if (theStore.StoreDevDetails.Count(x => x.Devmodel.ID == entity.Devmodel.ID) == 0)
+            {
+                StoreDevDetail detail = new StoreDevDetail();
+                detail.Devmodel = (new Devmodel()).GetById(entity.Devmodel.ID);
+                detail.Store = theStore;
+                detail.Save(detail);
+            }
             this.Updated_At = DateTime.Now;
             this.Updater = User.CurrentUserId;
             base.Update(entity);
             Devhistory theHistory = new Devhistory(entity);
-            theHistory.Save(theHistory);           
+            theHistory.Save(theHistory);
+            
         }
 
         public Device()

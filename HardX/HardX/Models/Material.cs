@@ -20,7 +20,16 @@ namespace HardX.Models
             this.Updater = User.CurrentUserId;
             base.Save(entity);
             Mathistory theHistory = new Mathistory(entity);
-            theHistory.Save(theHistory);            
+            theHistory.Save(theHistory);
+
+            // Проверяем есть ли дня нового склада - позиция добавляемых моделей материалов
+            if (entity.Store.StoreMatDetails.Count(x => x.Matmodel.ID == entity.Matmodel.ID) == 0)
+            {
+                StoreMatDetail detail = new StoreMatDetail();
+                detail.Matmodel = (new Matmodel()).GetById(entity.Matmodel.ID);
+                detail.Store = (new Store()).GetById(entity.Store.ID);
+                detail.Save(detail);
+            }
         }
 
         public override void Update(Material entity)
@@ -29,7 +38,16 @@ namespace HardX.Models
             this.Updater = User.CurrentUserId;
             Mathistory theHistory = new Mathistory(entity);            
             base.Update(entity);            
-            theHistory.Save(theHistory);           
+            theHistory.Save(theHistory);
+            
+            // Проверяем есть ли дня нового склада - позиция добавляемых моделей материалов
+            if (entity.Store.StoreMatDetails.Count(x => x.Matmodel.ID == entity.Matmodel.ID) == 0)
+            {
+                StoreMatDetail detail = new StoreMatDetail();
+                detail.Matmodel = (new Matmodel()).GetById(entity.Matmodel.ID);
+                detail.Store = (new Store()).GetById(entity.Store.ID);
+                detail.Save(detail);
+            }
         }
 
 
