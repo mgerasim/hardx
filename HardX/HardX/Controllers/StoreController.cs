@@ -441,20 +441,7 @@ namespace HardX.Controllers
                 return RedirectToAction("Error", "Home", route);
             }
         }
-        //
-        // GET: /Store/Report/5
-
-        public ActionResult Excel(int id, string collection)
-        {
-            MaterialUchet model = new MaterialUchet();
-            List<MaterialUchet> theList = new List<MaterialUchet>();
-            theList = (List<MaterialUchet>)model.GetAll("repository_id = " + id.ToString() + " AND id in (" + collection + ")", "VENDOR_NAME");
-            string filename = "Отчёт-Склад-" + (new Store()).GetById(id).Name + "_" + DateTime.Now.ToString("yyyy-MM-dd");
-            filename = filename.Replace(' ', '-');
-            Response.AddHeader("Content-Disposition", "attachment; filename=" + filename);
-            Response.AddHeader("Content-Type", "application/vnd.ms-excel");
-            return View(theList);
-        }
+        
 
         public ActionResult ReportMaterialsGet(int repository_id, string report_bgn, string report_end)
         {
