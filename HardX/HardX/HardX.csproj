@@ -101,7 +101,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HouseController.cs" />
     <Compile Include="Controllers\MaterialController.cs" />
-    <Compile Include="Controllers\MaterialUchetController.cs" />
     <Compile Include="Controllers\MatmodelController.cs" />
     <Compile Include="Controllers\RegionController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -124,7 +123,6 @@
     <Compile Include="Factories\DevmodelFactory.cs" />
     <Compile Include="Factories\HouseFactory.cs" />
     <Compile Include="Factories\MaterialFactory.cs" />
-    <Compile Include="Factories\MaterialUchetFactory.cs" />
     <Compile Include="Factories\MathistoryFactory.cs" />
     <Compile Include="Factories\MatmodelFactory.cs" />
     <Compile Include="Factories\RegionFactory.cs" />
@@ -153,7 +151,6 @@
     <Compile Include="Models\Devmodel.cs" />
     <Compile Include="Models\House.cs" />
     <Compile Include="Models\Material.cs" />
-    <Compile Include="Models\MaterialUchet.cs" />
     <Compile Include="Models\Mathistory.cs" />
     <Compile Include="Models\Matmodel.cs" />
     <Compile Include="Models\Region.cs" />
@@ -176,7 +173,6 @@
     <Compile Include="Repositories\DevmodelRepository.cs" />
     <Compile Include="Repositories\HouseRepository.cs" />
     <Compile Include="Repositories\MaterialRepository.cs" />
-    <Compile Include="Repositories\MaterialUchetRepository.cs" />
     <Compile Include="Repositories\MathistoryRepository.cs" />
     <Compile Include="Repositories\MatmodelRepository.cs" />
     <Compile Include="Repositories\RegionRepository.cs" />
@@ -270,9 +266,6 @@
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
     <EmbeddedResource Include="Mapping\Area.hbm.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Mapping\MaterialUchet.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Mapping\State.hbm.xml">
@@ -406,28 +399,16 @@
     <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Region\Matmodel\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Devmodel\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Devmodel\Compatibility.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Region\Matmodel\Compatibility.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Devmodel\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Devmodel\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Region\Matmodel\Create.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Region\Matmodel\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\Index.cshtml" />
@@ -449,9 +430,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Devmodel\_create.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Region\Matmodel\_create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\issue.cshtml" />
