@@ -62,33 +62,7 @@ namespace HardX.Models
             }
         }
 
-        private Iesi.Collections.Generic.ISet<StoreDevDetail> _StoreDevDetails;
-
-        public virtual Iesi.Collections.Generic.ISet<StoreDevDetail> StoreDevDetails
-        {
-            get
-            {
-                return this._StoreDevDetails;
-            }
-            set
-            {
-                this._StoreDevDetails = value;
-            }
-        }
-
-        private Iesi.Collections.Generic.ISet<StoreMatDetail> _StoreMatDetails;
-
-        public virtual Iesi.Collections.Generic.ISet<StoreMatDetail> StoreMatDetails
-        {
-            get
-            {
-                return this._StoreMatDetails;
-            }
-            set
-            {
-                this._StoreMatDetails = value;
-            }
-        }
+        
                 
         protected internal virtual DateTime Created_At { get; set; }
         protected internal virtual DateTime Updated_At { get; set; }
@@ -122,9 +96,6 @@ namespace HardX.Models
             this._Devices = new Iesi.Collections.Generic.HashedSet<Device>();
 
             this._Areas = new Iesi.Collections.Generic.HashedSet<Area>();
-
-            this._StoreDevDetails = new Iesi.Collections.Generic.HashedSet<StoreDevDetail>();
-            this._StoreMatDetails = new Iesi.Collections.Generic.HashedSet<StoreMatDetail>();
         }
 
         public virtual string Name
@@ -180,82 +151,7 @@ namespace HardX.Models
             return false;
         }
 
-        public virtual int GetDeviceCount(int DevmodelID, int StatusID)
-        {
-            int res = 0;
-            foreach (var item in Devices)
-            {
-                if (item.Devmodel.ID == DevmodelID && item.StatusID == StatusID)
-                {
-                    res++;
-                }
-            }
-
-            return res;
-        }
-
-        public virtual int GetMaterialCount(int MatmodelID, int StatusID)
-        {
-            int res = 0;
-            foreach (var item in Materials)
-            {
-                if (item.Matmodel.ID == MatmodelID && item.StatusID == StatusID)
-                {
-                    res++;
-                }
-            }
-
-            return res;
-        }
-
-        public virtual int GetMaterialCountFromList(List<Material> theList, int MatmodelID, int StatusID)
-        {
-            int res = 0;
-            foreach (var item in theList)
-            {
-                if (item.Matmodel.ID == MatmodelID && item.StatusID == StatusID)
-                {
-                    res++;
-                }
-            }
-            return res;
-        }
-
-        public virtual int GetDeviceCountFromList(List<Device> theList, int DevmodelID, int StatusID)
-        {
-            int res = 0;
-            foreach (var item in theList)
-            {
-                if (item.Devmodel.ID == DevmodelID && item.StatusID == StatusID)
-                {
-                    res++;
-                }
-            }
-            return res;
-        }
-
-        public virtual int GetMaterialsCountFromHistory(List<Mathistory> theHistory, int MatmodelID, int StatusID)
-        {
-            int res = 0;
-            
-                res = theHistory.Where(x => x.StatusID == StatusID)
-                    .Where(x => x.MatmodelID == MatmodelID)
-                    .Where(x => x.StoreID == this.ID)
-                    .Count();
-            return res;
-        }
-
-        public virtual int GetDevicesCountFromHistory(List<Devhistory> theHistory, int DevmodelID, int StatusID)
-        {
-            int res = 0;
-            
-                res = theHistory.Where(x => x.StatusID == StatusID)
-                    .Where(x => x.DevmodelID == DevmodelID)
-                    .Where(x => x.StoreID == this.ID)
-                    .Count();
-            
-            return res;
-        }
+        
     }
 
 

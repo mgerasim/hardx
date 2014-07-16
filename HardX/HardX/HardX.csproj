@@ -131,9 +131,7 @@
     <Compile Include="Factories\RoleFactory.cs" />
     <Compile Include="Factories\RoomFactory.cs" />
     <Compile Include="Factories\StateFactory.cs" />
-    <Compile Include="Factories\StoreDevDetailFactory.cs" />
     <Compile Include="Factories\StoreFactory.cs" />
-    <Compile Include="Factories\StoreMatDetailFactory.cs" />
     <Compile Include="Factories\StreetFactory.cs" />
     <Compile Include="Factories\TownFactory.cs" />
     <Compile Include="Factories\TypedevFactory.cs" />
@@ -143,9 +141,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Mapping\Store.hbm.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Mapping\StoreMatDetail.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <Compile Include="Models\Action.cs" />
@@ -165,10 +160,7 @@
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Room.cs" />
     <Compile Include="Models\State.cs" />
-    <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Store.cs" />
-    <Compile Include="Models\StoreDevDetail.cs" />
-    <Compile Include="Models\StoreMatDetail.cs" />
     <Compile Include="Models\Street.cs" />
     <Compile Include="Models\Town.cs" />
     <Compile Include="Models\Typedev.cs" />
@@ -191,8 +183,6 @@
     <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\RoomRepository.cs" />
     <Compile Include="Repositories\StateRepository.cs" />
-    <Compile Include="Repositories\StoreDevDetailRepository.cs" />
-    <Compile Include="Repositories\StoreMatDetailRepository.cs" />
     <Compile Include="Repositories\StoreRepository.cs" />
     <Compile Include="Repositories\StreetRepository.cs" />
     <Compile Include="Repositories\TownRepository.cs" />
@@ -303,9 +293,6 @@
     <EmbeddedResource Include="Mapping\Room.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Mapping\StoreDevDetail.hbm.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
     <EmbeddedResource Include="Mapping\Device.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -336,9 +323,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Mapping\Material.hbm.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Mapping\Status.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Mapping\Branche.hbm.xml">

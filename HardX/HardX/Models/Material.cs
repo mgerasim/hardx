@@ -21,15 +21,6 @@ namespace HardX.Models
             base.Save(entity);
             Mathistory theHistory = new Mathistory(entity);
             theHistory.Save(theHistory);
-
-            // Проверяем есть ли дня нового склада - позиция добавляемых моделей материалов
-            if (entity.Store.StoreMatDetails.Count(x => x.Matmodel.ID == entity.Matmodel.ID) == 0)
-            {
-                StoreMatDetail detail = new StoreMatDetail();
-                detail.Matmodel = (new Matmodel()).GetById(entity.Matmodel.ID);
-                detail.Store = (new Store()).GetById(entity.Store.ID);
-                detail.Save(detail);
-            }
         }
 
         public override void Update(Material entity)
@@ -39,15 +30,6 @@ namespace HardX.Models
             Mathistory theHistory = new Mathistory(entity);            
             base.Update(entity);            
             theHistory.Save(theHistory);
-            
-            // Проверяем есть ли дня нового склада - позиция добавляемых моделей материалов
-            if (entity.Store.StoreMatDetails.Count(x => x.Matmodel.ID == entity.Matmodel.ID) == 0)
-            {
-                StoreMatDetail detail = new StoreMatDetail();
-                detail.Matmodel = (new Matmodel()).GetById(entity.Matmodel.ID);
-                detail.Store = (new Store()).GetById(entity.Store.ID);
-                detail.Save(detail);
-            }
         }
 
 
@@ -55,7 +37,6 @@ namespace HardX.Models
         {
             this.Created_At = DateTime.Now;
             this.Updated_At = DateTime.Now;
-            this.StatusID = 1;
             MaterialFactory theFactory = new MaterialFactory();
             _repository = theFactory.createRepository();
             if (_repository == null)
@@ -67,8 +48,8 @@ namespace HardX.Models
         {
             this.Matmodel = (new Matmodel()).GetById(model.Matmodel.ID);
             this.Store = (new Store()).GetById(model.Store.ID);
-            this.fAdded = model.fAdded;
-            this.DeviceID = model.DeviceID;
-        }
+            
+            this.DeviceSetupID = (model.DeviceSetupID);
+        }        
     }
 }

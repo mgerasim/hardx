@@ -93,6 +93,15 @@ namespace HardX.Models
             if (_repository == null)
                 throw new NotImplementedException();
         }
+        public string Devnames()
+        {
+            string s = "";
+            foreach (var item in this.Devmodels)
+            {
+                s += item.Name + ", ";
+            }
+            return s;
+        }
     }
 
     public class NewMatmodel : Matmodel

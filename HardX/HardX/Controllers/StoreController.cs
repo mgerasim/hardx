@@ -209,6 +209,8 @@ namespace HardX.Controllers
             ViewBag.Materials = (new Material()).GetAll();
             
             ViewBag.Stores = (new Store()).GetAll();
+
+            ViewBag.Matmodels = (new Matmodel()).GetAll();
                         
             return View(theList);
         }
@@ -227,10 +229,9 @@ namespace HardX.Controllers
                     route.Add("err", "Нет доступа!");
                     return RedirectToAction("Error", "Home", route);
                 }
-                StoreMatDetail theMatDetail = new StoreMatDetail();
-                theMatDetail.Matmodel = (new Matmodel()).GetById(Convert.ToInt32(collection["[0].MatmodelID"]));
-                theMatDetail.Store = (new Store()).GetById(id);
-                theMatDetail.Save(theMatDetail);
+                
+                this.MaterialsGet(id, Convert.ToInt32(collection["[0].Matmodel.ID"]), Convert.ToInt32(collection["count_added"]));
+                
                 return this.Materials(id);
             }
             catch (Exception ex)
@@ -255,11 +256,10 @@ namespace HardX.Controllers
             Store theStore = new Store();
             theStore = theStore.GetById(id);
             ViewBag.theStore = theStore;
-
-            ViewBag.Devices = ((List<Devhistory>)(new Devhistory()).GetAll()).Where(x => x.StatusID == 2).Where(x => x.StoreID == id);
-            ViewBag.Devhistory = ((List<Devhistory>)(new Devhistory()).GetAll());
                         
             ViewBag.Stores = (new Store()).GetAll();
+            ViewBag.Devhistories = (List<Devhistory>)(new Devhistory()).GetAll("STORE_ID = " + id.ToString());
+            ViewBag.Devmodels = (List<Devmodel>)(new Devmodel()).GetAll();
 
             return View(theList);
         }
@@ -275,11 +275,7 @@ namespace HardX.Controllers
             }
             try
             {
-                StoreDevDetail theDevDetail = new StoreDevDetail();
-                theDevDetail.Devmodel = (new Devmodel()).GetById(Convert.ToInt32(collection["[0].Devmodel.ID"]));
-                theDevDetail.Store = (new Store()).GetById(id);
-                theDevDetail.Save(theDevDetail);
-                
+                this.DevicesGet(id, Convert.ToInt32(collection["[0].Devmodel.ID"]), Convert.ToInt32(collection["count_added"]));
                 return this.Devices(id);
             }
             catch (Exception ex)
@@ -333,7 +329,7 @@ namespace HardX.Controllers
             for (int i = 0; i < count_delta; i++)
             {
                 model.Devmodel = (new Devmodel()).GetById(devmodel_id);
-                model.StatusID = 1;
+                model.StatusID = (1);
                 model.Save(model);
             }
             return View();
@@ -384,25 +380,9 @@ namespace HardX.Controllers
         public ActionResult DeleteMatDetail(int ID)
         {
             try
-            {
-                StoreMatDetail theMD = new StoreMatDetail();
-                theMD = theMD.GetById(ID);
+            {               
 
-                Store theStore = new Store();
-                theStore = theStore.GetById(theMD.Store.ID);
-
-                int nCount = theStore.StoreMatDetails.Count(x => x.Matmodel.ID == theMD.Matmodel.ID);
-                if (nCount == 1) // Удаляется последняя позиция модели (S0029)
-                {                                                            // => удаляем все устройства по данной позиции (S0029)
-                    foreach (var item in (new Material()).GetAll("REPOSITORY_ID=" + theMD.Store.ID + " AND MAT_MODEL_ID=" + theMD.Matmodel.ID))
-                    {
-                        item.Delete(item);
-                    }
-                }
-
-                theMD.Delete(theMD);
-
-                return RedirectToAction("Materials", new  { id = theMD.Store.ID });
+                return RedirectToAction("Materials");
             }
             catch (Exception ex)
             {
@@ -416,23 +396,8 @@ namespace HardX.Controllers
         {
             try
             {
-                StoreDevDetail theDD = new StoreDevDetail();
-                theDD = theDD.GetById(ID);
-
-                Store theStore = new Store();
-                theStore = theStore.GetById(theDD.Store.ID); 
-                int nCount = theStore.StoreDevDetails.Count(x => x.Devmodel.ID == theDD.Devmodel.ID);
-                if (nCount == 1) // Удаляется последняя позиция модели (S0029)
-                {                                                            // => удаляем все устройства по данной позиции (S0029)
-                    foreach (var item in (new Device()).GetAll("REPOSITORY_ID=" + theDD.Store.ID + " AND DEV_MODEL_ID=" + theDD.Devmodel.ID))
-                    {
-                        item.Delete(item);
-                    }
-                }
-
-                theDD.Delete(theDD); // удаляем саму позиция (S0029)
-
-                return RedirectToAction("Devices", new { id = theDD.Store.ID });
+               
+                return RedirectToAction("Devices");
             }
             catch (Exception ex)
             {
@@ -618,7 +583,7 @@ namespace HardX.Controllers
         {
             Material model = new Material();
             model = model.GetById(material_id);
-            model.StatusID = status_id;
+            model.StatusID = (status_id);
             model.Updated_At = DateTime.Now;
             model.Update(model);
             return View();
@@ -648,7 +613,7 @@ namespace HardX.Controllers
         {
             Material model = new Material();
             model = model.GetById(material_id);
-            model.DeviceID = device_id;
+            model.DeviceSetupID = device_id;
             model.Updated_At = DateTime.Now;
             model.StatusID = 22;
             model.Update(model);
@@ -660,10 +625,10 @@ namespace HardX.Controllers
             Material model = new Material();
             model = model.GetById(material_id);            
             model.Updated_At = DateTime.Now;
-            model.StatusID = 2;                        
+            model.StatusID = 2;
             model.Update(model);
 
-            
+
             model.StatusID = 1;
             model.Store = (new Store()).GetById(store_id);            
             model.Update(model);
@@ -684,7 +649,7 @@ namespace HardX.Controllers
         {
             Device model = new Device();
             model = model.GetById(device_id);
-            model.RoomID = room_id;
+            model.RoomSetupID = (room_id);
             model.StatusID = 22;
             model.Updated_At = DateTime.Now;
             model.IPAddr = ipaddr;
@@ -699,10 +664,10 @@ namespace HardX.Controllers
             Device model = new Device();
             model = model.GetById(device_id);
             model.Updated_At = DateTime.Now;
-            model.StatusID = 2;
+            model.StatusID = (2);
             model.Update(model);
 
-            model.StatusID = 1;
+            model.StatusID = 1; 
             model.Store = (new Store()).GetById(store_id);            
             
             model.Update(model);

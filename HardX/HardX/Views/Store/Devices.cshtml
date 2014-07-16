@@ -98,17 +98,42 @@
 
 <tbody>
 
-@foreach (var item in ViewBag.theStore.StoreDevDetails) {
+	@foreach (var item in   ( from devmain in
+										(  from devmodel in
+													(
+														from device in (List<Device>) Model
+														where device.Store.ID == ViewBag.theStore.ID
+														select new  {	
+																		DevmodelID=device.Devmodel.ID,
+																		StatusID = device.StatusID,											
+																	}
+													) 
+						  
+										  group devmodel by devmodel.DevmodelID into newGroup
+										  select new {ID = newGroup.Key, DevmodelID = newGroup.Key, Devices = newGroup}
+										)
+								join devmodel_name in (List<Devmodel>) ViewBag.Devmodels on devmain.ID equals devmodel_name.ID
+								select new	{
+												ID = devmodel_name.ID,
+												DevmodelID = devmodel_name.ID,
+												Devmodel = devmodel_name,
+												Count = devmain.Devices.Count(x=>x.StatusID==1),
+												CountIssue = devmain.Devices.Count(x=>x.StatusID==2),
+												CountSetup = devmain.Devices.Count(x=>x.StatusID==22),
+												CountMarriage = devmain.Devices.Count(x=>x.StatusID==3),
+											}
+							)
+		 ) {
     <tr> 
         <td>
-            @item.Devmodel.Vendor.Name
+			@item.Devmodel.Vendor.Name
         </td>
 		    
         <td>
             @item.Devmodel.Typedev.Name
         </td>
 	     <td>            
-			<a href="@Url.Action("ShowDevices", new { id = item.Store.ID, DevmodelID = item.Devmodel.ID})">                
+			<a href="@Url.Action("ShowDevices", new { id = ViewBag.theStore.ID, DevmodelID = item.DevmodelID})">                
 				@item.Devmodel.Name
             </a>	
         </td>
@@ -117,7 +142,8 @@
 				// Наличие
 			}	
 			<div id="mat@(item.ID)">				
-				@item.Store.GetDeviceCountFromList(Model, @item.Devmodel.ID, 1)
+				@item.Count
+				
 			</div>
 			
 			<script>
@@ -131,10 +157,10 @@
 						contents = contents + " ";
 											
 						if (count_delta > 0) {
-							$.get('@Url.Action("DevicesGet", "Store")', { repository_id: @(item.Store.ID), devmodel_id: @(item.Devmodel.ID), count_delta: count_delta }, function(data) {	});
+							$.get('@Url.Action("DevicesGet", "Store")', { repository_id: @(ViewBag.theStore.ID), devmodel_id: @(item.DevmodelID), count_delta: count_delta }, function(data) {	});
 						} 
 						else {
-							$.get('@Url.Action("DevicesDel", "Store")', { repository_id: @(item.Store.ID), devmodel_id: @(item.Devmodel.ID), count_delta: Math.abs(count_delta) }, function(data) {	});
+							$.get('@Url.Action("DevicesDel", "Store")', { repository_id: @(ViewBag.theStore.ID), devmodel_id: @(item.DevmodelID), count_delta: Math.abs(count_delta) }, function(data) {	});
 						}
 											
 					} else {
@@ -256,7 +282,7 @@
 
 							if (  parseInt( $("#dialog_select_store_@(item.ID)").val() ) > 0 && parseInt($("#dialog_issue@(item.ID)").val()) )
 							{
-								$.get('@Url.Action("DevicesIssued", "Store")', { repository_id: @(ViewBag.theStore.ID), devmodel_id: @(item.Devmodel.ID), store_id: parseInt( $("#dialog_select_store_@(item.ID)").val() ), count_delta: parseInt( $("#dialog_issue@(item.ID)").val() ) }, function(data) {	});
+								$.get('@Url.Action("DevicesIssued", "Store")', { repository_id: @(ViewBag.theStore.ID), devmodel_id: @(item.DevmodelID), store_id: parseInt( $("#dialog_select_store_@(item.ID)").val() ), count_delta: parseInt( $("#dialog_issue@(item.ID)").val() ) }, function(data) {	});
 								
 								$("#mat_issued@(item.ID)").html( parseInt($("#mat_issued@(item.ID)").html()) + parseInt($("#dialog_issue@(item.ID)").val()) );
 								$("#mat@(item.ID)").html( parseInt($("#mat@(item.ID)").html()) - parseInt($("#dialog_issue@(item.ID)").val()) );								
@@ -270,7 +296,7 @@
 			</script>
 			
             <div id="mat_issued@(item.ID)">				
-				@ViewBag.theStore.GetDevicesCountFromHistory(ViewBag.Devhistory, @item.Devmodel.ID, 2)
+				@item.CountIssue
 			</div>	
 			<script>
 				$("#mat_issued@(item.ID)").click(function() {
@@ -286,7 +312,7 @@
 			// Установлено
 			}
             <div id="mat_setup@(item.ID)">
-				@item.Store.GetDeviceCountFromList(Model, @item.Devmodel.ID, 22)
+				@item.CountSetup
 			</div>				
         </th>
 
@@ -296,7 +322,7 @@
 			// Брак
 			}
             <div id="mat_marriage@(item.ID)">
-				@item.Store.GetDeviceCountFromList(Model, @item.Devmodel.ID, 3)
+				@item.CountMarriage
 			</div>
         </th>
 
@@ -368,7 +394,10 @@
         <div class="editor-field">
 			@Html.DropDownListFor(model => model[0].Devmodel.ID, new SelectList((List<Devmodel>)(new Devmodel()).GetAll() , "ID", "FullName" ), new {@class="chosen-select", @style="width: 350px;" })
         </div>
-		
+		<br/>
+		<div class="editor-field">
+					<input id="count_added" name="count_added" type="text" placeholder="Количество" >
+		</div>
 		<br />
         
         <p>

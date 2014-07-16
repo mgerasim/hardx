@@ -27,16 +27,14 @@ namespace HardX.Models.Base
         [Display(Name = "Хост")]
         [Required(ErrorMessage = "* Укажите хост")]
         public String Host{ get; set; }
-
-        public int DevmodelID;
-
-
+                
         [Display(Name = "Склад")]
         [Required(ErrorMessage = "* Укажите склад")]
         public Store Store { get; set; }
 
-        public int StoreID;
-
+        [Display(Name = "Где установлен?")]
+        [Required(ErrorMessage = "* Укажите комнату установки")]
+        public int RoomSetupID { get; set; }
 
         [Display(Name = "Статус")]
         [Required(ErrorMessage = "* Укажите статус")]
@@ -48,9 +46,7 @@ namespace HardX.Models.Base
         public int Updater { get; set; }
 
         public String CauseOfMarriage { get; set; }
-
-        public int RoomID { get; set; }
-
+                
         public string FullName
         {
             get

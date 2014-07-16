@@ -62,7 +62,7 @@ namespace HardX.Models
         {
             this.DeviceID = entity.ID;
             this.Created_At = entity.Created_At;
-            this.RoomID = entity.RoomID;
+            this.RoomID = entity.RoomSetupID;
             this.StoreID = entity.Store.ID;
             this.StatusID = entity.StatusID;
             this.Serial = entity.Serial;

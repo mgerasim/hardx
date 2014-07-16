@@ -58,10 +58,10 @@ namespace HardX.Models
         public Mathistory(Material entity) : this()
         {
             this.MaterialID = entity.ID;
-            this.DeviceID = entity.DeviceID;
+            this.DeviceID = (entity.DeviceSetupID);
             this.Created_At = entity.Created_At;            
             this.StoreID = entity.Store.ID;
-            this.StatusID = entity.StatusID;
+            this.StatusID = (entity.StatusID);
             this.MatmodelID = entity.Matmodel.ID;
         }
     }

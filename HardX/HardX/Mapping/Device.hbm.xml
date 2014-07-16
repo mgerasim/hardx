@@ -11,12 +11,17 @@
         <param name="sequence">SEQ_DEVICES</param>
       </generator>
     </id>
+    
+    <set name="Devhistories"  lazy="false" >
+      <key column="DEVICE_ID"/>
+      <one-to-many class="Devhistory"/>
+    </set> 
 
     <many-to-one name="Devmodel" column="DEV_MODEL_ID" />
     <many-to-one name="Store" column="REPOSITORY_ID" />
-    <property name="StatusID"  column="STATUS_ID" type="int"/>
-    <property name="CauseOfMarriage" column="cause_of_marriage" type="String" length="255" />
-    <property name="RoomID" column="ROOM_ID" type="int" />
+    <property name="StatusID" column="STATUS_ID" type="int" />
+    <property name="RoomSetupID" column="ROOM_ID" type="int" />
+    <property name="CauseOfMarriage" column="cause_of_marriage" type="String" length="255" />    
     <property name="Serial" column="SERIAL" type="String" length="255" />
     <property name="IPAddr" column="IPADDR" type="String" length="255" />
     <property name="Host" column="HOST" type="String" length="255" />

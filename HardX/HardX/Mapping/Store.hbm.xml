@@ -18,6 +18,17 @@
     <property name="Creater" column="CREATER" type="int" />
     <property name="Updater" column="UPDATER" type="int" />
 
+
+    <set name="Areas"  lazy="false" >
+      <key column="repository_ID"/>
+      <one-to-many class="Area"/>
+    </set>
+    
+
+    <many-to-one name="User" column="User_ID" />
+    <many-to-one name="User2" column="User2_ID" />
+    <many-to-one name="Room" column="ROOM_ID" />
+        
     <set name="Materials" lazy="false">
       <key column = "repository_ID" />
       <one-to-many class="Material" />
@@ -28,26 +39,10 @@
       <one-to-many class="Device" />
     </set>
 
-    <set name="Areas"  lazy="false" >
-      <key column="repository_ID"/>
-      <one-to-many class="Area"/>
-    </set>
-        
-    <set name="StoreMatDetails" lazy="false">
-      <key column = "STORE_ID" />
-      <one-to-many class="StoreMatDetail" />
-    </set>
-    
-    <set name="StoreDevDetails" lazy="false">
-      <key column = "STORE_ID" />
-      <one-to-many class="StoreDevDetail" />
-    </set>
 
-    <many-to-one name="User" column="User_ID" />    
-    <many-to-one name="User2" column="User2_ID" />
-    <many-to-one name="Room" column="ROOM_ID" />
-    
-   
-    
+
+
+
+
   </class>
 </hibernate-mapping>

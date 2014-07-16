@@ -99,7 +99,33 @@
 </thead>
 
 <tbody>
-@foreach(var item in ViewBag.theStore.StoreMatDetails) {
+@foreach (var item in   ( from matmain in
+										(  from matmodel in
+													(
+														from material in (List<Material>) Model
+														where material.Store.ID == ViewBag.theStore.ID
+														select new  {	
+																		MatmodelID=material.Matmodel.ID,
+																		StatusID = material.StatusID,											
+																	}
+													) 
+						  
+										  group matmodel by matmodel.MatmodelID into newGroup
+										  select new {ID = newGroup.Key, MatmodelID = newGroup.Key, Materials = newGroup}
+										)
+								join matmodel_name in (List<Matmodel>) ViewBag.Matmodels on matmain.ID equals matmodel_name.ID
+								select new	{
+												ID = matmodel_name.ID,
+												MatmodelID = matmodel_name.ID,
+												Matmodel = matmodel_name,
+												Count = matmain.Materials.Count(x=>x.StatusID==1),
+												CountIssue = matmain.Materials.Count(x=>x.StatusID==2),
+												CountSetup = matmain.Materials.Count(x=>x.StatusID==22),
+												CountMarriage = matmain.Materials.Count(x=>x.StatusID==3),
+												Devnames = matmodel_name.Devnames(),
+											}
+							)
+		 ) {
     <tr> 
 
         <td>
@@ -112,13 +138,13 @@
 	     
 		     
         <td>
-			<a href="@Url.Action("ShowMaterials", new { id = item.Store.ID, MatmodelID = item.Matmodel.ID})">
+			<a href="@Url.Action("ShowMaterials", new { id = ViewBag.theStore.ID, MatmodelID = @item.Matmodel.ID})">
                 @item.Matmodel.FullName
             </a>			
         </td>
 		          
         <td>
-			@((new MaterialUchet()).GetAll("REPOSITORY_ID="+@ViewBag.theStore.ID+" AND MAT_MODEL_ID="+@item.Matmodel.ID)[0].devnames)
+			@item.Devnames
             
         </td>
 		
@@ -126,7 +152,7 @@
 			@{// Наличие
 			}
 			<div id="mat@(item.ID)">
-				@item.Store.GetMaterialCountFromList(Model, @item.Matmodel.ID, 1)
+				@item.Count
 			</div>
 			<script>
 				function handleGetSuccess@(item.ID)(editable)
@@ -280,7 +306,7 @@
 				});
 			</script>
             <div id="mat_issued@(item.ID)">
-				@ViewBag.theStore.GetMaterialsCountFromHistory(ViewBag.Mathistory, @item.Matmodel.ID, 2)
+				@item.CountIssue
 			</div>	
 			<script>
 				$("#mat_issued@(item.ID)").click(function() {
@@ -296,7 +322,7 @@
 			// Установлено
 			}
             <div id="mat_setup@(item.ID)">
-				@item.Store.GetMaterialCountFromList(Model, @item.Matmodel.ID, 22)
+				@item.CountSetup
 			</div>	
 						
         </th>
@@ -306,7 +332,7 @@
 			// Брак
 			}
             <div id="mat_marriage@(item.ID)">
-				@item.Store.GetMaterialCountFromList(Model, @item.Matmodel.ID, 3)
+				@item.CountMarriage
 			</div>
         </th>
 		
@@ -394,9 +420,12 @@
             @Html.LabelFor(model => model[0].Matmodel)
         </div>
         <div class="editor-field">
-			@Html.DropDownListFor(model => model[0].MatmodelID, new SelectList((List<Matmodel>)(new Matmodel()).GetAll() , "ID", "FullName" ), new {@class="chosen-select", @style="width: 350px;" })
+			@Html.DropDownListFor(model => model[0].Matmodel.ID, new SelectList((List<Matmodel>)(new Matmodel()).GetAll() , "ID", "FullName" ), new {@class="chosen-select", @style="width: 350px;" })
         </div>
-		
+		<br/>
+		<div class="editor-field">
+					<input id="count_added" name="count_added" type="text" placeholder="Количество" >
+		</div>
 		<br />
         
         <p>

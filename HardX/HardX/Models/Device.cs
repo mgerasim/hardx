@@ -6,6 +6,7 @@ using HardX.Core;
 using System.ComponentModel.DataAnnotations;
 using HardX.Factories;
 using HardX.Models.Base;
+using Iesi.Collections.Generic;
 
 namespace HardX.Models
 {
@@ -20,28 +21,13 @@ namespace HardX.Models
             base.Save(entity);
             Devhistory theHistory = new Devhistory(entity);
             theHistory.Save(theHistory);
-            // Проверяем есть ли дня нового склада - позиция добавляемых моделей оборудования (S0026)
-            if (entity.Store.StoreDevDetails.Count(x => x.Devmodel.ID == entity.Devmodel.ID) == 0)
-            {
-                StoreDevDetail detail = new StoreDevDetail();
-                detail.Devmodel = (new Devmodel()).GetById(entity.Devmodel.ID);
-                detail.Store = (new Store()).GetById(entity.Store.ID);
-                detail.Save(detail);
-            }
+            
         }
 
         public override void Update(Device entity)
         {
             Store theStore = new Store();
-            theStore = theStore.GetById(entity.Store.ID);
-            // Проверяем есть ли дня нового склада - позиция добавляемых моделей оборудования (S0026)
-            if (theStore.StoreDevDetails.Count(x => x.Devmodel.ID == entity.Devmodel.ID) == 0)
-            {
-                StoreDevDetail detail = new StoreDevDetail();
-                detail.Devmodel = (new Devmodel()).GetById(entity.Devmodel.ID);
-                detail.Store = theStore;
-                detail.Save(detail);
-            }
+            theStore = theStore.GetById(entity.Store.ID);            
             this.Updated_At = DateTime.Now;
             this.Updater = User.CurrentUserId;
             base.Update(entity);
@@ -50,8 +36,12 @@ namespace HardX.Models
             
         }
 
+        public virtual ICollection<Devhistory> Devhistories { get; protected set; }
+
         public Device()
         {
+            Devhistories = new HashedSet<Devhistory>();
+
             DeviceFactory theFactory = new DeviceFactory();
             _repository = theFactory.createRepository();
             if (_repository == null)
