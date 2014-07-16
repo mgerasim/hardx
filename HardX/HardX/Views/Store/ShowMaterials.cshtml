@@ -35,7 +35,7 @@
 								{
 									if (ViewBag.StoreID != store.ID)
 									{
-										if (store.ID == item.StoreID)  {
+										if (store.ID == item.Store.ID)  {
 											<option selected="selected" value="@(store.ID)">@store.Name</option>
 										}
 										else {
@@ -57,7 +57,7 @@
 							<select id="tab1_select_setup_device_@(item.ID)" class="chosen-select" placeholder="Выбрать..." name="[0].MatmodelID" style="width: 450px;">
 								<option value=""></option>
 								@foreach(var device in from dev in (List<Device>)ViewBag.Devices
-																join room in (List<Room>)ViewBag.Rooms on dev.RoomID equals room.ID
+																join room in (List<Room>)ViewBag.Rooms on dev.RoomSetupID equals room.ID
 																join compability in (NHibernate.Collection.Generic.PersistentGenericSet<HardX.Models.Devmodel>)ViewBag.Matmodel.Devmodels on dev.Devmodel.ID equals compability.ID
 																select new
 																{
@@ -176,7 +176,7 @@
                                       StoreID = store.ID,                                      
                                       StoreName = store.Name,
 									  CauseOfMarriage = material.CauseOfMarriage,
-									  DeviceID = material.DeviceID,
+									  DeviceID = material.DeviceSetupID,
                                   }
 
                                    )

@@ -35,7 +35,7 @@
 								{
 									if (ViewBag.StoreID != store.ID)
 									{
-										if (store.ID == item.StoreID)  {
+										if (store.ID == item.Store.ID)  {
 											<option selected="selected" value="@(store.ID)">@store.Name</option>
 										}
 										else {
@@ -57,7 +57,7 @@
 								<option value=""></option>
 								@foreach(var room in ViewBag.Rooms)
 								{
-									if (room.ID == item.RoomID)  {
+									if (room.ID == item.RoomSetupID)  {
 										<option selected="selected" value="@(room.ID)">@room.FullName</option>
 									}
 									else {
@@ -104,6 +104,12 @@
 				}
 			</tbody>
 		</table>
+
+		<input id="serial_new" type="text" value="" placeholder="Серийный номер" >
+		<input id="ipaddr_new" type="text" value="" placeholder="IP адрес" >
+		<input id="host_new" type="text" value="" placeholder="Хост" >
+
+
 	</div> <!-- tabs-1 -->
 
 	<div id="tabs-2">
@@ -122,7 +128,7 @@
 											  StoreID = store.ID,                                      
 											  StoreName = store.Name,
 											  CauseOfMarriage = device.CauseOfMarriage,
-											  RoomID = device.RoomID,
+											  RoomID = device.RoomSetupID,
 										  }				
 				
 										) )
