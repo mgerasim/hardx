@@ -116,6 +116,21 @@
 		<table>
 			<tbody id="tbody_tab2">
 				@foreach( var item in (
+											from device in (NHibernate.Collection.Generic.PersistentGenericSet<Device>) ViewBag.theStore.Devices
+											join store in ( (List<Store>)ViewBag.Stores ) on device.Store.ID equals store.ID
+														where device.Devmodel.ID == ViewBag.DevmodelID
+														select new  {	
+																		DevmodelID=device.Devmodel.ID,
+																		StatusID = device.StatusID,																													
+																		  ID = device.ID,
+																		  Devmodel = device.Devmodel,
+																		  Updated_At = device.Updated_At,
+																		  StoreID = store.ID,                                      
+																		  StoreName = store.Name,
+																		  CauseOfMarriage = device.CauseOfMarriage,
+																		  RoomID = device.RoomSetupID,
+																	}
+											/*
 										  from devhist in (List<Devhistory>)ViewBag.Devhistory 
 										  join device in ( (List<Device>)ViewBag.Devices ) on devhist.DeviceID equals device.ID
 										  join store in ( (List<Store>)ViewBag.Stores ) on device.Store.ID equals store.ID
@@ -129,7 +144,8 @@
 											  StoreName = store.Name,
 											  CauseOfMarriage = device.CauseOfMarriage,
 											  RoomID = device.RoomSetupID,
-										  }				
+										  }	
+										  */			
 				
 										) )
 				{

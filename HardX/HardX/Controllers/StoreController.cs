@@ -554,6 +554,7 @@ namespace HardX.Controllers
                 return RedirectToAction("Error", "Home", route);
             }
             ViewBag.StoreID = id;
+            ViewBag.theStore = (new Store()).GetById(id);
             ViewBag.DevmodelID = DevmodelID;
             ViewBag.Stores = (new Store()).GetAll();
             ViewBag.Rooms = (new Room()).GetAll();
