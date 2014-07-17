@@ -53,7 +53,33 @@
     </tr>
 
 	
-	@foreach(var item in ViewBag.theStore.Sto1reMatDetails) {
+	@foreach (var item in   ( from matmain in
+										(  from matmodel in
+													(
+														from material in (List<Material>) Model
+														where material.Store.ID == ViewBag.theStore.ID
+														select new  {	
+																		MatmodelID=material.Matmodel.ID,
+																		StatusID = material.StatusID,											
+																	}
+													) 
+						  
+										  group matmodel by matmodel.MatmodelID into newGroup
+										  select new {ID = newGroup.Key, MatmodelID = newGroup.Key, Materials = newGroup}
+										)
+								join matmodel_name in (List<Matmodel>) ViewBag.Matmodels on matmain.ID equals matmodel_name.ID
+								select new	{
+												ID = matmodel_name.ID,
+												MatmodelID = matmodel_name.ID,
+												Matmodel = matmodel_name,
+												Count = matmain.Materials.Count(x=>x.StatusID==1),
+												CountIssue = matmain.Materials.Count(x=>x.StatusID==2),
+												CountSetup = matmain.Materials.Count(x=>x.StatusID==22),
+												CountMarriage = matmain.Materials.Count(x=>x.StatusID==3),
+												Devnames = matmodel_name.Devnames(),
+											}
+							)
+		 ) {
     <tr> 
 
         <td>
@@ -70,25 +96,25 @@
         </td>
 		          
         <td>
-			@((new MaterialUchet()).GetAll("REPOSITORY_ID="+@ViewBag.theStore.ID+" AND MAT_MODEL_ID="+@item.Matmodel.ID)[0].devnames)
+			@item.Devnames
             
         </td>
         
 		
         <td>			
-            @item.Store.GetMaterialCountFromList(Model, @item.Matmodel.ID, 1)
+            @item.Count
         </td>
 		
         <td>
-            @ViewBag.theStore.GetMaterialsCountFromHistory(ViewBag.Mathistory, @item.Matmodel.ID, 2)
+            @item.CountIssue
         </td>
 		
         <td>
-            @item.Store.GetMaterialCountFromList(Model, @item.Matmodel.ID, 22)
+            @item.CountSetup
         </td>
 
         <td>
-            @item.Store.GetMaterialCountFromList(Model, @item.Matmodel.ID, 3)
+            @item.CountMarriage
         </td>
 					
 

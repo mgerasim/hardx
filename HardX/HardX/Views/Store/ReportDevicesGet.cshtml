@@ -48,7 +48,32 @@
     </tr>
 
 	
-	@foreach(var item in ViewBag.theStore.Stor12eDevDetails) {
+	@foreach (var item in   ( from devmain in
+										(  from devmodel in
+													(
+														from device in (List<Device>) Model
+														where device.Store.ID == ViewBag.theStore.ID
+														select new  {	
+																		DevmodelID=device.Devmodel.ID,
+																		StatusID = device.StatusID,											
+																	}
+													) 
+						  
+										  group devmodel by devmodel.DevmodelID into newGroup
+										  select new {ID = newGroup.Key, DevmodelID = newGroup.Key, Devices = newGroup}
+										)
+								join devmodel_name in (List<Devmodel>) ViewBag.Devmodels on devmain.ID equals devmodel_name.ID
+								select new	{
+												ID = devmodel_name.ID,
+												DevmodelID = devmodel_name.ID,
+												Devmodel = devmodel_name,
+												Count = devmain.Devices.Count(x=>x.StatusID==1),
+												CountIssue = devmain.Devices.Count(x=>x.StatusID==2),
+												CountSetup = devmain.Devices.Count(x=>x.StatusID==22),
+												CountMarriage = devmain.Devices.Count(x=>x.StatusID==3),
+											}
+							)
+		 ) {
     <tr> 
 
         <td>
@@ -67,19 +92,19 @@
         
 		
         <td>			
-            @item.Store.GetDeviceCountFromList(Model, @item.Devmodel.ID, 1)
+            @item.Count
         </td>
 		
         <td>
-            @ViewBag.theStore.GetDevicesCountFromHistory(ViewBag.Devhistory, @item.Devmodel.ID, 2)
+            @item.CountIssue
         </td>
 
 		<td>
-            @item.Store.GetDeviceCountFromList(Model, @item.Devmodel.ID, 22)
+            @item.CountSetup
         </td>
 		
         <td>
-            @item.Store.GetDeviceCountFromList(Model, @item.Devmodel.ID, 3)
+            @item.CountMarriage
         </td>
 					
 

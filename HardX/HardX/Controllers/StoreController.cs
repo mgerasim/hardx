@@ -457,6 +457,10 @@ namespace HardX.Controllers
 
             ViewBag.Mathistory = ((List<Mathistory>)(new Mathistory()).GetAll());
             ViewBag.Materials = (new Material()).GetAll();
+            
+            ViewBag.Stores = (new Store()).GetAll();
+
+            ViewBag.Matmodels = (new Matmodel()).GetAll();
 
             string filename = "Отчёт-Склад-Материалы-" + (new Store()).GetById(repository_id).Name + "_" + DateTime.Now.ToString("yyyy-MM-dd")+".xls";
             filename = filename.Replace(' ', '-');
@@ -482,7 +486,10 @@ namespace HardX.Controllers
             ViewBag.theStore = theStore;
 
             ViewBag.Devices = ((List<Devhistory>)(new Devhistory()).GetAll()).Where(x => x.StatusID == 2).Where(x => x.StoreID == repository_id);
-            ViewBag.Devhistory = ((List<Devhistory>)(new Devhistory()).GetAll());            
+            ViewBag.Devhistory = ((List<Devhistory>)(new Devhistory()).GetAll());
+            ViewBag.Stores = (new Store()).GetAll();
+            ViewBag.Devhistories = (List<Devhistory>)(new Devhistory()).GetAll("STORE_ID = " + repository_id.ToString());
+            ViewBag.Devmodels = (List<Devmodel>)(new Devmodel()).GetAll();
 
             string filename = "Отчёт-Склад-Оборудование-" + (new Store()).GetById(repository_id).Name + "_" + DateTime.Now.ToString("yyyy-MM-dd") + ".xls";
             filename = filename.Replace(' ', '-');
