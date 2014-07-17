@@ -69,7 +69,7 @@
 								)
 
 								{
-									if (device.ID == item.DeviceID)  {
+									if (device.ID == item.DeviceSetupID)  {
 										<option selected="selected" value="@(device.ID)">@device.FullName</option>
 									}
 									else {
@@ -164,21 +164,37 @@
 	<div id="tabs-22">
 		<table>
 			<tbody id="tbody_tab22">			
-				@foreach( var item in from mathist in (List<Mathistory>)ViewBag.Mathistory 
-                                  join material in ( (List<Material>)ViewBag.Materials ) on  mathist.MaterialID equals material.ID
-								  join store in ( (List<Store>)ViewBag.Stores ) on material.Store.ID equals store.ID
+				@foreach( var item in 
+														from material in (List<Material>) ViewBag.Materials
+														join store in ( (List<Store>)ViewBag.Stores ) on material.Store.ID equals store.ID
+														where material.Store.ID == ViewBag.StoreID
+														select new  {	
+																		MatmodelID=material.Matmodel.ID,
+																		StatusID = material.StatusID,		
+																		ID = material.ID,
+																		Matmodel = material.Matmodel,
+																		Updated_At = material.Updated_At,
+																		StoreID = store.ID,                                      
+																		StoreName = store.Name,
+																		CauseOfMarriage = material.CauseOfMarriage,
+																		DeviceID = material.DeviceSetupID,									
+																	}
+									/*
+													from mathist in (List<Mathistory>)ViewBag.Mathistory 
+													  join material in ( (List<Material>)ViewBag.Materials ) on  mathist.MaterialID equals material.ID
+													  join store in ( (List<Store>)ViewBag.Stores ) on material.Store.ID equals store.ID
                                   
-                                  select new
-                                  {
-                                      ID = material.ID,
-                                      Matmodel = material.Matmodel,
-                                      Updated_At = material.Updated_At,
-                                      StoreID = store.ID,                                      
-                                      StoreName = store.Name,
-									  CauseOfMarriage = material.CauseOfMarriage,
-									  DeviceID = material.DeviceSetupID,
-                                  }
-
+													  select new
+													  {
+														  ID = material.ID,
+														  Matmodel = material.Matmodel,
+														  Updated_At = material.Updated_At,
+														  StoreID = store.ID,                                      
+														  StoreName = store.Name,
+														  CauseOfMarriage = material.CauseOfMarriage,
+														  DeviceID = material.DeviceSetupID,
+													  }
+										*/
                                    )
 				{
 					<tr id="tr_tab22_@(item.ID)">
