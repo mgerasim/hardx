@@ -744,7 +744,52 @@ namespace HardX.Controllers
             }
 
             return View();
-        } 
+        }
+
+        public ActionResult MaterialsSetup(int repository_id, int matmodel_id, int count_delta)
+        {
+            Material model = new Material();
+
+            List<Material> models = new List<Material>();
+            string s = "REPOSITORY_ID = " + repository_id.ToString() +
+                        " AND mat_model_id = " + matmodel_id.ToString() +
+                        " AND status_id = 1 " +
+                        " AND rownum < " + (count_delta + 1).ToString();
+            models = (List<Material>)model.GetAll(s);
+
+            model.Store = (new Store()).GetById(repository_id);
+            foreach (Material item in models)
+            {
+                item.StatusID = 22;
+                item.Updated_At = DateTime.Now;
+                item.Update(item);
+            }
+            return View();
+        }
+
+        public ActionResult MaterialsSetupDel(int repository_id, int matmodel_id, int count_delta)
+        {
+            Material model = new Material();
+
+            List<Material> models = new List<Material>();
+            string s = "REPOSITORY_ID = " + repository_id.ToString() +
+                        " AND mat_model_id = " + matmodel_id.ToString() +
+                        " AND status_id = 22 " +
+                        " AND rownum < " + (count_delta + 1).ToString();
+            models = (List<Material>)model.GetAll(s);
+
+            model.Store = (new Store()).GetById(repository_id);
+            foreach (Material item in models)
+            {
+                item.StatusID = 1;
+                item.Update(item);
+            }
+            return View();
+        }
+
+
+        
+
     }
 }
 

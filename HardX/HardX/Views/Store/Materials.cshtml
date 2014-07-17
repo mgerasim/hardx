@@ -324,6 +324,100 @@
             <div id="mat_setup@(item.ID)">
 				@item.CountSetup
 			</div>	
+			<script>
+				function handleSetupSuccess@(item.ID)(editable)
+				{
+					var contents = editable.find(':first-child:input').val();
+					
+					if (" "+(parseInt( contents ))+" "!=" NaN ") {											
+						var count_delta = parseInt( contents );
+						contents = parseInt( contents ) + parseInt( content ) ;
+						contents = contents + " ";
+											
+						$("#mat@(item.ID)").html( parseInt($("#mat@(item.ID)").html()) - count_delta );
+
+						if (count_delta > 0) {
+							$.get('@Url.Action("MaterialsSetup", "Store")', { repository_id: @(ViewBag.theStore.ID), matmodel_id: @(item.Matmodel.ID), count_delta: count_delta }, function(data) {	});
+						}
+						else {
+							$.get('@Url.Action("MaterialsSetupDel", "Store")', { repository_id: @(ViewBag.theStore.ID), matmodel_id: @(item.Matmodel.ID), count_delta: Math.abs(count_delta) }, function(data) {	});
+						}											
+					} else {
+						contents = content;
+					}
+
+					editable
+						.removeClass('active-inline')
+						.contents()
+						.replaceWith(contents);
+				}
+
+				function handleSetupFail(editable)
+				{
+					contents = content;
+					
+					editable
+							.removeClass('active-inline')
+							.contents()
+							.replaceWith(contents);
+				}
+
+				var clicked = 0;
+				var content=0;
+				$("#mat_setup@(item.ID)")
+					.hover(function() {
+						$(this).toggleClass("over-inline");
+					})
+					.unbind('click').click(function(e) {						
+
+						var $editable = $(this);
+						if ($editable.hasClass('active-inline')) {
+							return;
+						};
+						clicked = 0;
+						
+						content = $.trim($editable.html());
+						
+						$editable
+							.addClass("active-inline")
+							.empty();
+
+						var editElement = '<input type="text" />';
+						
+						$(editElement)
+							//.val(content)
+							.appendTo($editable)
+							.focus()
+							.blur(function(e) {
+								$editable.trigger('blur');
+							});
+					})
+					.unbind('blur').blur(function(e) {						
+						clicked = 1;
+						var $editable = $(this);
+						handleSetupFail($editable);
+					})
+					.keyup(function(event){
+						if(event.keyCode == 13){
+							if (clicked == 1) {
+								return;
+							};
+							clicked = 1;
+							var $editable = $(this);
+							handleSetupSuccess@(item.ID)($editable);
+						
+						}
+						if(event.keyCode == 27){
+								if (clicked == 1) {
+									return;
+								};
+								clicked = 1;
+								var $editable = $(this);
+								handleSetupFail($editable);						
+						}
+					})
+					;
+			</script>
 						
         </th>
 			
@@ -334,6 +428,107 @@
             <div id="mat_marriage@(item.ID)">
 				@item.CountMarriage
 			</div>
+			<script>
+				function handleMarriageSuccess@(item.ID)(editable)
+				{
+					var contents = editable.find(':first-child:input').val();
+					
+					if (" "+(parseInt( contents ))+" "!=" NaN ") {											
+						var count_delta = parseInt( contents );
+						contents = parseInt( contents ) + parseInt( content ) ;
+						contents = contents + " ";
+											
+						$("#mat@(item.ID)").html( parseInt($("#mat@(item.ID)").html()) - count_delta );
+
+						if (count_delta > 0) {
+							$.get('@Url.Action("MaterialsMarriage", "Store")', { repository_id: @(ViewBag.theStore.ID), matmodel_id: @(item.Matmodel.ID), count_delta: count_delta }, function(data) {	});
+						}
+						else {
+							$.get('@Url.Action("MaterialsMarriageDel", "Store")', { repository_id: @(ViewBag.theStore.ID), matmodel_id: @(item.Matmodel.ID), count_delta: Math.abs(count_delta) }, function(data) {	});
+						}
+
+
+											
+					} else {
+						contents = content;
+					}
+
+					editable
+						.removeClass('active-inline')
+						.contents()
+						.replaceWith(contents);
+				}
+
+				function handleMarriageFail(editable)
+				{
+					contents = content;
+					
+					editable
+							.removeClass('active-inline')
+							.contents()
+							.replaceWith(contents);
+				}
+
+				var clicked = 0;
+				var content=0;
+				$("#mat_marriage@(item.ID)")
+					.hover(function() {
+						$(this).toggleClass("over-inline");
+					})
+					.unbind('click').click(function(e) {						
+
+						var $editable = $(this);
+						if ($editable.hasClass('active-inline')) {
+							return;
+						};
+						clicked = 0;
+						
+						content = $.trim($editable.html());
+						
+						$editable
+							.addClass("active-inline")
+							.empty();
+
+						var editElement = '<input type="text" />';
+						
+						$(editElement)
+							//.val(content)
+							.appendTo($editable)
+							.focus()
+							.blur(function(e) {
+								$editable.trigger('blur');
+							});
+					})
+					.unbind('blur').blur(function(e) {						
+						clicked = 1;
+						var $editable = $(this);
+						handleMarriageFail($editable);
+					})
+					.keyup(function(event){
+						if(event.keyCode == 13){
+							if (clicked == 1) {
+								return;
+							};
+							clicked = 1;
+							var $editable = $(this);
+							handleMarriageSuccess@(item.ID)($editable);
+						
+						}
+						if(event.keyCode == 27){
+								if (clicked == 1) {
+									return;
+								};
+								clicked = 1;
+								var $editable = $(this);
+								handleMarriageFail($editable);						
+						}
+					})
+					;
+			</script>
+
+			@{
+			// Брак 
+			}
         </th>
 		
         <td>
