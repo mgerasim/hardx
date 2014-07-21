@@ -335,6 +335,20 @@ namespace HardX.Controllers
             return View();
         }
 
+        public ActionResult DevicesAdded(int repository_id, int devmodel_id, string serial, string ipaddr, string host)
+        {
+            Device model = new Device();
+            model.Store = (new Store()).GetById(repository_id);
+            model.Devmodel = (new Devmodel()).GetById(devmodel_id);
+            model.StatusID = (1);
+            model.Serial = serial;
+            model.IPAddr = ipaddr;
+            model.Host = host;
+
+            model.Save(model);
+            return View();
+        }
+
         public ActionResult DevicesDel(int repository_id, int devmodel_id, int count_delta)
         {
             Device model = new Device();

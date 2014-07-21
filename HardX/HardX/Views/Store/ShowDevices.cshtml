@@ -108,6 +108,13 @@
 		<input id="serial_new" type="text" value="" placeholder="Серийный номер" >
 		<input id="ipaddr_new" type="text" value="" placeholder="IP адрес" >
 		<input id="host_new" type="text" value="" placeholder="Хост" >
+		<a href="#" id="added_new">Добавить</a>
+		<script>								
+			$("#added_new").click(function() {
+				$.get('@Url.Action("DevicesAdded", "Store")', { repository_id: @(ViewBag.StoreID), devmodel_id: @(ViewBag.DevmodelID), serial: $("#serial_new").val(),  ipaddr: $("#ipaddr_new").val(), host: $("#host_new").val()}, function(data) { location.reload(true);	});
+				 
+			});
+		</script>
 
 
 	</div> <!-- tabs-1 -->
