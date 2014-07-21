@@ -179,7 +179,7 @@
 						<td>@item.Updated_At.ToString()</td>
 						<td>
 							Установлен в кабинете: <br />
-							@foreach(var room2 in ((List<Room>)ViewBag.Rooms).Where(x => x.ID==item.RoomID))
+							@foreach(var room2 in ((List<Room>)ViewBag.Rooms).Where(x => x.ID==item.RoomSetupID))
 							{
 								@room2.FullName
 							}
