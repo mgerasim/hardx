@@ -1,4 +1,4 @@
-﻿@model List<HardX.Models.Device>
+﻿@model HardX.Models.NonTables.Deviceadded
 @using HardX.Models
 
 @{
@@ -101,7 +101,7 @@
 	@foreach (var item in   ( from devmain in
 										(  from devmodel in
 													(
-														from device in (List<Device>) Model
+														from device in (List<Device>) ViewBag.Devices
 														where device.Store.ID == ViewBag.theStore.ID
 														select new  {	
 																		DevmodelID=device.Devmodel.ID,
@@ -386,20 +386,22 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-
-
 		<div class="editor-label">
-            @Html.LabelFor(model => model[0].Devmodel)
+            @Html.LabelFor(model => model.model)
         </div>
         <div class="editor-field">
-			@Html.DropDownListFor(model => model[0].Devmodel.ID, new SelectList((List<Devmodel>)(new Devmodel()).GetAll() , "ID", "FullName" ), new {@class="chosen-select", @style="width: 350px;" })
+			@Html.DropDownListFor(model => model.model, new SelectList((List<Devmodel>)(new Devmodel()).GetAll() , "ID", "FullName" ), new {@class="chosen-select", @style="width: 350px;" })
+			@Html.ValidationMessageFor(model => model.model)
         </div>
 		<br/>
-		<div class="editor-field">
-					<input id="count_added" name="count_added" type="text" placeholder="Количество" >
-		</div>
-		<br />
-        
+		<div class="editor-label">
+            @Html.LabelFor(model => model.count)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.count)
+			@Html.ValidationMessageFor(model => model.count)
+        </div>
+		<br/>
         <p>
             <input type="submit" value="Добавить" /> @Html.ActionLink("Назад", "Index")
         </p>

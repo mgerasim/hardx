@@ -153,6 +153,7 @@
     <Compile Include="Models\Material.cs" />
     <Compile Include="Models\Mathistory.cs" />
     <Compile Include="Models\Matmodel.cs" />
+    <Compile Include="Models\NonTables\Deviceadded.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Room.cs" />

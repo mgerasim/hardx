@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using HardX.Models;
 using HardX.Utils;
+using HardX.Models.NonTables;
 
 namespace HardX.Controllers
 {
@@ -251,7 +252,7 @@ namespace HardX.Controllers
                 return RedirectToAction("Error", "Home", route);
             }
             Device theModel = new Device();
-            List<Device> theList = (List<Device>)theModel.GetAll("REPOSITORY_ID=" + id.ToString());
+            ViewBag.Devices = (List<Device>)theModel.GetAll("REPOSITORY_ID=" + id.ToString());
 
             Store theStore = new Store();
             theStore = theStore.GetById(id);
@@ -261,7 +262,10 @@ namespace HardX.Controllers
             ViewBag.Devhistories = (List<Devhistory>)(new Devhistory()).GetAll("STORE_ID = " + id.ToString());
             ViewBag.Devmodels = (List<Devmodel>)(new Devmodel()).GetAll();
 
-            return View(theList);
+            Deviceadded theAdded = new Deviceadded();
+            
+
+            return View(theAdded);
         }
 
         [HttpPost]
@@ -275,7 +279,7 @@ namespace HardX.Controllers
             }
             try
             {
-                this.DevicesGet(id, Convert.ToInt32(collection["[0].Devmodel.ID"]), Convert.ToInt32(collection["count_added"]));
+                this.DevicesGet(id, Convert.ToInt32(collection["model"]), Convert.ToInt32(collection["count"]));
                 return this.Devices(id);
             }
             catch (Exception ex)
