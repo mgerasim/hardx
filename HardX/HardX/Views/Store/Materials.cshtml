@@ -532,7 +532,7 @@
         </th>
 		
         <td>
-            @Html.ActionLink("Удалить", "DeleteMatDetail", new { id=item.ID }, new { onclick = "return confirm('Вы действительно хотите удалить?');" })
+            @Html.ActionLink("Удалить", "MaterialsDeleteModel", new { repository_id=ViewBag.theStore.ID, model_id=item.ID }, new { onclick = "return confirm('Вы действительно хотите удалить?');" })
         </td>
 		
       

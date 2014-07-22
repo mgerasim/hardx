@@ -395,12 +395,18 @@ namespace HardX.Controllers
             }
         }
 
-        public ActionResult DeleteMatDetail(int ID)
+        public ActionResult DevicesDeleteModel(int repository_id, int model_id)
         {
             try
-            {               
+            {
+                Store theStore = new Store();
+                theStore = theStore.GetById(repository_id);
+                foreach( var item in theStore.Devices.Where(x=>x.Devmodel.ID == model_id) )
+                {
+                    item.Delete(item);
+                }
 
-                return RedirectToAction("Materials");
+                return RedirectToAction("Devices", new { id = repository_id });
             }
             catch (Exception ex)
             {
@@ -410,12 +416,17 @@ namespace HardX.Controllers
             }
         }
 
-        public ActionResult DeleteDevDetail(int ID)
+        public ActionResult MaterialsDeleteModel(int repository_id, int model_id)
         {
             try
             {
-               
-                return RedirectToAction("Devices");
+                Store theStore = new Store();
+                theStore = theStore.GetById(repository_id);
+                foreach (var item in theStore.Materials.Where(x => x.Matmodel.ID == model_id))
+                {
+                    item.Delete(item);
+                }
+                return RedirectToAction("Materials", new { id = repository_id });
             }
             catch (Exception ex)
             {
