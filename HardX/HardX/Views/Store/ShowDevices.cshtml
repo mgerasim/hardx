@@ -136,23 +136,7 @@
 																		  StoreName = store.Name,
 																		  CauseOfMarriage = device.CauseOfMarriage,
 																		  RoomID = device.RoomSetupID,
-																	}
-											/*
-										  from devhist in (List<Devhistory>)ViewBag.Devhistory 
-										  join device in ( (List<Device>)ViewBag.Devices ) on devhist.DeviceID equals device.ID
-										  join store in ( (List<Store>)ViewBag.Stores ) on device.Store.ID equals store.ID
-                                  
-										  select new
-										  {
-											  ID = device.ID,
-											  Devmodel = device.Devmodel,
-											  Updated_At = device.Updated_At,
-											  StoreID = store.ID,                                      
-											  StoreName = store.Name,
-											  CauseOfMarriage = device.CauseOfMarriage,
-											  RoomID = device.RoomSetupID,
-										  }	
-										  */			
+																	}													
 				
 										) )
 				{
@@ -185,11 +169,34 @@
 						<td>@item.Devmodel.FullName</td>
 						<td>@item.Updated_At.ToString()</td>
 						<td>
-							Установлен в кабинете: <br />
+							Установлен в кабинете: <br />							
 							@foreach(var room2 in ((List<Room>)ViewBag.Rooms).Where(x => x.ID==item.RoomSetupID))
 							{
 								@room2.FullName
 							}
+							<br/>
+							Изменить на новый кабинет: <br />
+							<select id="tab22_select_setup_room_@(item.ID)" class="chosen-select" placeholder="Выбрать..." name="[0].RoomID" style="width: 250px;">
+								<option value=""></option>
+								@foreach(var room in ViewBag.Rooms)
+								{
+									if (room.ID == item.RoomSetupID)  {
+										<option selected="selected" value="@(room.ID)">@room.FullName</option>
+									}
+									else {
+										<option value="@(room.ID)">@room.FullName</option>
+									}
+								}								
+							</select>
+							<br />
+							<a href="#" id="tab22_setup_save@(item.ID)">Сохранить</a>
+							<script>								
+								$("#tab22_setup_save@(item.ID)").click(function() {
+									$.get('@Url.Action("DevicesSaveSetup", "Store")', { device_id: @(item.ID), room_setup_id: $("#tab22_select_setup_room_@(item.ID)").val() }, function(data) {  location.reload(true);	});
+									$(this).text("Сохранено");
+								});
+							</script>
+
 						</td>
 						<td>
 							<input id="tab22_cause_of_marriage_@(item.ID)" type="text" value="@(item.CauseOfMarriage)" placeholder="Причина брака" >

@@ -728,6 +728,15 @@ namespace HardX.Controllers
             model.Update(model);
             return View();
         }
+        public ActionResult DevicesSaveSetup(int device_id, int room_setup_id)
+        {
+            Device model = new Device();
+            model = model.GetById(device_id);
+            model.RoomSetupID = room_setup_id;
+            model.Updated_At = DateTime.Now;
+            model.Update(model);
+            return View();
+        }
 
         public ActionResult MaterialsIssued(int repository_id, int matmodel_id, int store_id, int count_delta)
          {
