@@ -14,7 +14,7 @@
 	<thead>
 		<tr>
 			<th>
-				Имя
+				Номер
 			</th>
 
 			<th>
@@ -51,8 +51,7 @@
 				</td>
 				<td>
 					@Html.ActionLink("Редактировать", "Edit", new { id=item.ID }) |
-					@Html.ActionLink("Просмотр", "Details", new { id=item.ID }) |
-					@Html.ActionLink("Удалить", "Delete", new { id=item.ID }, new { onclick = "return confirm('Вы действительно хотите удалить?');" })
+					@Html.ActionLink("Просмотр", "Details", new { id=item.ID }) 
 				</td>        
 			</tr>
 		}
@@ -61,7 +60,7 @@
 	<tfoot>
 		<tr>
 			<th>
-				Имя
+				Номер
 			</th>
 
 			<th>

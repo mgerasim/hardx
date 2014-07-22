@@ -11,8 +11,8 @@ namespace HardX.Models
     public class Room : Entity<Room>
     {       
         public Int32 ID {get; set;}
-        [Display(Name = "Полное имя")]
-        [Required(ErrorMessage = "* Укажите значение для полного имени")]        
+        [Display(Name = "Номер или название кабинета")]
+        [Required(ErrorMessage = "* Укажите значение для номера или названия кабинета")]        
         [Editable(true)]
         public virtual string Name { get; set; }
 
