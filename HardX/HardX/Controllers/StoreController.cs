@@ -594,10 +594,10 @@ namespace HardX.Controllers
             ViewBag.DevmodelID = DevmodelID;
             ViewBag.Stores = (new Store()).GetAll();
             ViewBag.Rooms = (new Room()).GetAll();
-            ViewBag.Devices = (new Device()).GetAll("DEV_MODEL_ID="+ViewBag.DevmodelID) ;
-            ViewBag.Devices1 = ((List<Device>) ViewBag.Devices).Where(x => x.StatusID==1 ).Where(x => x.Store.ID==ViewBag.StoreID);
-            ViewBag.Devices22 = ((List<Device>)ViewBag.Devices).Where(x => x.StatusID == 22).Where(x => x.Store.ID == ViewBag.StoreID);
-            ViewBag.Devices3 = ((List<Device>)ViewBag.Devices).Where(x => x.StatusID == 3).Where(x => x.Store.ID == ViewBag.StoreID);
+            ViewBag.Devices = (new Device()).GetAll("DEV_MODEL_ID="+ViewBag.DevmodelID+" AND REPOSITORY_ID="+id.ToString()) ;
+            ViewBag.Devices1 = ((List<Device>) ViewBag.Devices).Where(x => x.StatusID==1 );
+            ViewBag.Devices22 = ((List<Device>)ViewBag.Devices).Where(x => x.StatusID == 22);
+            ViewBag.Devices3 = ((List<Device>)ViewBag.Devices).Where(x => x.StatusID == 3);
             
             ViewBag.Devhistory = (new Devhistory()).GetAll("STORE_ID=" + ViewBag.StoreID + " AND STATUS_ID=2");
             
