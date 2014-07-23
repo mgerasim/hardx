@@ -139,7 +139,7 @@
 								<option value=""></option>
 								@foreach(var device in ViewBag.Devices)
 								{
-									if (device.ID == item.DeviceID)  {
+									if (device.ID == item.DeviceSetupID)  {
 										<option selected="selected" value="@(device.ID)">@device.FullName</option>
 									}
 									else {
