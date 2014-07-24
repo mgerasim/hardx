@@ -36,6 +36,9 @@ namespace HardX.Models.Base
         [Required(ErrorMessage = "* Укажите комнату установки")]
         public int RoomSetupID { get; set; }
 
+        [Display(Name = "На какой склад выдан?")]
+        public int StoreIssuedID { get; set; }
+
         [Display(Name = "Статус")]
         [Required(ErrorMessage = "* Укажите статус")]
         public int StatusID { get; set; }

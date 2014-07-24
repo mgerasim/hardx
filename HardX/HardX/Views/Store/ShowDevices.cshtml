@@ -19,16 +19,17 @@
 		<li><a href="#tabs-3">Забраковано</a></li>
 	</ul>
 	<div id="tabs-1">
-		<table>
+		<table class="table_tab1>
 			<tbody id="tbody_tab1">
 				@foreach( var item in (ViewBag.Devices1) )
 				{
+
 					<tr id="tr_tab1_@(item.ID)">
 						<td>@item.ID</td>
 						<td>@item.Devmodel.FullName</td>
 						<td>@item.Updated_At.ToString()</td>
 						<td>
-							Выдать на склад: 
+							Выдать на склад: <br />
 							<select id="tab1_select_setup_store_@(item.ID)" class="chosen-select" placeholder="Выбрать..." name="[0].MatmodelID" style="width: 250px;">
 								<option value=""></option>
 								@foreach(var store in ViewBag.Stores)
@@ -47,12 +48,12 @@
 							<a href="#" id="issue@(item.ID)">Выдать</a><br/>
 							<script>
 								$("#issue@(item.ID.ToString())").click(function() {
-									$.get('@Url.Action("DevicesSetIssue", "Store")', { device_id: @(item.ID), store_id: $("#tab1_select_setup_store_@(item.ID)").val() }, function(data) {	});
-									$(this).text("Сохранено");
+									$.get('@Url.Action("DevicesSetIssue", "Store")', { device_id: @(item.ID), store_id: $("#tab1_select_setup_store_@(item.ID)").val() }, function(data) { $(this).text("Сохранено");	});
+									
 								});
 							</script>
-
-							Установить в кабинет:
+							<br />
+							Установить в кабинет: <br />
 							<select id="tab1_select_setup_room_@(item.ID)" class="chosen-select" placeholder="Выбрать..." name="[0].RoomID" style="width: 250px;">
 								<option value=""></option>
 								@foreach(var room in ViewBag.Rooms)
@@ -65,20 +66,16 @@
 									}
 								}								
 							</select>
-							<input id="serial_@(item.ID)" type="text" value="@(item.Serial)" placeholder="Серийный номер" >
-							<input id="ipaddr_@(item.ID)" type="text" value="@(item.IPAddr)" placeholder="IP адрес" >
-							<input id="host_@(item.ID)" type="text" value="@(item.Host)" placeholder="Хост" >
-
 							<a href="#" id="tab1_setup@(item.ID)">Установить</a><br/>
 							<script>
 								$("#tab1_setup@(item.ID.ToString())").click(function() {									
-									$.get('@Url.Action("DevicesSetSetup", "Store")', { device_id: @(item.ID), room_id: $("#tab1_select_setup_room_@(item.ID)").val(), serial: $("#serial_@(item.ID)").val(), ipaddr: $("#ipaddr_@(item.ID)").val(), host: $("#host_@(item.ID)").val() }, function(data) {	});
+									$.get('@Url.Action("DevicesSetSetup", "Store")', { device_id: @(item.ID), room_id: $("#tab1_select_setup_room_@(item.ID)").val(), serial: $("#tab22_serial_@(item.ID)").val(), ipaddr: $("#tab22_ipaddr_@(item.ID)").val(), host: $("#tab22_host_@(item.ID)").val() }, function(data) {	});
 									$(this).text("Сохранено");
 								});
 							</script>
-
-
-							<a href="#" id="marriage@(item.ID)">Брак</a>
+							<br />Указать причину брака:<br />							
+							<input id="cause_of_marriage_@(item.ID)" type="text" value="@(item.CauseOfMarriage)" placeholder="Причина брака" >
+							<a href="#" id="marriage@(item.ID)">Сохранить</a><br />
 							<script>
 								function AjaxUpdateStatus@(item.ID)(status) {
 									$.get('@Url.Action("DevicesUpdateStatus", "Store")', { device_id: @(item.ID), status_id: status }, function(data) {	});
@@ -89,8 +86,45 @@
 									$(this).parent().parent().remove();
 								});
 							</script>
-							<input id="cause_of_marriage_@(item.ID)" type="text" value="@(item.CauseOfMarriage)" placeholder="Причина брака" >
 						</td>
+
+						<td>
+							<a href="#" id="tab22_serial_save@(item.ID)">Сохранить серийный номер</a>
+							<script>								
+								$("#tab22_serial_save@(item.ID)").click(function() {
+									$.get('@Url.Action("DevicesSaveSerial", "Store")', { device_id: @(item.ID), serial: $("#tab22_serial_@(item.ID)").val() }, function(data) {	});
+									$(this).text("Сохранено");
+								});
+							</script>							
+							<br />
+							<input id="tab22_serial_@(item.ID)" type="text" value="@(item.Serial)" placeholder="Серийный номер" >
+							<br />
+						
+							
+							<a href="#" id="tab22_ipaddr_save@(item.ID)">Сохранить IP адрес</a>
+							<script>								
+								$("#tab22_ipaddr_save@(item.ID)").click(function() {
+									$.get('@Url.Action("DevicesSaveIPAddr", "Store")', { device_id: @(item.ID), ipaddr: $("#tab22_ipaddr_@(item.ID)").val() }, function(data) {	});
+									$(this).text("Сохранено");
+								});
+							</script>							
+							<br />
+							<input id="tab22_ipaddr_@(item.ID)" type="text" value="@(item.IPAddr)" placeholder="IP адрес" >
+							<br />
+													
+							<a href="#" id="tab22_host_save@(item.ID)">Сохранить хост</a>
+							<script>								
+								$("#tab22_host_save@(item.ID)").click(function() {
+									$.get('@Url.Action("DevicesSaveHost", "Store")', { device_id: @(item.ID), host: $("#tab22_host_@(item.ID)").val() }, function(data) {	});
+									$(this).text("Сохранено");
+								});
+							</script>							
+							<br />
+							<input id="tab22_host_@(item.ID)" type="text" value="@(item.Host)" placeholder="Хост" >
+							<br />
+						</td>
+
+							
 						<td>
 							<a href="#" id="delete@(item.ID)">Удалить</a>
 							<script>
@@ -100,10 +134,18 @@
 								});
 							</script>
 						</td>
+						
 					</tr>
+					
 				}
 			</tbody>
 		</table>
+
+		<script>
+			$(document).ready(function() {
+				$('tbody tr:even').css('background-color', '#dddddd');
+			});
+		</script>
 
 		<input id="serial_new" type="text" value="" placeholder="Серийный номер" >
 		<input id="ipaddr_new" type="text" value="" placeholder="IP адрес" >
@@ -124,8 +166,8 @@
 			<tbody id="tbody_tab2">
 				@foreach( var item in (
 											from device in (NHibernate.Collection.Generic.PersistentGenericSet<Device>) ViewBag.theStore.Devices
-											join store in ( (List<Store>)ViewBag.Stores ) on device.Store.ID equals store.ID
-														where device.Devmodel.ID == ViewBag.DevmodelID
+											join store in ( (List<Store>)ViewBag.Stores ) on device.StoreIssuedID equals store.ID
+														where device.Devmodel.ID == ViewBag.DevmodelID 
 														select new  {	
 																		DevmodelID=device.Devmodel.ID,
 																		StatusID = device.StatusID,																													
@@ -136,20 +178,32 @@
 																		  StoreName = store.Name,
 																		  CauseOfMarriage = device.CauseOfMarriage,
 																		  RoomID = device.RoomSetupID,
+																		  Serial = device.Serial
 																	}													
 				
 										) )
 				{
-					<tr id="tr_tab2_@(item.ID)">
-						<td>@item.ID</td>
-						<td>@item.Devmodel.FullName</td>
-						<td>@item.Updated_At.ToString()</td>
-						<td>							
-							
-							Выдан на склад: @item.StoreName											
-							
-						</td>
-					</tr>
+					if(@item.StatusID==2)
+					{
+						<tr id="tr_tab2_@(item.ID)">
+							<td>@item.ID</td>
+							<td>@item.Devmodel.FullName</td>
+							<td>@item.Serial</td>
+							<td>@item.Updated_At.ToString()</td>
+							<td>														
+								Выдан на склад: @item.StoreName																
+							</td>
+							<td>
+								<a href="#" id="delete@(item.ID)">Удалить</a>
+								<script>
+									$("#delete@(item.ID)").click(function() {
+										$.get('@Url.Action("Delete", "Device")', { id: @(item.ID) }, function(data) {	});									
+										$(this).parent().parent().remove();
+									});
+								</script>
+							</td>
+						</tr>
+					}
 				}
 			</tbody>
 		</table>
@@ -213,8 +267,7 @@
 							</script>							
 						</td>
 						
-						<td>
-							
+						<td>							
 							<a href="#" id="tab22_serial_save@(item.ID)">Сохранить серийный номер</a>
 							<script>								
 								$("#tab22_serial_save@(item.ID)").click(function() {
@@ -249,6 +302,15 @@
 							<input id="tab22_host_@(item.ID)" type="text" value="@(item.Host)" placeholder="Хост" >
 							<br />
 						</td>
+						<td>
+							<a href="#" id="delete@(item.ID)">Удалить</a>
+							<script>
+								$("#delete@(item.ID)").click(function() {
+									$.get('@Url.Action("Delete", "Device")', { id: @(item.ID) }, function(data) {	});									
+									$(this).parent().parent().remove();
+								});
+							</script>
+						</td>
 
 					</tr>
 				}
@@ -276,6 +338,15 @@
 								$("#tab3_marriage@(item.ID)").click(function() {								
 									tab3_AjaxUpdateStatus@(item.ID)( 1 );		
 									$(this).parent().parent().remove();									
+								});
+							</script>
+						</td>
+						<td>
+							<a href="#" id="delete@(item.ID)">Удалить</a>
+							<script>
+								$("#delete@(item.ID)").click(function() {
+									$.get('@Url.Action("Delete", "Device")', { id: @(item.ID) }, function(data) {	});									
+									$(this).parent().parent().remove();
 								});
 							</script>
 						</td>

@@ -590,13 +590,15 @@ namespace HardX.Controllers
                 return RedirectToAction("Error", "Home", route);
             }
             ViewBag.StoreID = id;
-            ViewBag.theStore = (new Store()).GetById(id);
+            Store theStore = (new Store()).GetById(id);
+            ViewBag.theStore = theStore;
             ViewBag.DevmodelID = DevmodelID;
             ViewBag.Stores = (new Store()).GetAll();
             ViewBag.Rooms = (new Room()).GetAll();
             ViewBag.Devices = (new Device()).GetAll("DEV_MODEL_ID="+ViewBag.DevmodelID+" AND REPOSITORY_ID="+id.ToString()) ;
             ViewBag.Devices1 = ((List<Device>) ViewBag.Devices).Where(x => x.StatusID==1 );
             ViewBag.Devices22 = ((List<Device>)ViewBag.Devices).Where(x => x.StatusID == 22);
+            ViewBag.Devices2 = ((List<Device>)ViewBag.Devices).Where(x => x.StatusID == 2);
             ViewBag.Devices3 = ((List<Device>)ViewBag.Devices).Where(x => x.StatusID == 3);
             
             ViewBag.Devhistory = (new Devhistory()).GetAll("STORE_ID=" + ViewBag.StoreID + " AND STATUS_ID=2");
@@ -650,12 +652,14 @@ namespace HardX.Controllers
             model = model.GetById(material_id);            
             model.Updated_At = DateTime.Now;
             model.StatusID = 2;
+            model.StoreIssuedID = store_id;
             model.Update(model);
 
-
-            model.StatusID = 1;
-            model.Store = (new Store()).GetById(store_id);            
-            model.Update(model);
+            Material theNew = new Material(model);
+            theNew.StatusID = 1;
+            theNew.Store = (new Store()).GetById(store_id);
+            theNew.StoreIssuedID = model.Store.ID; 
+            theNew.Save(theNew);
 
             return View();
         }
@@ -689,13 +693,15 @@ namespace HardX.Controllers
             model = model.GetById(device_id);
             model.Updated_At = DateTime.Now;
             model.StatusID = (2);
+            model.StoreIssuedID = store_id;
             model.Update(model);
-
-            model.StatusID = 1; 
-            model.Store = (new Store()).GetById(store_id);            
             
-            model.Update(model);
-
+            Device theNew = new Device(model);
+            theNew.StatusID = 1;
+            theNew.Store = (new Store()).GetById(store_id);
+            theNew.StoreIssuedID = model.Store.ID;
+            theNew.Save(theNew);
+                        
             return View();            
         }
 
@@ -752,10 +758,14 @@ namespace HardX.Controllers
              {
                  item.Updated_At = DateTime.Now;
                  item.StatusID = 2;
+                 item.StoreIssuedID = store_id;
                  item.Update(item);
-                 item.StatusID = 1;
-                 item.Store = (new Store()).GetById(store_id);
-                 item.Update(item);
+                 
+                 Material theNew = new Material(item);
+                 theNew.StatusID = 1;
+                 theNew.Store = (new Store()).GetById(store_id);
+                 theNew.StoreIssuedID = repository_id;
+                 theNew.Save(theNew);
              }
              
              return View();
@@ -775,10 +785,14 @@ namespace HardX.Controllers
             {
                 item.Updated_At = DateTime.Now;
                 item.StatusID = 2;
+                item.StoreIssuedID = store_id;
                 item.Update(item);
-                item.StatusID = 1;
-                item.Store = (new Store()).GetById(store_id);
-                item.Update(item);
+
+                Device theNew = new Device(item);
+                theNew.StatusID = 1;
+                theNew.Store = (new Store()).GetById(store_id);
+                theNew.StoreIssuedID = repository_id;
+                theNew.Save(theNew);
             }
 
             return View();

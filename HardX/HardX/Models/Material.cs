@@ -50,6 +50,9 @@ namespace HardX.Models
             this.Store = (new Store()).GetById(model.Store.ID);
             
             this.DeviceSetupID = (model.DeviceSetupID);
+            this.CauseOfMarriage = model.CauseOfMarriage;
+            this.StatusID = model.StatusID;
+            this.StoreIssuedID = model.StoreIssuedID;
         }        
     }
 }

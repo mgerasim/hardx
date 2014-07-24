@@ -28,7 +28,7 @@
 						<td>@item.Matmodel.FullName</td>
 						<td>@item.Updated_At.ToString()</td>
 						<td>
-							Выдать на склад:
+							Выдать на склад:<br/>
 							<select id="tab1_select_setup_store_@(item.ID)" class="chosen-select" placeholder="Выбрать..." name="[0].MatmodelID" style="width: 250px;">
 								<option value=""></option>
 								@foreach(var store in ViewBag.Stores)
@@ -52,7 +52,7 @@
 								});
 							</script>
 
-							Установить в оборудование:											
+							<br/>Установить в оборудование:											
 							<br />
 							<select id="tab1_select_setup_device_@(item.ID)" class="chosen-select" placeholder="Выбрать..." name="[0].MatmodelID" style="width: 450px;">
 								<option value=""></option>
@@ -84,7 +84,9 @@
 									$(this).text("Сохранено");
 								});
 							</script>
-							<a href="#" id="marriage@(item.ID)">Брак</a>
+							<br/>Указать причину брака<br/>							
+							<input id="cause_of_marriage_@(item.ID)" type="text" value="@(item.CauseOfMarriage)" placeholder="Причина брака" >
+							<a href="#" id="marriage@(item.ID)">Сохранить</a>
 							<script>
 								function AjaxUpdateStatus@(item.ID)(status) {
 									$.get('@Url.Action("MaterialsUpdateStatus", "Store")', { material_id: @(item.ID), status_id: status }, function(data) {	});
@@ -94,9 +96,6 @@
 									$(this).parent().parent().remove();
 								});
 							</script>
-							<input id="cause_of_marriage_@(item.ID)" type="text" value="@(item.CauseOfMarriage)" placeholder="Причина брака" >
-
-
 						</td>
 						<td>
 							<a href="#" id="delete@(item.ID)">Удалить</a>
@@ -111,6 +110,11 @@
 				}
 			</tbody>
 		</table>
+		<script>
+			$(document).ready(function() {
+				$('tbody tr:even').css('background-color', '#dddddd');
+			});
+		</script>
 	</div> <!-- tabs-1 -->
 
 	<div id="tabs-2">
@@ -155,6 +159,15 @@
 								});
 							</script>
 						</td>
+						<td>
+							<a href="#" id="delete@(item.ID)">Удалить</a>
+							<script>
+								$("#delete@(item.ID)").click(function() {
+									$.get('@Url.Action("Delete", "Material")', { id: @(item.ID) }, function(data) {	});									
+									$(this).parent().parent().remove();
+								});
+							</script>
+						</td>
 					</tr>
 				}
 			</tbody>
@@ -166,7 +179,7 @@
 			<tbody id="tbody_tab22">			
 				@foreach( var item in 
 														from material in (List<Material>) ViewBag.Materials
-														join store in ( (List<Store>)ViewBag.Stores ) on material.Store.ID equals store.ID
+														join store in ( (List<Store>)ViewBag.Stores ) on material.StoreIssuedID equals store.ID
 														where material.Store.ID == ViewBag.StoreID
 														select new  {	
 																		MatmodelID=material.Matmodel.ID,
@@ -179,33 +192,30 @@
 																		CauseOfMarriage = material.CauseOfMarriage,
 																		DeviceID = material.DeviceSetupID,									
 																	}
-									/*
-													from mathist in (List<Mathistory>)ViewBag.Mathistory 
-													  join material in ( (List<Material>)ViewBag.Materials ) on  mathist.MaterialID equals material.ID
-													  join store in ( (List<Store>)ViewBag.Stores ) on material.Store.ID equals store.ID
-                                  
-													  select new
-													  {
-														  ID = material.ID,
-														  Matmodel = material.Matmodel,
-														  Updated_At = material.Updated_At,
-														  StoreID = store.ID,                                      
-														  StoreName = store.Name,
-														  CauseOfMarriage = material.CauseOfMarriage,
-														  DeviceID = material.DeviceSetupID,
-													  }
-										*/
+									
                                    )
 				{
-					<tr id="tr_tab22_@(item.ID)">
-						<td>@item.ID</td>
-						<td>@item.Matmodel.FullName</td>
-						<td>@item.Updated_At.ToString()</td>
-						<td>							
+					if(@item.StatusID==2)
+					{
+						<tr id="tr_tab22_@(item.ID)">
+							<td>@item.ID</td>
+							<td>@item.Matmodel.FullName</td>
+							<td>@item.Updated_At.ToString()</td>
+							<td>					
 							
-							Выдано на склад: @item.StoreName (# @item.StoreID)
-						</td>
-					</tr>
+								Выдано на склад: @item.StoreName (# @item.StoreID)
+							</td>
+							<td>
+								<a href="#" id="delete@(item.ID)">Удалить</a>
+								<script>
+									$("#delete@(item.ID)").click(function() {
+										$.get('@Url.Action("Delete", "Material")', { id: @(item.ID) }, function(data) {	});									
+										$(this).parent().parent().remove();
+									});
+								</script>
+							</td>
+						</tr>
+					}
 				}
 			</tbody>
 		</table>

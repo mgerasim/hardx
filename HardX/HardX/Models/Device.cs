@@ -49,6 +49,24 @@ namespace HardX.Models
 
         }
 
+        public Device(Device item)
+            : this()
+        {
+            this.Serial = item.Serial;
+            this.StatusID = item.StatusID;
+            this.Store = (new Store()).GetById(item.Store.ID);
+            this.StoreIssuedID = item.StoreIssuedID;
+            this.Updated_At = item.Updated_At;
+            this.Created_At = item.Created_At;
+            this.Creater = item.Creater;
+            this.Updater = item.Updater;
+            this.RoomSetupID = item.RoomSetupID;
+            this.IPAddr = item.IPAddr;
+            this.Host = item.Host;
+            this.Devmodel = (new Devmodel()).GetById(item.Devmodel.ID);
+            this.CauseOfMarriage = this.CauseOfMarriage;
+        }
+
         public int GetStoreIDFromHistory(List<Devhistory> theHistory)
         {
             int res = 0;

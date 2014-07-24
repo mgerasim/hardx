@@ -21,6 +21,7 @@
     <many-to-one name="Store" column="REPOSITORY_ID" />
     <property name="StatusID" column="STATUS_ID" type="int" />
     <property name="RoomSetupID" column="ROOM_ID" type="int" />
+    <property name="StoreIssuedID" column="STOREISSUED_ID" type="int" />
     <property name="CauseOfMarriage" column="cause_of_marriage" type="String" length="255" />    
     <property name="Serial" column="SERIAL" type="String" length="255" />
     <property name="IPAddr" column="IPADDR" type="String" length="255" />

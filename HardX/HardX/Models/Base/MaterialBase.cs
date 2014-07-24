@@ -22,6 +22,9 @@ namespace HardX.Models.Base
         [Display(Name = "Статус")]
         [Required(ErrorMessage = "* Укажите статус")]
         public int StatusID { get; set; }
+
+        [Display(Name = "На какой склад выдан?")]
+        public int StoreIssuedID { get; set; }
                 
         public DateTime Created_At { get; set; }
         public DateTime Updated_At { get; set; }
