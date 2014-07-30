@@ -40,6 +40,11 @@
 	<script>
 		$("#report_get").click(function() {	
 			
+			if ( $("#report_bgn").val() =="" || $("#report_end").val() =="" ) {
+				alert("Укажите период выгрузки!");
+				return;
+			}
+
 			$.fileDownload( '/Store/ReportDevicesGet?repository_id=@ViewBag.theStore.ID&report_bgn='+$("#report_bgn").val()+'&report_end='+$("#report_end").val(), {
 			
 				preparingMessageHtml: "Происходит выгрузка отчёта, пожалуйста подождите...",
@@ -51,11 +56,15 @@
 	<script>
 		$("#report_get_device").click(function() {	
 			
+			if ( $("#report_bgn").val() =="" || $("#report_end").val() =="" ) {
+				alert("Укажите период выгрузки!");
+				return;
+			}			
 			$.fileDownload( '/Store/ReportDevicesGetList?repository_id=@ViewBag.theStore.ID&report_bgn='+$("#report_bgn").val()+'&report_end='+$("#report_end").val(), {
 			
 				preparingMessageHtml: "Происходит выгрузка отчёта, пожалуйста подождите...",
 				failMessageHtml: "Возникли проблемы при формировании отчёта, необходимо повторить попытку позже."
-			});
+			});			
 		});
 	</script>
 </p>
