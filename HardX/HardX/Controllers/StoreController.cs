@@ -545,6 +545,7 @@ namespace HardX.Controllers
             ViewBag.Devices = ((List<Devhistory>)(new Devhistory()).GetAll()).Where(x => x.StatusID == 2).Where(x => x.StoreID == repository_id);
             ViewBag.Devhistory = ((List<Devhistory>)(new Devhistory()).GetAll());
             ViewBag.Stores = ((List<Store>)(new Store()).GetAll());
+            ViewBag.Rooms = (new Room()).GetAll();
 
             string filename = "Отчёт-Склад-Оборудование-" + (new Store()).GetById(repository_id).Name + "_" + DateTime.Now.ToString("yyyy-MM-dd") + ".xls";
             filename = filename.Replace(' ', '-');

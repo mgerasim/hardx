@@ -29,6 +29,7 @@
         <th>
 			Имя модели
 		</th>
+		
 
 		<th>
 			Где установлен?
@@ -77,34 +78,39 @@
             @item.Devmodel.FullName 
         </td>
 		     
-        
-		
+        		
         <td>			
-            @item.GetStoreName(@item.GetStoreIDFromHistory((List<Devhistory>) ViewBag.Devhistory), (List<Store>) ViewBag.Stores)
+			@foreach(var store2 in ((List<Store>)ViewBag.Stores).Where(x => x.ID==item.StoreIssuedID))
+							{
+								@store2.Name
+							}
         </td>
 		
         <td>
-            куда выдан
+            @foreach(var room2 in ((List<Room>)ViewBag.Rooms).Where(x => x.ID==item.RoomSetupID))
+							{
+								@room2.FullName
+							}
         </td>
 
 		<td>
-            Причина брака
+            @item.CauseOfMarriage
         </td>
 		
         <td>
-            сер номер
+            @item.Serial
         </td>
 
 		<td>
-            IP адрес
+            @item.IPAddr
         </td>
 
 		<td>
-            хост
+            @item.Host
         </td>
 
 		<td>
-            дата изменения
+            @item.Updated_At
         </td>
 					
 
