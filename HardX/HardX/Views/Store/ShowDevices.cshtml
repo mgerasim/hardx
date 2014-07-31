@@ -310,6 +310,15 @@
 									$(this).parent().parent().remove();
 								});
 							</script>
+							<br />
+							
+							<a href="#" id="refund@(item.ID)">Возврат</a>
+							<script>
+								$("#refund@(item.ID)").click(function() {
+									$.get('@Url.Action("Refund", "Device")', { id: @(item.ID) }, function(data) {	});									
+									$(this).parent().parent().remove();
+								});
+							</script>
 						</td>
 
 					</tr>

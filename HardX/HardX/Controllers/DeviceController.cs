@@ -40,5 +40,24 @@ namespace HardX.Controllers
             item.Delete(item);
             return View();
         }
+
+        public ActionResult Refund(int id)
+        {
+            if (!Access.HasAccess(50))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
+            Device item = new Device();
+            item = item.GetById(id);
+            item.StatusID = 1;
+            item.IPAddr = "";
+            item.Host = "";
+            item.Update(item);
+            return View();
+        }
+
+
     }
 }
