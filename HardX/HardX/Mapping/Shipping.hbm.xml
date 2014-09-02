@@ -13,7 +13,5 @@
     </id>
     <property name="Name"  column="name" type="String" length="255"/>
     <property name="Count" column="Count" type="int" />
-    <many-to-one name="Devmodel" column="DEVICE_ID" />
-    <many-to-one name="Matmodel" column="MATERIAL_ID" />
   </class>
 </hibernate-mapping>

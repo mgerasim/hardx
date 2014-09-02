@@ -77,6 +77,25 @@ namespace HardX.Models
             }
         }
 
+        public static User CurrentUser
+        {
+            get
+            {
+                string strLoginName = HttpContext.Current.User.Identity.Name;
+                User theUser = new User();
+                List<User> theUserList = new List<User>();
+                theUserList = (List<User>)theUser.GetAll("UPPER(LOGIN) = '" + strLoginName.ToUpper() + "'");
+                if (theUserList.Count == 0 || theUserList.Count >= 2)
+                {
+                    return null;
+                }
+                else
+                {
+                    return theUserList[0];
+                }
+            }
+        }
+
         public static int CurrentUserId
         {
             get

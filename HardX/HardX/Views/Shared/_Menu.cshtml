@@ -6,6 +6,10 @@
         <ul class="sub">
             <li><a href="@Url.Action("Index", "Area")">Площадки</a></li>
             <li><a href="@Url.Action("Index", "Store")">Склады</a></li>
+            @if ( HardX.Models.User.CurrentUser.IsExistRole(1)/*снабженец*/ )
+            {
+              <li><a href="@Url.Action("Index", "Shipping")">Поставки</a></li>
+            }
         </ul>
     </li>
     <li class="top"><a href="#" class="top_link"><span class="down">Справочники</span></a>
