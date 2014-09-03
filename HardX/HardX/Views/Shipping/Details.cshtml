@@ -1,0 +1,22 @@
+﻿@model HardX.Models.Branche
+
+@{
+    ViewBag.Title = "Просмотр филиала";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<fieldset>
+    <legend>Филиал</legend>
+
+    <div class="display-label">Полное имя</div>
+    <div class="display-field">@Model.FullName</div>
+
+    <div class="display-label">Короткое имя</div>
+    <div class="display-field">@Model.ShortName</div>
+</fieldset>
+<p>
+    @Html.ActionLink("Редактировать", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Назад", "Index")
+</p>
+

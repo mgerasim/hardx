@@ -1,0 +1,93 @@
+﻿@model IEnumerable<HardX.Models.Shipping>
+
+
+@{
+    ViewBag.Title = "Список поставок";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>    
+	<button id="shipping_new" type="button" class="btn btn-default">Добавить поставку</button>
+</p>
+<script>
+	function handleSave() {
+	
+		$.get('@Url.Action("CreateAjax", "Shipping")', { name: $('#input_shipping_new').val() }, function(data) {							
+					var tr = document.createElement('tr');
+					var th = document.createElement('td');
+					var t  = document.createTextNode($("#input_shipping_new").val());
+					th.appendChild(t); 
+					tr.appendChild(th); 
+					$('#td_shipping_new').after(tr);
+					// выполнено
+					$("#td_shipping_new").hide();		
+		});	
+		
+	};
+
+	$(document).ready(function() {
+		
+		$body = $("body");
+
+		$(document).on({
+			ajaxStart: function() { $body.addClass("loading");    },
+			 ajaxStop: function() { $body.removeClass("loading"); }    
+		});
+
+		
+
+		$("#td_shipping_new").hide();		
+
+		
+		$("#shipping_new").click(function() {
+			$("#td_shipping_new").show();		
+		});
+
+		$("#shipping_save").click(function() {
+			handleSave();
+		});
+
+		$("#input_shipping_new").keyup(function(e) {
+			 var code = e.which;
+			 if (code == 13) {				
+				handleSave();						
+			 }
+		});
+	});
+
+
+
+</script>
+<table>
+    <tr>
+        <th>
+			Наименование
+        </th>
+        <th></th>
+    </tr>
+	<tr id="td_shipping_new">
+		<td>
+			<input id="input_shipping_new" type="text" class="form-control" placeholder="Text input">
+			<button id="shipping_save" type="button" class="btn btn-primary">Сохранить</button>
+		</td>
+		<td>
+		</td>
+	</tr>
+@foreach (var item in Model) {
+    <tr>
+		
+		<td>
+            @item.Name
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Просмотр", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.ID }, new { onclick = "return confirm('Вы действительно хотите удалить?');" })
+        </td>        
+    </tr>
+}
+
+</table>
+
+<div class="modal"><!-- Place at bottom of page --></div>

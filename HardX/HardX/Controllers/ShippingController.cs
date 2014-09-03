@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using HardX.Models;
+using HardX.Utils;
 
 namespace HardX.Controllers
 {
@@ -13,7 +15,18 @@ namespace HardX.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            if (!Access.HasAccess(71))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
+
+            Shipping model = new Shipping();
+            List<Shipping> theListModel = new List<Shipping>();
+            theListModel = (List<Shipping>)model.GetAll();
+
+            return View(theListModel);
         }
 
         //
@@ -21,6 +34,27 @@ namespace HardX.Controllers
 
         public ActionResult Details(int id)
         {
+            if (!Access.HasAccess(74))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
+            return View();
+        }
+
+        public ActionResult CreateAjax(string name)
+        {
+            if (!Access.HasAccess(72))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
+            Shipping theShipping = new Shipping();
+            theShipping.Name = name;
+            theShipping.Save(theShipping);
+
             return View();
         }
 
@@ -29,7 +63,14 @@ namespace HardX.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            if (!Access.HasAccess(72))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
+            ShippingNew model = new ShippingNew();
+            return View(model);
         } 
 
         //
@@ -38,10 +79,17 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
+            if (!Access.HasAccess(72))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             try
             {
-                // TODO: Add insert logic here
-
+                Shipping model = new Shipping();
+                model.Name = collection["Name"];
+                model.Save(model);
                 return RedirectToAction("Index");
             }
             catch
@@ -55,7 +103,15 @@ namespace HardX.Controllers
  
         public ActionResult Edit(int id)
         {
-            return View();
+            if (!Access.HasAccess(73))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
+            Shipping model = new Shipping();
+            model = model.GetById(id);
+            return View(model);
         }
 
         //
@@ -64,10 +120,19 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
+            if (!Access.HasAccess(13))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
             try
             {
-                // TODO: Add update logic here
- 
+                Shipping model = new Shipping();
+                model = model.GetById(id);
+                model.Name = collection["Name"];
+                model.Update(model);
+
                 return RedirectToAction("Index");
             }
             catch
@@ -81,7 +146,17 @@ namespace HardX.Controllers
  
         public ActionResult Delete(int id)
         {
-            return View();
+            if (!Access.HasAccess(75))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
+            Shipping model = new Shipping();
+            model = model.GetById(id);
+            model.Delete(model);
+
+            return RedirectToAction("Index");
         }
 
         //
@@ -90,16 +165,17 @@ namespace HardX.Controllers
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
-            try
+            if (!Access.HasAccess(75))
             {
-                // TODO: Add delete logic here
- 
-                return RedirectToAction("Index");
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
             }
-            catch
-            {
-                return View();
-            }
+            Shipping model = new Shipping();
+            model = model.GetById(id);
+            model.Delete(model);
+
+            return RedirectToAction("Index");
         }
     }
 }

@@ -12,6 +12,5 @@
       </generator>
     </id>
     <property name="Name"  column="name" type="String" length="255"/>
-    <property name="Count" column="Count" type="int" />
   </class>
 </hibernate-mapping>
