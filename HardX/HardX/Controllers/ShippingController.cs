@@ -24,7 +24,7 @@ namespace HardX.Controllers
 
             Shipping model = new Shipping();
             List<Shipping> theListModel = new List<Shipping>();
-            theListModel = (List<Shipping>)model.GetAll();
+            theListModel = (List<Shipping>)model.GetAll("","ID DESC");
 
             return View(theListModel);
         }
@@ -55,7 +55,7 @@ namespace HardX.Controllers
             theShipping.Name = name;
             theShipping.Save(theShipping);
 
-            return View();
+            return View(theShipping);
         }
 
         //

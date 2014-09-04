@@ -209,6 +209,7 @@
     <Compile Include="ViewModels\DevmodelInput.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\img\ajax-loader.gif" />
     <Content Include="Content\jquerycssmenu.css" />
     <Content Include="Content\tcal.css" />
     <Content Include="Content\themes\cap_style\capstyle.css" />
@@ -307,11 +308,12 @@
     <EmbeddedResource Include="Mapping\Shipping.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Mapping\Shippingitems.hbm.xml">
+    <EmbeddedResource Include="Mapping\Shippingitem.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.custom.js" />
+    <Content Include="Scripts\jquery.blockUI.js" />
     <Content Include="Scripts\jquery.fileDownload.js" />
     <Content Include="Scripts\jquerycssmenu.js" />
     <Content Include="Scripts\stuHover.js" />
@@ -586,10 +588,13 @@
     <Content Include="Views\Shipping\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shippingitem\CreateAjax.cshtml" />
+    <Content Include="Views\Shippingitem\CreateAjaxDev.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shipping\CreateAjax.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shippingitem\CreateAjaxMat.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -1,7 +1,8 @@
-﻿@model HardX.Models.Branche
+﻿@model HardX.Models.Shipping
+@using HardX.Models
 
 @{
-    ViewBag.Title = "Редактирование филиала";
+    ViewBag.Title = "Редактирование поставки";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -12,30 +13,196 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>Филиал</legend>
 
-        @Html.HiddenFor(model => model.Id)
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.FullName)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.FullName)
-            @Html.ValidationMessageFor(model => model.FullName)
-        </div>
+        @Html.HiddenFor(model => model.ID)
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.ShortName)
+            @Html.LabelFor(model => model.Name)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.ShortName)
-            @Html.ValidationMessageFor(model => model.ShortName)
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
         </div>
 
         <p>
             <input type="submit" value="Сохранить" />
         </p>
+		<br/>
+
+		<table>
+			<tr>
+				<th>#
+				</th>
+				<th>
+					Устройство
+				</th>
+				<th>
+					Материал
+				</th>
+				<th>
+					Кол-во
+				</th>
+				<th></th>
+			</tr>
+		@foreach (var item in Model.Shippingitems) {
+			<tr>
+				<td>
+					@item.ID
+				</td>
+
+				<td>
+					@if (item.Devmodel!= null) {
+						@item.Devmodel.ID
+					}
+				</td>
+
+				<td>
+					@if (item.Matmodel!=null) {
+						@item.Matmodel.ID
+					}
+				</td>
+				<td>					
+						@item.Count					
+				</td>
+
+			</tr>
+		}
+
+</table>
+
+<script>
+	$(function() {
+		$( "#tabs" ).tabs();
+	});
+</script>
+
+
+
+
     </fieldset>
+
+	<div id="tabs">
+	 <ul>
+		<li><a href="#tabs-1">Добавить устройство</a></li>
+		<li><a href="#tabs-2">Добавить материал</a></li>
+	</ul>
+	<div id="tabs-1">
+		<select id="tab1_select_device" class="chosen-select" placeholder="Выбрать..."  style="width: 450px;">
+								<option value=""></option>
+								@foreach( var device in (new Devmodel()).GetAll() )
+								{
+										<option value="@(device.ID)">@device.FullName</option>
+									
+								}								
+							</select>
+		<br />
+		
+		<p>
+			<input id="input_device_new" type="text" class="form-control" placeholder="Количество устройств">
+		</p>
+
+		<p>    
+			<button id="tab_device_new" type="button" class="btn btn-primary">Добавить</button>
+		</p>
+
+		<script>
+
+			function handleSaveDev() {
+				$.get('@Url.Action("CreateAjaxDev", "Shippingitems")', { shipping_id: @(Model.ID), devmodel_id: $('#tab1_select_device').val(), count: $('#input_device_new').val() }, function(data) {							
+				
+				/*
+							var tr = document.createElement('tr');
+
+							tr.innerHTML = 	'<td>'+data+'</td><td>'+ $("#input_shipping_new").val() + '</td>'+
+								'<td>'+ '<a href="/Shipping/Edit/'+data+'">Редактировать</a> |'+
+					'<a href="/Shipping/Details/'+data+'">Просмотр</a> |'+
+					'<a href="/Shipping/Delete/'+data+'" onclick="return confirm(\'Вы действительно хотите удалить?\');">Удалить</a>'  +'<td>';				
+					
+					
+							$('#td_shipping_new').after(tr);
+							// выполнено
+							$("#td_shipping_new").hide();		
+				*/
+				});	
+			};
+			
+			$(document).ready(function() {
+			
+				$('#input_device_new').keyup(function(e) {
+					 var code = e.which;
+					 if (code == 13) {				
+						handleSaveDev();						
+					 }
+				});
+				
+				$("#tab_device_new").click(function() {
+					handleSaveDev();					
+				});
+
+			});
+
+			
+		</script>
+
+	</div> <!-- tabs-1 -->
+
+	<div id="tabs-2">
+		<select id="tab2_select_material" class="chosen-select" placeholder="Выбрать..."  style="width: 450px;">
+								<option value=""></option>
+								@foreach( var mat in (new Matmodel()).GetAll() )
+								{
+										<option value="@(mat.ID)">@mat.FullName</option>
+									
+								}								
+							</select>
+							<br />
+
+		<p>
+			<input id="input_material_new" type="text" class="form-control" placeholder="Количество материалов">
+		</p>
+		<p>    
+			<button id="tab_material_new" type="button" class="btn btn-primary">Добавить</button>
+		</p>
+
+		<script>
+			function handleSaveMat() {
+				$.get('@Url.Action("CreateAjaxMat", "Shippingitems")', { shipping_id: @(Model.ID), matmodel_id: $('#tab2_select_material').val(), count: $('#input_material_new').val() }, function(data) {							
+				
+				/*
+							var tr = document.createElement('tr');
+
+							tr.innerHTML = 	'<td>'+data+'</td><td>'+ $("#input_shipping_new").val() + '</td>'+
+								'<td>'+ '<a href="/Shipping/Edit/'+data+'">Редактировать</a> |'+
+					'<a href="/Shipping/Details/'+data+'">Просмотр</a> |'+
+					'<a href="/Shipping/Delete/'+data+'" onclick="return confirm(\'Вы действительно хотите удалить?\');">Удалить</a>'  +'<td>';				
+					
+					
+							$('#td_shipping_new').after(tr);
+							// выполнено
+							$("#td_shipping_new").hide();		
+				*/
+				});	
+			};
+
+			$(document).ready(function() {
+				$('#input_material_new').keyup(function(e) {
+					 var code = e.which;
+					 if (code == 13) {				
+						handleSaveMat();						
+					 }
+				});				
+				$('#tab_material_new').click(function() {
+				
+					handleSaveMat();
+				});
+			});			
+		</script>
+
+	</div>
+	
+
+</div>
+
 }
 
 <div>

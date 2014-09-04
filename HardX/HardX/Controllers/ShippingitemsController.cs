@@ -28,11 +28,24 @@ namespace HardX.Controllers
         //
         // GET: /Shippingitems/Create
 
-        public ActionResult CreateAjax(string name)
+        public ActionResult CreateAjaxMat(int shipping_id, int matmodel_id, int count)
         {
             Shippingitem theItem = new Shippingitem();
-            
-            return View();
+            theItem.Shipping = (new Shipping()).GetById(shipping_id);
+            theItem.Matmodel = (new Matmodel()).GetById(matmodel_id);
+            theItem.Count = count;
+            theItem.Save(theItem);
+            return View(theItem);
+        }
+
+        public ActionResult CreateAjaxDev(int shipping_id, int devmodel_id, int count)
+        {
+            Shippingitem theItem = new Shippingitem();
+            theItem.Shipping = (new Shipping()).GetById(shipping_id);
+            theItem.Devmodel = (new Devmodel()).GetById(devmodel_id);
+            theItem.Count = count;
+            theItem.Save(theItem);
+            return View(theItem);
         }
 
         public ActionResult Create()

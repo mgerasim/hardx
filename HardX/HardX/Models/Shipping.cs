@@ -20,8 +20,39 @@ namespace HardX.Models
         public virtual string Name { get; set; }
         public virtual Int32 Count { get; set; }
 
+        public virtual DateTime Created_At { get; set; }
+        public virtual int Creater { get; set; }
+
+        public override void Save(Shipping entity)
+        {
+            this.Created_At = DateTime.Now;
+            this.Creater = User.CurrentUserId;
+            base.Save(entity);
+        }
+
+        public override void Update(Shipping entity)
+        {
+            base.Update(entity);
+        }
+
+        private Iesi.Collections.Generic.ISet<Shippingitem> _Shippingitems;
+
+        public virtual Iesi.Collections.Generic.ISet<Shippingitem> Shippingitems
+        {
+            get
+            {
+                return this._Shippingitems;
+            }
+            set
+            {
+                this._Shippingitems = value;
+            }
+        }
+
         public Shipping()
         {
+            this._Shippingitems = new Iesi.Collections.Generic.HashedSet<Shippingitem>();
+        
             ShippingFactory theFactory = new ShippingFactory();
             _repository = theFactory.createRepository();
             if (_repository == null)

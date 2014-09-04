@@ -12,13 +12,17 @@
 </p>
 <script>
 	function handleSave() {
-	
+		$.blockUI({ message: null }); 
+
 		$.get('@Url.Action("CreateAjax", "Shipping")', { name: $('#input_shipping_new').val() }, function(data) {							
 					var tr = document.createElement('tr');
-					var th = document.createElement('td');
-					var t  = document.createTextNode($("#input_shipping_new").val());
-					th.appendChild(t); 
-					tr.appendChild(th); 
+
+					tr.innerHTML = 	'<td>'+data+'</td><td>'+ $("#input_shipping_new").val() + '</td>'+
+						'<td>'+ '<a href="/Shipping/Edit/'+data+'">Редактировать</a> |'+
+            '<a href="/Shipping/Details/'+data+'">Просмотр</a> |'+
+            '<a href="/Shipping/Delete/'+data+'" onclick="return confirm(\'Вы действительно хотите удалить?\');">Удалить</a>'  +'<td>';				
+					
+					
 					$('#td_shipping_new').after(tr);
 					// выполнено
 					$("#td_shipping_new").hide();		
@@ -28,13 +32,7 @@
 
 	$(document).ready(function() {
 		
-		$body = $("body");
-
-		$(document).on({
-			ajaxStart: function() { $body.addClass("loading");    },
-			 ajaxStop: function() { $body.removeClass("loading"); }    
-		});
-
+		$(document).ajaxStop($.unblockUI);
 		
 
 		$("#td_shipping_new").hide();		
@@ -61,6 +59,8 @@
 </script>
 <table>
     <tr>
+		<th>#
+		</th>
         <th>
 			Наименование
         </th>
@@ -68,7 +68,9 @@
     </tr>
 	<tr id="td_shipping_new">
 		<td>
-			<input id="input_shipping_new" type="text" class="form-control" placeholder="Text input">
+		</td>
+		<td>
+			<input id="input_shipping_new" type="text" class="form-control" placeholder="Наименование поставки">
 			<button id="shipping_save" type="button" class="btn btn-primary">Сохранить</button>
 		</td>
 		<td>
@@ -76,7 +78,10 @@
 	</tr>
 @foreach (var item in Model) {
     <tr>
-		
+		<td>
+            @item.ID
+        </td>
+
 		<td>
             @item.Name
         </td>
@@ -89,5 +94,3 @@
 }
 
 </table>
-
-<div class="modal"><!-- Place at bottom of page --></div>

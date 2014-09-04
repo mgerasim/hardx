@@ -16,8 +16,6 @@ namespace HardX.Models
         public virtual Matmodel Matmodel { get; set; }
         public virtual int Count { get; set; }
 
-       
-
         public Shippingitem()
         {
             ShippingitemFactory theFactory = new ShippingitemFactory();

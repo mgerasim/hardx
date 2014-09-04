@@ -12,5 +12,14 @@
       </generator>
     </id>
     <property name="Name"  column="name" type="String" length="255"/>
+
+    <set name="Shippingitems"  lazy="false" >
+      <key column="SHIPPING_ID"/>
+      <one-to-many class="Shippingitem"/>
+    </set>
+
+    <property name="Created_At" column="created_at" type="LocalDateTime" />    
+    <property name="Creater" column="CREATER" type="int" />
+    
   </class>
 </hibernate-mapping>
