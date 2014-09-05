@@ -29,46 +29,7 @@
         </p>
 		<br/>
 
-		<table>
-			<tr>
-				<th>#
-				</th>
-				<th>
-					Устройство
-				</th>
-				<th>
-					Материал
-				</th>
-				<th>
-					Кол-во
-				</th>
-				<th></th>
-			</tr>
-		@foreach (var item in Model.Shippingitems) {
-			<tr>
-				<td>
-					@item.ID
-				</td>
-
-				<td>
-					@if (item.Devmodel!= null) {
-						@item.Devmodel.ID
-					}
-				</td>
-
-				<td>
-					@if (item.Matmodel!=null) {
-						@item.Matmodel.ID
-					}
-				</td>
-				<td>					
-						@item.Count					
-				</td>
-
-			</tr>
-		}
-
-</table>
+		
 
 <script>
 	$(function() {
@@ -80,7 +41,49 @@
 
 
     </fieldset>
+		<table id="edit_shipping">
+					<tr>
+						<th>#
+						</th>
+						<th>
+							Устройство
+						</th>
+						<th>
+							Материал
+						</th>
+						<th>
+							Кол-во
+						</th>
+						<th></th>
+					</tr>
+				@foreach (var item in Model.Shippingitems) {
+					<tr>
+						<td>
+							@item.ID
+						</td>
 
+						<td>
+							@if (item.Devmodel!= null) {
+								@item.Devmodel.FullName					
+							}
+						</td>
+
+						<td>
+							@if (item.Matmodel!=null) {
+								@item.Matmodel.FullName
+							}
+						</td>
+						<td>					
+								@item.Count					
+						</td>
+						<td>
+							@Html.ActionLink("Удалить", "Delete", new { id=item.ID }, new { onclick = "return confirm('Вы действительно хотите удалить?');" })
+						</td>
+
+					</tr>
+				}
+
+		</table>
 	<div id="tabs">
 	 <ul>
 		<li><a href="#tabs-1">Добавить устройство</a></li>
@@ -107,26 +110,28 @@
 
 		<script>
 
-			function handleSaveDev() {
-				$.get('@Url.Action("CreateAjaxDev", "Shippingitems")', { shipping_id: @(Model.ID), devmodel_id: $('#tab1_select_device').val(), count: $('#input_device_new').val() }, function(data) {							
-				
-				/*
-							var tr = document.createElement('tr');
-
-							tr.innerHTML = 	'<td>'+data+'</td><td>'+ $("#input_shipping_new").val() + '</td>'+
-								'<td>'+ '<a href="/Shipping/Edit/'+data+'">Редактировать</a> |'+
-					'<a href="/Shipping/Details/'+data+'">Просмотр</a> |'+
-					'<a href="/Shipping/Delete/'+data+'" onclick="return confirm(\'Вы действительно хотите удалить?\');">Удалить</a>'  +'<td>';				
-					
-					
-							$('#td_shipping_new').after(tr);
-							// выполнено
-							$("#td_shipping_new").hide();		
-				*/
-				});	
-			};
 			
 			$(document).ready(function() {
+
+			function handleSaveDev() {
+				$.blockUI({ message: null }); 
+
+				$.get('@Url.Action("CreateAjaxDev", "Shippingitem")', { shipping_id: @(Model.ID), devmodel_id: $('#tab1_select_device').val(), count: $('#input_device_new').val() }, function(data) {											
+					var tr = document.createElement('tr');
+					tr.innerHTML = '<td>'+data+'</td>'+
+						'<td>'+$('#tab1_select_device option:selected').text()+'</td>'+
+						'<td></td>'+
+						'<td>'+$('#input_device_new').val()+'</td>'+
+						'<a href="/Shippingitem/Delete/'+data+'" onclick="return confirm(\'Вы действительно хотите удалить?\');">Удалить</a>';
+					$(tr).appendTo($('#edit_shipping'));					
+				});	
+			};
+				$(document).ajaxStop($.unblockUI);
+
+				$(document).ajaxError(
+    function (event, jqXHR, ajaxSettings, thrownError) {
+        alert('[event:' + event + '], [jqXHR:' + jqXHR.responseText + '], [ajaxSettings:' + ajaxSettings + '], [thrownError:' + thrownError + '])');
+    });
 			
 				$('#input_device_new').keyup(function(e) {
 					 var code = e.which;
@@ -165,22 +170,19 @@
 		</p>
 
 		<script>
-			function handleSaveMat() {
-				$.get('@Url.Action("CreateAjaxMat", "Shippingitems")', { shipping_id: @(Model.ID), matmodel_id: $('#tab2_select_material').val(), count: $('#input_material_new').val() }, function(data) {							
-				
-				/*
-							var tr = document.createElement('tr');
+			function handleSaveMat() {			
+				$.blockUI({ message: null }); 
 
-							tr.innerHTML = 	'<td>'+data+'</td><td>'+ $("#input_shipping_new").val() + '</td>'+
-								'<td>'+ '<a href="/Shipping/Edit/'+data+'">Редактировать</a> |'+
-					'<a href="/Shipping/Details/'+data+'">Просмотр</a> |'+
-					'<a href="/Shipping/Delete/'+data+'" onclick="return confirm(\'Вы действительно хотите удалить?\');">Удалить</a>'  +'<td>';				
-					
-					
-							$('#td_shipping_new').after(tr);
-							// выполнено
-							$("#td_shipping_new").hide();		
-				*/
+				$.get('@Url.Action("CreateAjaxMat", "Shippingitem")', { shipping_id: @(Model.ID), matmodel_id: $('#tab2_select_material').val(), count: $('#input_material_new').val() }, function(data) {					
+					var tr = document.createElement('tr');
+					tr.innerHTML = '<td>'+data+'</td>'+
+						'<td></td>'+
+						'<td>'+$('#tab2_select_material option:selected').text()+'</td>'+						
+						'<td>'+$('#input_material_new').val()+'</td>'+
+						'<a href="/Shippingitem/Delete/'+data+'" onclick="return confirm(\'Вы действительно хотите удалить?\');">Удалить</a>';
+
+												
+					$(tr).appendTo($('#edit_shipping'));
 				});	
 			};
 

@@ -7,7 +7,7 @@ using HardX.Models;
 
 namespace HardX.Controllers
 {
-    public class ShippingitemsController : Controller
+    public class ShippingitemController : Controller
     {
         //
         // GET: /Shippingitems/
@@ -102,7 +102,12 @@ namespace HardX.Controllers
  
         public ActionResult Delete(int id)
         {
-            return View();
+
+            Shippingitem model = new Shippingitem();
+            model = model.GetById(id);
+            model.Delete(model);
+
+            return View(model);
         }
 
         //

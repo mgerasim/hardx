@@ -111,6 +111,10 @@ namespace HardX.Controllers
             }
             Shipping model = new Shipping();
             model = model.GetById(id);
+
+            ViewBag.Devmodels = (new Devmodel()).GetAll();
+            ViewBag.Matmodels = (new Matmodel()).GetAll();
+
             return View(model);
         }
 
