@@ -90,6 +90,9 @@
 		<li><a href="#tabs-2">Добавить материал</a></li>
 	</ul>
 	<div id="tabs-1">
+		<p id="device_enter">
+			Укажите устройство:
+		</p>
 		<select id="tab1_select_device" class="chosen-select" placeholder="Выбрать..."  style="width: 450px;">
 								<option value=""></option>
 								@foreach( var device in (new Devmodel()).GetAll() )
@@ -100,6 +103,10 @@
 							</select>
 		<br />
 		
+		<p id="device_count_enter">
+			Укажите количество:
+		</p>
+
 		<p>
 			<input id="input_device_new" type="text" class="form-control" placeholder="Количество устройств">
 		</p>
@@ -113,7 +120,24 @@
 			
 			$(document).ready(function() {
 
-			function handleSaveDev() {
+			function handleSaveDev() {				
+				
+				var is_error = 0;
+
+				if ( $('#input_device_new').val() == "") {
+					$('#device_count_enter').css({'color': 'red'});
+					is_error = 1;
+				}
+
+				if ( $('#tab1_select_device').val() =="" ) {
+					$('#device_enter').css({'color': 'red'});
+					is_error = 1
+				}
+
+				if (is_error == 1) {
+					return ;
+				}
+
 				$.blockUI({ message: null }); 
 
 				$.get('@Url.Action("CreateAjaxDev", "Shippingitem")', { shipping_id: @(Model.ID), devmodel_id: $('#tab1_select_device').val(), count: $('#input_device_new').val() }, function(data) {											
@@ -152,6 +176,9 @@
 	</div> <!-- tabs-1 -->
 
 	<div id="tabs-2">
+		<p id="device_count_enter">
+			Укажите расходный материал:
+		</p>
 		<select id="tab2_select_material" class="chosen-select" placeholder="Выбрать..."  style="width: 450px;">
 								<option value=""></option>
 								@foreach( var mat in (new Matmodel()).GetAll() )
@@ -162,6 +189,10 @@
 							</select>
 							<br />
 
+		<p id="device_count_enter">
+			Укажите количество:
+		</p>
+
 		<p>
 			<input id="input_material_new" type="text" class="form-control" placeholder="Количество материалов">
 		</p>
@@ -171,6 +202,23 @@
 
 		<script>
 			function handleSaveMat() {			
+
+				var is_error = 0;
+
+				if ( $('#input_material_new').val() == "") {
+					$('#material_count_enter').css({'color': 'red'});
+					is_error = 1;
+				}
+
+				if ( $('#tab2_select_material').val() =="" ) {
+					$('#material_enter').css({'color': 'red'});
+					is_error = 1
+				}
+
+				if (is_error == 1) {
+					return ;
+				}
+
 				$.blockUI({ message: null }); 
 
 				$.get('@Url.Action("CreateAjaxMat", "Shippingitem")', { shipping_id: @(Model.ID), matmodel_id: $('#tab2_select_material').val(), count: $('#input_material_new').val() }, function(data) {					
