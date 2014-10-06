@@ -77,7 +77,7 @@
 								@item.Count					
 						</td>
 						<td>
-							@Html.ActionLink("Удалить", "Delete", new { id=item.ID }, new { onclick = "return confirm('Вы действительно хотите удалить?');" })
+							<button id="@item.ID" class="BtnDeleteitem" type="button" class="btn btn-primary">Удалить</button>
 						</td>
 
 					</tr>
@@ -146,7 +146,7 @@
 						'<td>'+$('#tab1_select_device option:selected').text()+'</td>'+
 						'<td></td>'+
 						'<td>'+$('#input_device_new').val()+'</td>'+
-						'<a href="/Shippingitem/Delete/'+data+'" onclick="return confirm(\'Вы действительно хотите удалить?\');">Удалить</a>';
+						'<button id="data" class="BtnDeleteitem" type="button" class="btn btn-primary">Удалить</button>';
 					$(tr).appendTo($('#edit_shipping'));					
 				});	
 			};
@@ -227,7 +227,7 @@
 						'<td></td>'+
 						'<td>'+$('#tab2_select_material option:selected').text()+'</td>'+						
 						'<td>'+$('#input_material_new').val()+'</td>'+
-						'<a href="/Shippingitem/Delete/'+data+'" onclick="return confirm(\'Вы действительно хотите удалить?\');">Удалить</a>';
+						'<button id="data" class="BtnDeleteitem" type="button" class="btn btn-primary">Удалить</button>';
 
 												
 					$(tr).appendTo($('#edit_shipping'));
@@ -259,3 +259,26 @@
     @Html.ActionLink("Назад", "Index")
 </div>
 
+
+<script>
+
+	$(".BtnDeleteitem").click(function(){
+		if (confirm("Вы действительно хотите удалить?") == 1) {
+
+			var v_id = $(this).prop("id");
+			$(this).parent().parent().remove();
+			$.blockUI({ message: null }); 
+
+			$.get('@Url.Action("Delete", "Shippingitem")', { id: v_id }, function(data) {			
+			});
+		}		
+	});
+
+	$(document).ajaxStop($.unblockUI);
+
+				$(document).ajaxError(
+    function (event, jqXHR, ajaxSettings, thrownError) {
+        alert('[event:' + event + '], [jqXHR:' + jqXHR.responseText + '], [ajaxSettings:' + ajaxSettings + '], [thrownError:' + thrownError + '])');
+    });
+
+</script>

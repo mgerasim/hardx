@@ -19,7 +19,6 @@
 
 					tr.innerHTML = 	'<td>'+data+'</td><td>'+ $("#input_shipping_new").val() + '</td>'+
 						'<td>'+ '<a href="/Shipping/Edit/'+data+'">Редактировать</a> |'+
-            '<a href="/Shipping/Details/'+data+'">Просмотр</a> |'+
             '<a href="/Shipping/Delete/'+data+'" onclick="return confirm(\'Вы действительно хотите удалить?\');">Удалить</a>'  +'<td>';				
 					
 					
@@ -87,7 +86,6 @@
         </td>
         <td>
             @Html.ActionLink("Редактировать", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Просмотр", "Details", new { id=item.ID }) |
             @Html.ActionLink("Удалить", "Delete", new { id=item.ID }, new { onclick = "return confirm('Вы действительно хотите удалить?');" })
         </td>        
     </tr>
