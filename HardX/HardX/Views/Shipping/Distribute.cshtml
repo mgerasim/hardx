@@ -1,0 +1,188 @@
+﻿@model HardX.Models.Shipping
+@using HardX.Models
+
+@{
+    ViewBag.Title = "Распределение поставки";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+
+<script>
+	$(function() {
+		$( "#tabs" ).tabs();
+	});
+</script>
+
+
+
+
+    </fieldset>
+		<table id="edit_shipping" class="table table-bordered">
+					<tr>
+						<th>#
+						</th>
+						<th>
+							Устройство
+						</th>
+						<th>
+							Материал
+						</th>
+						<th>
+							Кол-во
+						</th>
+
+						@foreach (var item in ViewBag.Stores) {
+							<th>
+								@item.Name
+							</th>
+						}
+						
+					</tr>
+				@foreach (var item in Model.Shippingitems) {
+					<tr>
+						<td>
+							@item.ID
+						</td>
+
+						<td>
+							@if (item.Devmodel!= null) {
+								@item.Devmodel.FullName					
+							}
+						</td>
+
+						<td>
+							@if (item.Matmodel!=null) {
+								@item.Matmodel.FullName
+							}
+						</td>
+						<td>					
+								@item.Count					
+						</td>
+						
+						@foreach (var store in ViewBag.Stores) {
+							<td storeid=@store.ID shippingitemid=@item.ID class="distribute">
+								0
+							</td>
+						}
+
+					</tr>
+				}
+
+		</table>
+		<script>
+			$(".distribute")
+				.hover(function() {
+						$(this).toggleClass("over-inline");
+					})
+					.unbind('click').click(function(e) {	
+						var $editable = $(this);
+						if ($editable.hasClass('active-inline')) {
+							return;
+						};
+						clicked = 0;
+						
+						content = $.trim($editable.html());
+						
+						$editable
+							.addClass("active-inline")
+							.empty();
+
+						var editElement = '<input type="text" />';
+						
+						$(editElement)
+							//.val(content)
+							.appendTo($editable)
+							.focus()
+							.blur(function(e) {
+								$editable.trigger('blur');
+							});
+					})
+					.unbind('blur').blur(function(e) {						
+						clicked = 1;
+						var $editable = $(this);
+						handleGetFail($editable);
+					})
+					.keyup(function(event){
+						if(event.keyCode == 13){
+							if (clicked == 1) {
+								return;
+							};
+							clicked = 1;
+							var $editable = $(this);
+							handleGetSuccess($editable);
+						
+						}
+						if(event.keyCode == 27){
+								if (clicked == 1) {
+									return;
+								};
+								clicked = 1;
+								var $editable = $(this);
+								handleGetFail($editable);						
+						}
+					})
+					;
+
+
+					function handleGetSuccess(editable)
+					{
+					
+						var contents = editable.find(':first-child:input').val();
+					
+						if (" "+(parseInt( contents ))+" "!=" NaN ") {											
+							var count_delta = parseInt( contents );
+							contents = parseInt( contents ) + parseInt( content ) ;
+							contents = contents + " ";
+							
+											
+						} else {
+							contents = content;
+						}
+
+						editable
+							.removeClass('active-inline')
+							.contents()
+							.replaceWith(contents);					
+					}
+
+				function handleGetFail(editable)
+				{
+					contents = content;
+					
+					editable
+							.removeClass('active-inline')
+							.contents()
+							.replaceWith(contents);
+				}
+
+		</script>
+		
+<div>
+    @Html.ActionLink("Назад", "Index")
+</div>
+
+
+<script>
+
+	$(".BtnDeleteitem").click(function(){
+		if (confirm("Вы действительно хотите удалить?") == 1) {
+
+			var v_id = $(this).prop("id");
+			$(this).parent().parent().remove();
+			$.blockUI({ message: null }); 
+
+			$.get('@Url.Action("Delete", "Shippingitem")', { id: v_id }, function(data) {			
+			});
+		}		
+	});
+
+	$(document).ajaxStop($.unblockUI);
+
+				$(document).ajaxError(
+    function (event, jqXHR, ajaxSettings, thrownError) {
+        alert('[event:' + event + '], [jqXHR:' + jqXHR.responseText + '], [ajaxSettings:' + ajaxSettings + '], [thrownError:' + thrownError + '])');
+    });
+
+</script>

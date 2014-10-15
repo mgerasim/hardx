@@ -86,6 +86,7 @@
         </td>
         <td>
             @Html.ActionLink("Редактировать", "Edit", new { id=item.ID }) |
+			@Html.ActionLink("Распределить", "Distribute", new { id=item.ID }) |
             @Html.ActionLink("Удалить", "Delete", new { id=item.ID }, new { onclick = "return confirm('Вы действительно хотите удалить?');" })
         </td>        
     </tr>
