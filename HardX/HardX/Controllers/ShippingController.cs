@@ -156,7 +156,7 @@ namespace HardX.Controllers
             Shipping model = new Shipping();
             model = model.GetById(id);
 
-            ViewBag.Stores = (new Store()).GetAll();
+            ViewBag.Stores = (new Store()).GetAll("ID in (147, 84, 145, 81, 22)");
 
             return View(model);
         }

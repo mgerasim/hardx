@@ -131,6 +131,7 @@
     <Compile Include="Factories\RoleFactory.cs" />
     <Compile Include="Factories\RoomFactory.cs" />
     <Compile Include="Factories\ShippingFactory.cs" />
+    <Compile Include="Factories\ShippingitemdistributeFactory.cs" />
     <Compile Include="Factories\ShippingitemFactory.cs" />
     <Compile Include="Factories\StateFactory.cs" />
     <Compile Include="Factories\StoreFactory.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="Models\Room.cs" />
     <Compile Include="Models\Shipping.cs" />
     <Compile Include="Models\Shippingitem.cs" />
+    <Compile Include="Models\Shippingitemdistribute.cs" />
     <Compile Include="Models\State.cs" />
     <Compile Include="Models\Store.cs" />
     <Compile Include="Models\Street.cs" />
@@ -185,6 +187,7 @@
     <Compile Include="Repositories\RegionRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\RoomRepository.cs" />
+    <Compile Include="Repositories\ShippingitemdistributeRepository.cs" />
     <Compile Include="Repositories\ShippingitemRepository.cs" />
     <Compile Include="Repositories\ShippingRepository.cs" />
     <Compile Include="Repositories\StateRepository.cs" />
@@ -311,6 +314,7 @@
     <EmbeddedResource Include="Mapping\Shippingitem.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <Content Include="Mapping\Shippingitemdistribute.hbm.xml" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.custom.js" />
     <Content Include="Scripts\jquery.blockUI.js" />
