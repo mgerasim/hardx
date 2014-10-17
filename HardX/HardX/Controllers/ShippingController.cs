@@ -157,6 +157,7 @@ namespace HardX.Controllers
             model = model.GetById(id);
 
             ViewBag.Stores = (new Store()).GetAll("ID in (147, 84, 145, 81, 22)");
+            ViewBag.Distributes = (new Shippingitemdistribute()).GetAll();
 
             return View(model);
         }
@@ -178,7 +179,7 @@ namespace HardX.Controllers
                 model = model.GetById(id);
                 model.Name = collection["Name"];
                 model.Update(model);
-
+                
                 return RedirectToAction("Index");
             }
             catch
@@ -220,6 +221,7 @@ namespace HardX.Controllers
             Shipping model = new Shipping();
             model = model.GetById(id);
             model.Delete(model);
+            
 
             return RedirectToAction("Index");
         }

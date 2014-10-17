@@ -107,6 +107,7 @@
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\ShippingController.cs" />
     <Compile Include="Controllers\ShippingitemController.cs" />
+    <Compile Include="Controllers\ShippingitemdistributeController.cs" />
     <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\StreetController.cs" />
@@ -314,7 +315,9 @@
     <EmbeddedResource Include="Mapping\Shippingitem.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <Content Include="Mapping\Shippingitemdistribute.hbm.xml" />
+    <EmbeddedResource Include="Mapping\Shippingitemdistribute.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.custom.js" />
     <Content Include="Scripts\jquery.blockUI.js" />
@@ -605,6 +608,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shipping\Distribute.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shippingitemdistribute\Create.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

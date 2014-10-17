@@ -63,7 +63,9 @@
 						
 						@foreach (var store in ViewBag.Stores) {
 							<td storeid=@store.ID shippingitemid=@item.ID class="distribute">
-								0
+
+								@( ((List<Shippingitemdistribute>) ViewBag.Distributes).Where(distr => distr.StoreID == store.ID && distr.ShippingitemID == @item.ID).Sum(d => d.Count)  )
+
 							</td>
 						}
 
@@ -111,7 +113,7 @@
 							};
 							clicked = 1;
 							var $editable = $(this);
-							handleGetSuccess($editable);
+							handleGetSuccess($editable, $(this).attr("shippingitemid"), $(this).attr("storeid") );
 						
 						}
 						if(event.keyCode == 27){
@@ -126,7 +128,7 @@
 					;
 
 
-					function handleGetSuccess(editable)
+					function handleGetSuccess(editable,shippingitem_id,store_id)
 					{
 					
 						var contents = editable.find(':first-child:input').val();
@@ -136,6 +138,7 @@
 							contents = parseInt( contents ) + parseInt( content ) ;
 							contents = contents + " ";
 							
+							$.get('@Url.Action("Create", "Shippingitemdistribute")', { shippingitem_id:shippingitem_id , store_id: store_id, count: count_delta }, function(data) {	});
 											
 						} else {
 							contents = content;
@@ -160,23 +163,22 @@
 		</script>
 		
 <div>
-    @Html.ActionLink("Назад", "Index")
+    
+	<p>    
+	@Html.ActionLink("Назад", "Index")
+			<button id="distribute_save" type="button" class="btn btn-primary">Распределить</button>
+		</p>
 </div>
+
+<script>
+	$("#distribute_save").click(function() {
+		alert("D");
+	});
+</script>
 
 
 <script>
 
-	$(".BtnDeleteitem").click(function(){
-		if (confirm("Вы действительно хотите удалить?") == 1) {
-
-			var v_id = $(this).prop("id");
-			$(this).parent().parent().remove();
-			$.blockUI({ message: null }); 
-
-			$.get('@Url.Action("Delete", "Shippingitem")', { id: v_id }, function(data) {			
-			});
-		}		
-	});
 
 	$(document).ajaxStop($.unblockUI);
 
