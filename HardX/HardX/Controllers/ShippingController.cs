@@ -188,6 +188,29 @@ namespace HardX.Controllers
             }
         }
 
+        public ActionResult DistributeSave(int id)
+        {
+            if (!Access.HasAccess(73))
+            {
+                System.Web.Routing.RouteValueDictionary route = new System.Web.Routing.RouteValueDictionary();
+                route.Add("err", "Нет доступа!");
+                return RedirectToAction("Error", "Home", route);
+            }
+            Shipping model = new Shipping();
+            model = model.GetById(id);
+
+            foreach (var item in model.Shippingitems)
+            {
+                foreach(var distr in (new Shippingitemdistribute()).GetAll("SHIPPINGITEM_ID="+item.ID.ToString()))
+                {
+                    distr.Status = 2;
+                    distr.Update(distr);
+                }
+            }
+
+            return View(model);
+        }
+
         //
         // GET: /Shipping/Delete/5
  

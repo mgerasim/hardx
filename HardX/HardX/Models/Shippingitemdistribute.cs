@@ -13,6 +13,7 @@ namespace HardX.Models
         public virtual int ShippingitemID { get; set; }
         public virtual int StoreID { get; set; }
         public virtual int Count { get; set; }
+        public virtual int Status { get; set; }
 
         public Shippingitemdistribute()
         {

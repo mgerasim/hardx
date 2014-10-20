@@ -13,7 +13,7 @@
     </id>
     <property name="ShippingitemID" column="SHIPPINGITEM_ID" type="int" />
     <property name="StoreID" column="STORE_ID" type="int" />
-
     <property name="Count" column="Count" type="int" />
+    <property name="Status" column="Status" type="int" />
   </class>
 </hibernate-mapping>

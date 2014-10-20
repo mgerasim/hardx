@@ -135,7 +135,7 @@
 					
 						if (" "+(parseInt( contents ))+" "!=" NaN ") {											
 							var count_delta = parseInt( contents );
-							contents = parseInt( contents ) + parseInt( content ) ;
+							contents = count_delta ;
 							contents = contents + " ";
 							
 							$.get('@Url.Action("Create", "Shippingitemdistribute")', { shippingitem_id:shippingitem_id , store_id: store_id, count: count_delta }, function(data) {	});
@@ -172,7 +172,7 @@
 
 <script>
 	$("#distribute_save").click(function() {
-		alert("D");
+		$.get('@Url.Action("DistributeSave", "Shipping")', { id:@Model.ID }, function(data) {	});
 	});
 </script>
 
