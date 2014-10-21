@@ -172,7 +172,8 @@
 
 <script>
 	$("#distribute_save").click(function() {
-		$.get('@Url.Action("DistributeSave", "Shipping")', { id:@Model.ID }, function(data) {	});
+		$.blockUI();
+		$.get('@Url.Action("DistributeSave", "Shipping")', { id:@Model.ID }, function(data) { 	});
 	});
 </script>
 

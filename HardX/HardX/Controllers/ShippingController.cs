@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using HardX.Models;
 using HardX.Utils;
+using System.Net.Mail;
 
 namespace HardX.Controllers
 {
@@ -201,14 +202,51 @@ namespace HardX.Controllers
 
             foreach (var item in model.Shippingitems)
             {
+                Store theStore = new Store();
+                theStore = theStore.GetById(distr.StoreID);
+                string strEmail = "gerasimovmn@dv.rt.ru";//= theStore.User.email;
+                string strEmail2 = "gerasimovmn@dv.rt.ru";//theStore.User.email2;
+
+                string strMsg = "Новое поступление на склад " + theStore.Name +"\n\n\n";
+
                 foreach(var distr in (new Shippingitemdistribute()).GetAll("SHIPPINGITEM_ID="+item.ID.ToString()))
                 {
                     distr.Status = 2;
                     distr.Update(distr);
                 }
+
+                try
+                {
+                    MailMessage mail = new MailMessage();
+                    SmtpClient SmtpServer = new SmtpClient("10.198.1.200");
+
+                    mail.From = new MailAddress("hardx@dv.rt.ru");
+                    mail.To.Add(strEmail);
+                    mail.To.Add(strEmail2);
+                    mail.Subject = "Склад поступление";
+                    mail.Body = strMsg;
+
+                    SmtpServer.Port = 25;
+                    SmtpServer.EnableSsl = false;
+
+                    SmtpServer.Send(mail);
+
+                }
+                catch (Exception ex)
+                {
+
+                }                     
+
             }
 
+
             return View(model);
+        }
+
+        void SendEmailNotification() {
+            foreach(var store in (new Store()).GetAll("ID in (147, 84, 145, 81, 22)")) {
+            }
+                
         }
 
         //

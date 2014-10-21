@@ -20,29 +20,6 @@ namespace HardX.Controllers
 
         public ActionResult Create(int shippingitem_id, int store_id, int count)
         {
-
-            try
-            {
-                MailMessage mail = new MailMessage();
-                SmtpClient SmtpServer = new SmtpClient("10.198.1.200");
-
-                mail.From = new MailAddress("hardx@dv.rt.ru");
-                mail.To.Add("gerasimovmn@dv.rt.ru");
-                mail.Subject = "Test Mail";
-                mail.Body = "This is for testing SMTP mail from HARDX";
-
-                SmtpServer.Port = 25;
-                //SmtpServer.Credentials = new System.Net.NetworkCredential("username", "password");
-                SmtpServer.EnableSsl = false;
-
-                SmtpServer.Send(mail);
-                
-            }
-            catch (Exception ex)
-            {
-                
-            }
-
             Shippingitemdistribute theModel = new Shippingitemdistribute();
             theModel.ShippingitemID = shippingitem_id;
             theModel.StoreID = store_id;
