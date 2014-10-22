@@ -31,8 +31,8 @@ namespace HardX.Controllers
                 theUpdate.ShippingitemID = shippingitem_id;
                 theUpdate.StoreID = store_id;
                 theUpdate.Count = count;
-                theUpdate.Update(theUpdate);
                 theUpdate.Status = 1;
+                theUpdate.Update(theUpdate);
                 return View(theUpdate);
             }
             else

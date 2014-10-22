@@ -157,7 +157,7 @@ namespace HardX.Controllers
             Shipping model = new Shipping();
             model = model.GetById(id);
 
-            ViewBag.Stores = (new Store()).GetAll("ID in (147, 84, 145, 81, 22)");
+            ViewBag.Stores = (new Store()).GetAll("ID in (147, 84, 145, 81, 22, 121)");
             ViewBag.Distributes = (new Shippingitemdistribute()).GetAll();
 
             return View(model);
@@ -202,49 +202,67 @@ namespace HardX.Controllers
 
             foreach (var item in model.Shippingitems)
             {
-                Store theStore = new Store();
-                theStore = theStore.GetById(distr.StoreID);
-                string strEmail = "gerasimovmn@dv.rt.ru";//= theStore.User.email;
-                string strEmail2 = "gerasimovmn@dv.rt.ru";//theStore.User.email2;
-
-                string strMsg = "Новое поступление на склад " + theStore.Name +"\n\n\n";
-
                 foreach(var distr in (new Shippingitemdistribute()).GetAll("SHIPPINGITEM_ID="+item.ID.ToString()))
                 {
                     distr.Status = 2;
                     distr.Update(distr);
                 }
-
-                try
-                {
-                    MailMessage mail = new MailMessage();
-                    SmtpClient SmtpServer = new SmtpClient("10.198.1.200");
-
-                    mail.From = new MailAddress("hardx@dv.rt.ru");
-                    mail.To.Add(strEmail);
-                    mail.To.Add(strEmail2);
-                    mail.Subject = "Склад поступление";
-                    mail.Body = strMsg;
-
-                    SmtpServer.Port = 25;
-                    SmtpServer.EnableSsl = false;
-
-                    SmtpServer.Send(mail);
-
-                }
-                catch (Exception ex)
-                {
-
-                }                     
-
             }
-
-
+            SendEmailNotification(id);
             return View(model);
         }
 
-        void SendEmailNotification() {
-            foreach(var store in (new Store()).GetAll("ID in (147, 84, 145, 81, 22)")) {
+        void SendEmailNotification(int shipping_id) {
+            IEnumerable<string> shippingitem_numbers = (new Shippingitem()).GetAll("SHIPPING_ID=" + shipping_id.ToString()).Select(a => a.ID.ToString());
+            string str_shippingitem_numbers = string.Join(", ", shippingitem_numbers);
+
+            IEnumerable<string> storeid_numbers = (new Shippingitemdistribute()).GetAll("SHIPPINGITEM_ID in (" + str_shippingitem_numbers + ")").Select(a => a.StoreID.ToString()).Distinct();
+            string str_storeid_numbers = string.Join(", ", storeid_numbers);
+
+            foreach(var store in (new Store()).GetAll( "ID in ("+str_storeid_numbers+")" )){               
+                string strEmail = store.User.Email;
+                string strEmail2 = store.User2.Email;
+
+                string strMsg = "Новое поступление на склад " + store.Name + "\n\n\n";
+                string strDistribute="";
+                foreach (var distribute in (new Shippingitemdistribute()).GetAll( "STATUS=2 AND STORE_ID="+ store.ID +" AND SHIPPINGITEM_ID in ("+str_shippingitem_numbers+")" ))
+                {
+                    string str="";
+                    Shippingitem theShippingitem = new Shippingitem();
+                    theShippingitem = theShippingitem.GetById(distribute.ShippingitemID);
+                    if (theShippingitem.Devmodel != null)
+                        str = theShippingitem.Devmodel.FullName + "\t\t" + distribute.Count + "\n";
+                    if (theShippingitem.Matmodel != null)
+                        str = theShippingitem.Matmodel.FullName + "\t\t" + distribute.Count + "\n";
+                    
+                    strDistribute += str;
+                }
+
+                if (strDistribute.Length > 0)
+                {
+                    strMsg += strDistribute;
+                    try
+                    {
+                        MailMessage mail = new MailMessage();
+                        SmtpClient SmtpServer = new SmtpClient("10.198.1.200");
+
+                        mail.From = new MailAddress("hardx@dv.rt.ru");
+                        mail.To.Add(strEmail);
+                        mail.To.Add(strEmail2);
+                        mail.Subject = "Склад поступление";
+                        mail.Body = strMsg;
+
+                        SmtpServer.Port = 25;
+                        SmtpServer.EnableSsl = false;
+
+                        SmtpServer.Send(mail);
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }  
+                }
             }
                 
         }

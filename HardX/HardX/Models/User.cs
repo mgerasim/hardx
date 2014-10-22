@@ -20,6 +20,14 @@ namespace HardX.Models
         [Editable(true)]
         public virtual string Login { get; set; }
 
+
+        [Display(Name = "Электронный адрес")]
+        [Required(ErrorMessage = "* Укажите электронный адрес")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "* длина электронного адреса должна быть не менее чем 2 и не более чем 50 символов")]
+        [Editable(true)]
+        public virtual string Email { get; set; }
+
+
         [Display(Name = "Филиал")]
         [Required(ErrorMessage = "* Укажите филиал")]
         public Branche Branche{get; set;}

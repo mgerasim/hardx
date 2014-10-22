@@ -16,12 +16,27 @@ namespace HardX.Models
         public virtual Matmodel Matmodel { get; set; }
         public virtual int Count { get; set; }
 
+        private Iesi.Collections.Generic.ISet<Store> _Stores;
+        public virtual Iesi.Collections.Generic.ISet<Store> Stores
+        {
+            get
+            {
+                return this._Stores;
+            }
+            set
+            {
+                this._Stores = value;
+            }
+        }
+
         public Shippingitem()
         {
             ShippingitemFactory theFactory = new ShippingitemFactory();
             _repository = theFactory.createRepository();
             if (_repository == null)
                 throw new NotImplementedException();
+
+            this._Stores = new Iesi.Collections.Generic.HashedSet<Store>();
         }  
     }
 }

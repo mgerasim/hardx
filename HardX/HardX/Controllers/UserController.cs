@@ -146,6 +146,7 @@ namespace HardX.Controllers
                 User theUser = new User();
                 theUser = theUser.GetById(id);
                 theUser.Login = collection["Login"];
+                theUser.Email = collection["Email"];
                 theUser.Name  = collection["Name"];
                 Branche theBranche = new Branche();
                 theUser.Branche = theBranche.GetById( Convert.ToInt32(collection["Branche.ID"]));

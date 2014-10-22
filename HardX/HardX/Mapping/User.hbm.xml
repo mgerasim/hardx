@@ -12,6 +12,7 @@
       </generator>
     </id>
     <property name="Login"  column="login" type="String" length="255"/>
+    <property name="Email"  column="EMAIL" type="String" length="255"/>
     <property name="Name" column="name" type="String" length="255"/>
     <many-to-one name="Branche" column="Branche_ID" />  
     
