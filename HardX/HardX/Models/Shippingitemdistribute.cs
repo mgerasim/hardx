@@ -14,7 +14,7 @@ namespace HardX.Models
         public virtual int ShippingitemID { get; set; }       
         public virtual int Count { get; set; }
         public virtual int Status { get; set; }
-        
+                      
         public Shippingitemdistribute()
         {
             ShippingitemdistributeFactory theFactory = new ShippingitemdistributeFactory();

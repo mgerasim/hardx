@@ -240,7 +240,7 @@ namespace HardX.Controllers
 
                 if (strDistribute.Length > 0)
                 {
-                    strMsg += strDistribute;
+                    strMsg += strDistribute + "\n\nhttp://hardx.dv.rt.ru/Shippingitemdistribute/details";
                     try
                     {
                         MailMessage mail = new MailMessage();

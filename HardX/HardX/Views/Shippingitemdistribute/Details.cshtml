@@ -1,0 +1,63 @@
+﻿@using HardX.Models
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<table class="border">
+<tbody>
+	<tr>
+		<th>Склад</th>
+		<th>Наименование оборудования/расходного материала</th>
+		<th>Количество</th>
+		<th></th>
+	</tr>
+
+@foreach(var distr in ViewBag.theDistribute) {
+	<tr>
+		<td>
+			@((new Store()).GetById(@distr.StoreID).Name)
+		</td>
+		<td>
+			@{Shippingitem theShippingitem = (new Shippingitem()).GetById(@distr.ShippingitemID);
+			}
+			@if (theShippingitem.Devmodel != null) {
+				@theShippingitem.Devmodel.FullName
+			} else {
+				@theShippingitem.Matmodel.FullName
+			}
+		</td>
+		<td>
+			@distr.Count
+		</td>
+		<td>
+			@if (theShippingitem.Devmodel != null) {
+				<button class="commit btn btn-primary" distr_id=@distr.ID store_id=@distr.StoreID matmodel_id=0 devmodel_id=@theShippingitem.Devmodel.ID type="button" class="btn btn-primary">Принять устройство</button>
+			} else {
+				<button class="commit btn btn-primary" distr_id=@distr.ID store_id=@distr.StoreID matmodel_id=@theShippingitem.Matmodel.ID devmodel_id=0  type="button" class="btn btn-primary">Принять расходный материал</button>
+			}
+		</td>
+	</tr>
+}
+</tbody>
+</table>
+
+<script>
+	$(".commit").click(function() {		
+		$.blockUI();
+		$.get('@Url.Action("Commit", "Shippingitemdistribute")', { distr_id:$(this).attr("distr_id"), store_id:$(this).attr("store_id"), matmodel_id:$(this).attr("matmodel_id"), devmodel_id:$(this).attr("devmodel_id") }, function(data) { 	});
+	});
+</script>
+
+
+<script>
+
+
+	$(document).ajaxStop($.unblockUI);
+
+				$(document).ajaxError(
+    function (event, jqXHR, ajaxSettings, thrownError) {
+        alert('[event:' + event + '], [jqXHR:' + jqXHR.responseText + '], [ajaxSettings:' + ajaxSettings + '], [thrownError:' + thrownError + '])');
+    });
+
+</script>
