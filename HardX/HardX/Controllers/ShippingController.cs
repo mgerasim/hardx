@@ -223,24 +223,35 @@ namespace HardX.Controllers
                 string strEmail = store.User.Email;
                 string strEmail2 = store.User2.Email;
 
-                string strMsg = "Новое поступление на склад " + store.Name + "\n\n\n";
+                string strMsg = "";
+                strMsg = "<b>Новое поступление на склад " + store.Name + "</b><br/><br/><br/>";
+                strMsg += "<table>";
                 string strDistribute="";
                 foreach (var distribute in (new Shippingitemdistribute()).GetAll( "STATUS=2 AND STORE_ID="+ store.ID +" AND SHIPPINGITEM_ID in ("+str_shippingitem_numbers+")" ))
                 {
+                    strDistribute += "<tr>";
                     string str="";
                     Shippingitem theShippingitem = new Shippingitem();
                     theShippingitem = theShippingitem.GetById(distribute.ShippingitemID);
                     if (theShippingitem.Devmodel != null)
-                        str = theShippingitem.Devmodel.FullName + "\t\t" + distribute.Count + "\n";
+                    {
+                        str += "<td>" + theShippingitem.Devmodel.FullName + "</td>";
+                        str += "<td>" + distribute.Count + "</td>";
+                    }
                     if (theShippingitem.Matmodel != null)
-                        str = theShippingitem.Matmodel.FullName + "\t\t" + distribute.Count + "\n";
-                    
-                    strDistribute += str;
-                }
+                    {
 
+                        str += "<td>" + theShippingitem.Matmodel.FullName + "</td>";
+                        str += "<td>" + distribute.Count + "</td>";
+                    }
+
+                    strDistribute += str;
+                    strDistribute += "</tr>";
+                }
+               
                 if (strDistribute.Length > 0)
                 {
-                    strMsg += strDistribute + "\n\nhttp://hardx.dv.rt.ru/Shippingitemdistribute/details";
+                    strMsg += strDistribute + "</table>"+"<br/>http://hardx.dv.rt.ru/Shippingitemdistribute/details";
                     try
                     {
                         MailMessage mail = new MailMessage();
@@ -250,6 +261,7 @@ namespace HardX.Controllers
                         mail.To.Add(strEmail);
                         mail.To.Add(strEmail2);
                         mail.Subject = "Склад поступление";
+                        mail.IsBodyHtml = true;
                         mail.Body = strMsg;
 
                         SmtpServer.Port = 25;
