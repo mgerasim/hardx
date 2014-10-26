@@ -233,8 +233,8 @@ namespace HardX.Controllers
                 }
 
                 string strMsg = "";
-                strMsg = "<b>Новое поступление на склад " + store.Name + "</b><br/><br/><br/>";
-                strMsg += "<table>";
+                strMsg = "<b>Новое поступление на склад " + store.Name + "</b><br/><br/><br/>";                
+                strMsg += "<table class=\"table table-bordered\">";
                 string strDistribute="";
                 foreach (var distribute in (new Shippingitemdistribute()).GetAll( "STATUS=2 AND STORE_ID="+ store.ID +" AND SHIPPINGITEM_ID in ("+str_shippingitem_numbers+")" ))
                 {
@@ -260,7 +260,8 @@ namespace HardX.Controllers
                
                 if (strDistribute.Length > 0)
                 {
-                    strMsg += strDistribute + "</table>"+"<br/>http://hardx.dv.rt.ru/Shippingitemdistribute/details";
+                    strMsg += strDistribute + "</table>"+" <p><a href=\"http://hardx.dv.rt.ru/Shippingitemdistribute/details\">Смотреть</a></p> ";
+                    
                     try
                     {
                         MailMessage mail = new MailMessage();
