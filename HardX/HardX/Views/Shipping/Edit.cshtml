@@ -41,10 +41,8 @@
 
 
     </fieldset>
-		<table id="edit_shipping">
+		<table id="edit_shipping" class="table table-bordered">
 					<tr>
-						<th>#
-						</th>
 						<th>
 							Устройство
 						</th>
@@ -58,9 +56,6 @@
 					</tr>
 				@foreach (var item in Model.Shippingitems) {
 					<tr>
-						<td>
-							@item.ID
-						</td>
 
 						<td>
 							@if (item.Devmodel!= null) {

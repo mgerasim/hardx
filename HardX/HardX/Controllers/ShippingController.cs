@@ -219,9 +219,18 @@ namespace HardX.Controllers
             IEnumerable<string> storeid_numbers = (new Shippingitemdistribute()).GetAll("SHIPPINGITEM_ID in (" + str_shippingitem_numbers + ")").Select(a => a.StoreID.ToString()).Distinct();
             string str_storeid_numbers = string.Join(", ", storeid_numbers);
 
-            foreach(var store in (new Store()).GetAll( "ID in ("+str_storeid_numbers+")" )){               
-                string strEmail = store.User.Email;
-                string strEmail2 = store.User2.Email;
+            foreach(var store in (new Store()).GetAll( "ID in ("+str_storeid_numbers+")" )){
+                string strEmail = "";
+                string strEmail2 = "";
+                if (store.User != null)
+                {
+                    strEmail = store.User.Email;
+                }
+
+                if (store.User2 != null)
+                {
+                    strEmail2 = store.User2.Email;
+                }
 
                 string strMsg = "";
                 strMsg = "<b>Новое поступление на склад " + store.Name + "</b><br/><br/><br/>";

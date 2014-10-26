@@ -17,9 +17,8 @@
 
 
 
-
-    </fieldset>
 		<table id="edit_shipping" class="table table-bordered">
+
 					<tr>
 						<th>#
 						</th>
@@ -40,6 +39,7 @@
 						}
 						
 					</tr>
+
 				@foreach (var item in Model.Shippingitems) {
 					<tr>
 						<td>
@@ -62,16 +62,18 @@
 						</td>
 						
 						@foreach (var store in ViewBag.Stores) {
-							<td storeid=@store.ID shippingitemid=@item.ID class="distribute">
+							<td>
+							<div id=distribute@(store.ID)@(item.ID) storeid=@store.ID shippingitemid=@item.ID class="distribute" >
 
 								@( ((List<Shippingitemdistribute>) ViewBag.Distributes).Where(distr => distr.StoreID == store.ID && distr.ShippingitemID == @item.ID).Sum(d => d.Count)  )
 
+							</div>
 							</td>
 						}
 
 					</tr>
 				}
-
+		
 		</table>
 		<script>
 			$(".distribute")
@@ -79,6 +81,7 @@
 						$(this).toggleClass("over-inline");
 					})
 					.unbind('click').click(function(e) {	
+						
 						var $editable = $(this);
 						if ($editable.hasClass('active-inline')) {
 							return;
@@ -97,13 +100,13 @@
 							//.val(content)
 							.appendTo($editable)
 							.focus()
-							.blur(function(e) {
+							.blur(function(e) {								
 								$editable.trigger('blur');
 							});
 					})
 					.unbind('blur').blur(function(e) {						
 						clicked = 1;
-						var $editable = $(this);
+						var $editable = $(this);						
 						handleGetFail($editable);
 					})
 					.keyup(function(event){
@@ -159,7 +162,8 @@
 							.contents()
 							.replaceWith(contents);
 				}
-
+				var clicked = 0;
+				var content=0;
 		</script>
 		
 <div>

@@ -199,8 +199,10 @@
 					})
 					.unbind('click').click(function(e) {						
 
+						alert("click");
 						var $editable = $(this);
 						if ($editable.hasClass('active-inline')) {
+							alert("active-inline-has-class");
 							return;
 						};
 						clicked = 0;
@@ -219,6 +221,7 @@
 							.focus()
 							.blur(function(e) {
 								$editable.trigger('blur');
+								alert("trigger");
 							});
 					})
 					.unbind('blur').blur(function(e) {						
