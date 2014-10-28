@@ -1,14 +1,14 @@
 ﻿@using HardX.Models
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Детали";
 }
 
 <table class="border">
 <tbody>
 	<tr>
 		<th>Склад</th>
-		<th>Наименование оборудования/расходного материала</th>
+		<th>Наименование оргтехники/расходника</th>
 		<th>Количество</th>
 		<th></th>
 	</tr>
@@ -32,9 +32,9 @@
 		</td>
 		<td>
 			@if (theShippingitem.Devmodel != null) {
-				<button class="commit btn btn-primary" distr_id=@distr.ID store_id=@distr.StoreID matmodel_id=0 devmodel_id=@theShippingitem.Devmodel.ID type="button" class="btn btn-primary">Принять устройство</button>
+				<button id="distribute@(distr.ID)" class="commit btn btn-primary" distr_id=@distr.ID store_id=@distr.StoreID matmodel_id=0 devmodel_id=@theShippingitem.Devmodel.ID type="button" >Принять оргтехнику</button>
 			} else {
-				<button class="commit btn btn-primary" distr_id=@distr.ID store_id=@distr.StoreID matmodel_id=@theShippingitem.Matmodel.ID devmodel_id=0  type="button" class="btn btn-primary">Принять расходный материал</button>
+				<button id="distribute@(distr.ID)" class="commit btn btn-primary" distr_id=@distr.ID store_id=@distr.StoreID matmodel_id=@theShippingitem.Matmodel.ID devmodel_id=0  type="button" >Принять расходник</button>
 			}
 		</td>
 	</tr>
@@ -45,7 +45,9 @@
 <script>
 	$(".commit").click(function() {		
 		$.blockUI();
-		$.get('@Url.Action("Commit", "Shippingitemdistribute")', { distr_id:$(this).attr("distr_id"), store_id:$(this).attr("store_id"), matmodel_id:$(this).attr("matmodel_id"), devmodel_id:$(this).attr("devmodel_id") }, function(data) { 	});
+		$.get('@Url.Action("Commit", "Shippingitemdistribute")', { distr_id:$(this).attr("distr_id"), store_id:$(this).attr("store_id"), matmodel_id:$(this).attr("matmodel_id"), devmodel_id:$(this).attr("devmodel_id") }, function(data) { 	
+			$("#distribute"+data).remove();
+		});
 	});
 </script>
 

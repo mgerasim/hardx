@@ -96,9 +96,7 @@ namespace HardX.Controllers
                 theDistr.Update(theDistr);
             }
 
-            return View();
+            return View(theDistr);
         }
-        
-
     }
 }
