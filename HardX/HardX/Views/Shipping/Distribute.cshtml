@@ -23,10 +23,10 @@
 						<th>#
 						</th>
 						<th>
-							Устройство
+							Оргтехника
 						</th>
 						<th>
-							Материал
+							Расходник
 						</th>
 						<th>
 							Кол-во
@@ -57,13 +57,15 @@
 								@item.Matmodel.FullName
 							}
 						</td>
-						<td>					
-								@item.Count					
+						<td>		
+								<div shippingitem_id=@item.ID class="shippingitem_count">			
+									@item.Count					
+								</div>
 						</td>
 						
 						@foreach (var store in ViewBag.Stores) {
 							<td>
-							<div id=distribute@(store.ID)@(item.ID) storeid=@store.ID shippingitemid=@item.ID class="distribute" >
+							<div id=distribute@(store.ID)@(item.ID) storeid=@store.ID shippingitemid=@item.ID class="distribute shippingitem_@(item.ID)" >
 
 								@( ((List<Shippingitemdistribute>) ViewBag.Distributes).Where(distr => distr.StoreID == store.ID && distr.ShippingitemID == @item.ID).Sum(d => d.Count)  )
 
@@ -75,6 +77,30 @@
 				}
 		
 		</table>
+		<script>
+			function UpdateColor() {
+				$(".shippingitem_count").each(function(index) {
+					var count = 0;
+					$(".shippingitem_"+$(this).attr("shippingitem_id")).each(function(jndex){
+						count += parseInt( $(this).text() );
+					});
+					var count_distr = parseInt( $(this).text() );
+					if (count_distr < count) {
+						$(this).css("background-color","red");
+					} else
+					if (count_distr == count) {
+						$(this).css("background-color","green");
+					} else
+					if (count_distr > count) {
+						$(this).css("background-color","orange");
+					}
+				});
+			}
+			$(document).ready(function() {
+				UpdateColor();
+			});
+		</script>
+
 		<script>
 			$(".distribute")
 				.hover(function() {
@@ -141,7 +167,7 @@
 							contents = count_delta ;
 							contents = contents + " ";
 							
-							$.get('@Url.Action("Create", "Shippingitemdistribute")', { shippingitem_id:shippingitem_id , store_id: store_id, count: count_delta }, function(data) {	});
+							$.get('@Url.Action("Create", "Shippingitemdistribute")', { shippingitem_id:shippingitem_id , store_id: store_id, count: count_delta }, function(data) { UpdateColor()	});
 											
 						} else {
 							contents = content;
