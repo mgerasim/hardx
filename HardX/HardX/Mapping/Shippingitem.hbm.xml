@@ -15,6 +15,10 @@
     <many-to-one name="Devmodel" column="DEVMODEL_ID" />
     <many-to-one name="Matmodel" column="MATMODEL_ID" />
     <property name="Count" column="Count" type="int" />
+    <set name="Distributes"  lazy="false" >
+      <key column="SHIPPINGITEM_ID"/>
+      <one-to-many class="Shippingitemdistribute"/>
+    </set>
 
     <set name="Stores" table="SHIPPINGITEMDISTRIBUTE" lazy="false">
       <key column = "shippingitem_id" />

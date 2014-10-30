@@ -202,7 +202,7 @@ namespace HardX.Controllers
 
             foreach (var item in model.Shippingitems)
             {
-                foreach(var distr in (new Shippingitemdistribute()).GetAll("SHIPPINGITEM_ID="+item.ID.ToString()))
+                foreach(var distr in (new Shippingitemdistribute()).GetAll("STATUS=1 AND SHIPPINGITEM_ID="+item.ID.ToString()))
                 {
                     distr.Status = 2;
                     distr.Update(distr);

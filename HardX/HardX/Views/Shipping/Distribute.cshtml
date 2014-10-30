@@ -65,8 +65,23 @@
 						
 						@foreach (var store in ViewBag.Stores) {
 							<td>
-							<div id=distribute@(store.ID)@(item.ID) storeid=@store.ID shippingitemid=@item.ID class="distribute shippingitem_@(item.ID)" >
+								@{
+									var dd = item.Distributes.Count(x => x.StoreID==store.ID);
+									var aa=0;
+									if (dd==1) {
+										foreach(var ss in (item.Distributes.Where(x => x.StoreID==store.ID)).Select(x => x.Status) ) {
+											aa = ss;
+										}
+									}
+									dd = aa;
+									if (((List<Shippingitemdistribute>) ViewBag.Distributes).Where(distr => distr.StoreID == store.ID && distr.ShippingitemID == @item.ID).Sum(d => d.Count) == 0) {
+										dd = 1;
+									}
+								}
 
+							<div id=distribute@(store.ID)@(item.ID) status=@dd storeid=@store.ID shippingitemid=@item.ID class="distribute shippingitem_@(item.ID)" >
+
+							
 								@( ((List<Shippingitemdistribute>) ViewBag.Distributes).Where(distr => distr.StoreID == store.ID && distr.ShippingitemID == @item.ID).Sum(d => d.Count)  )
 
 							</div>
@@ -78,7 +93,9 @@
 		
 		</table>
 		<script>
+			var isGreenAll=true;
 			function UpdateColor() {
+				isGreenAll=true;
 				$(".shippingitem_count").each(function(index) {
 					var count = 0;
 					$(".shippingitem_"+$(this).attr("shippingitem_id")).each(function(jndex){
@@ -87,12 +104,14 @@
 					var count_distr = parseInt( $(this).text() );
 					if (count_distr < count) {
 						$(this).css("background-color","red");
+						isGreenAll = false;
 					} else
 					if (count_distr == count) {
 						$(this).css("background-color","green");
 					} else
 					if (count_distr > count) {
 						$(this).css("background-color","orange");
+						isGreenAll = false;
 					}
 				});
 			}
@@ -107,6 +126,11 @@
 						$(this).toggleClass("over-inline");
 					})
 					.unbind('click').click(function(e) {	
+
+						if ($(this).attr("status")==3) {
+							alert("Данная позиция уже распределена");
+							return;
+						}
 						
 						var $editable = $(this);
 						if ($editable.hasClass('active-inline')) {
@@ -202,6 +226,10 @@
 
 <script>
 	$("#distribute_save").click(function() {
+		if (isGreenAll==false) {
+			alert("Общее количество поставки должно равно кол-ву распределению");
+			return;
+		}
 		$.blockUI();
 		$.get('@Url.Action("DistributeSave", "Shipping")', { id:@Model.ID }, function(data) { 	});
 	});

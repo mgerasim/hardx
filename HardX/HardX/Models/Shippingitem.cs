@@ -16,6 +16,20 @@ namespace HardX.Models
         public virtual Matmodel Matmodel { get; set; }
         public virtual int Count { get; set; }
 
+        private Iesi.Collections.Generic.ISet<Shippingitemdistribute> _Distributes;
+
+        public virtual Iesi.Collections.Generic.ISet<Shippingitemdistribute> Distributes
+        {
+            get
+            {
+                return this._Distributes;
+            }
+            set
+            {
+                this._Distributes = value;
+            }
+        }
+
         private Iesi.Collections.Generic.ISet<Store> _Stores;
         public virtual Iesi.Collections.Generic.ISet<Store> Stores
         {
@@ -31,6 +45,8 @@ namespace HardX.Models
 
         public Shippingitem()
         {
+            this._Distributes = new Iesi.Collections.Generic.HashedSet<Shippingitemdistribute>();
+
             ShippingitemFactory theFactory = new ShippingitemFactory();
             _repository = theFactory.createRepository();
             if (_repository == null)
