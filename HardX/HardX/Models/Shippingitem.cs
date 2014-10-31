@@ -16,6 +16,28 @@ namespace HardX.Models
         public virtual Matmodel Matmodel { get; set; }
         public virtual int Count { get; set; }
 
+        public virtual DateTime Created_At { get; set; }
+        public virtual DateTime Updated_At { get; set; }
+        public virtual int Creater { get; set; }
+        public virtual int Updater { get; set; }
+
+        public override void Save(Shippingitem entity)
+        {
+            this.Created_At = DateTime.Now;
+            this.Updated_At = DateTime.Now;
+            this.Creater = User.CurrentUserId;
+            this.Updater = User.CurrentUserId;
+            base.Save(entity);
+
+        }
+
+        public override void Update(Shippingitem entity)
+        {
+            this.Updated_At = DateTime.Now;
+            this.Updater = User.CurrentUserId;
+            base.Update(entity);
+        }
+
         private Iesi.Collections.Generic.ISet<Shippingitemdistribute> _Distributes;
 
         public virtual Iesi.Collections.Generic.ISet<Shippingitemdistribute> Distributes

@@ -15,5 +15,9 @@
     <property name="StoreID" column="STORE_ID" type="int" />
     <property name="Count" column="Count" type="int" />
     <property name="Status" column="Status" type="int" />
+    <property name="Created_At" column="created_at" type="LocalDateTime" />
+    <property name="Updated_At" column="updated_at" type="LocalDateTime" />
+    <property name="Creater" column="CREATER" type="int" />
+    <property name="Updater" column="UPDATER" type="int" />
   </class>
 </hibernate-mapping>
