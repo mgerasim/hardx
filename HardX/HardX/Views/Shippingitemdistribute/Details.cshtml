@@ -42,11 +42,22 @@
 </tbody>
 </table>
 
+<button id="distribute_all" class="btn btn-primary" type="button" >Принять всё</button>
+
 <script>
 	$(".commit").click(function() {		
 		$.blockUI();
 		$.get('@Url.Action("Commit", "Shippingitemdistribute")', { distr_id:$(this).attr("distr_id"), store_id:$(this).attr("store_id"), matmodel_id:$(this).attr("matmodel_id"), devmodel_id:$(this).attr("devmodel_id") }, function(data) { 	
 			$("#distribute"+data).remove();
+		});
+	});
+
+	$("#distribute_all").click(function() {
+		$(".commit").each(function(index) {
+			$.blockUI();
+			$.get('@Url.Action("Commit", "Shippingitemdistribute")', { distr_id:$(this).attr("distr_id"), store_id:$(this).attr("store_id"), matmodel_id:$(this).attr("matmodel_id"), devmodel_id:$(this).attr("devmodel_id") }, function(data) { 	
+				$("#distribute"+data).remove();
+			});
 		});
 	});
 </script>
