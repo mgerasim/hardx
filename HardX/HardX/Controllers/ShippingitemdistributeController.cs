@@ -59,6 +59,7 @@ namespace HardX.Controllers
             string str_storeid_numbers = string.Join(", ", storeid_numbers);
 
             ViewBag.theDistribute = (new Shippingitemdistribute()).GetAll("STATUS=2 AND STORE_ID in(" + str_storeid_numbers + ")");
+            ViewBag.theDistributeCommit = (new Shippingitemdistribute()).GetAll("STATUS=3 AND STORE_ID in(" + str_storeid_numbers + ")");
             ViewBag.theShippingitem = theShippingitem;
 
             return View();

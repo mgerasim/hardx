@@ -3,8 +3,8 @@
 @{
     ViewBag.Title = "Детали";
 }
-
-<table class="border">
+<h1>Новые позиции на склад:</h1>
+<table class="border table-bordered">
 <tbody>
 	<tr>
 		<th>Поставка</th>
@@ -93,3 +93,64 @@
     });
 
 </script>
+
+
+<hr>
+<h1>Принятые раннее позиции</h1>
+<table class="border table-bordered">
+<tbody>
+	<tr>
+		<th>Поставка</th>
+		<th>Тип</th>
+		<th>Наименование</th>
+		<th>Количество</th>
+		<th>Дата распределения</th>
+		<th>Дата принятия</th>
+	</tr>
+
+@foreach(var distr in ViewBag.theDistributeCommit) {
+	
+	<tr>
+		<td>
+			@{Shippingitem theShippingitem = (new Shippingitem()).GetById(@distr.ShippingitemID);
+				string Name = theShippingitem.Shipping.Name;
+				
+			}
+			
+			@Name
+			
+		</td>
+		
+		<td>
+			
+			@{string Type = "";
+				if (theShippingitem.Devmodel != null) {
+					Type = "Оргетхника";
+				} else {
+					Type = "Расходник";
+				}
+			}
+			@Type
+		</td>
+
+		<td>
+			@if (theShippingitem.Devmodel != null) {
+				@theShippingitem.Devmodel.FullName
+			} else {
+				@theShippingitem.Matmodel.FullName
+			}
+		</td>
+		<td>
+			@distr.Count
+		</td>
+		<td>
+			@distr.Created_At
+		</td>
+		
+		<td>
+			@distr.Updated_At
+		</td>
+	</tr>
+}
+</tbody>
+</table>
