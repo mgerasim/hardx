@@ -44,10 +44,10 @@
 		<table id="edit_shipping" class="table table-bordered">
 					<tr>
 						<th>
-							Оргтехника
+							Тип
 						</th>
 						<th>
-							Расходник
+							Наименование
 						</th>
 						<th>
 							Кол-во
@@ -56,14 +56,19 @@
 					</tr>
 				@foreach (var item in Model.Shippingitems) {
 					<tr>
+						<td>
+							@if (item.Devmodel!= null) {
+								<p>Оргтехника</p>
+							}
+							@if (item.Matmodel!=null) {
+								<p>Расходник</p>
+							}
+						</td>
 
 						<td>
 							@if (item.Devmodel!= null) {
 								@item.Devmodel.FullName					
 							}
-						</td>
-
-						<td>
 							@if (item.Matmodel!=null) {
 								@item.Matmodel.FullName
 							}
@@ -137,9 +142,8 @@
 
 				$.get('@Url.Action("CreateAjaxDev", "Shippingitem")', { shipping_id: @(Model.ID), devmodel_id: $('#tab1_select_device').val(), count: $('#input_device_new').val() }, function(data) {											
 					var tr = document.createElement('tr');
-					tr.innerHTML = '<td>'+data+'</td>'+
+					tr.innerHTML = '<td>Оргтехника</td>'+
 						'<td>'+$('#tab1_select_device option:selected').text()+'</td>'+
-						'<td></td>'+
 						'<td>'+$('#input_device_new').val()+'</td>'+
 						'<button id="data" class="BtnDeleteitem" type="button" class="btn btn-primary">Удалить</button>';
 					$(tr).appendTo($('#edit_shipping'));					
@@ -218,8 +222,7 @@
 
 				$.get('@Url.Action("CreateAjaxMat", "Shippingitem")', { shipping_id: @(Model.ID), matmodel_id: $('#tab2_select_material').val(), count: $('#input_material_new').val() }, function(data) {					
 					var tr = document.createElement('tr');
-					tr.innerHTML = '<td>'+data+'</td>'+
-						'<td></td>'+
+					tr.innerHTML = '<td>Расходник</td>'+
 						'<td>'+$('#tab2_select_material option:selected').text()+'</td>'+						
 						'<td>'+$('#input_material_new').val()+'</td>'+
 						'<button id="data" class="BtnDeleteitem" type="button" class="btn btn-primary">Удалить</button>';
