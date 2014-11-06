@@ -7,20 +7,39 @@
 <table class="border">
 <tbody>
 	<tr>
-		<th>Склад</th>
-		<th>Наименование оргтехники/расходника</th>
+		<th>Поставка</th>
+		<th>Тип</th>
+		<th>Наименование</th>
 		<th>Количество</th>
 		<th></th>
 	</tr>
 
 @foreach(var distr in ViewBag.theDistribute) {
+	
 	<tr>
 		<td>
-			@((new Store()).GetById(@distr.StoreID).Name)
-		</td>
-		<td>
 			@{Shippingitem theShippingitem = (new Shippingitem()).GetById(@distr.ShippingitemID);
+				string Name = theShippingitem.Shipping.Name;
+				
 			}
+			
+			@Name
+			
+		</td>
+		
+		<td>
+			
+			@{string Type = "";
+				if (theShippingitem.Devmodel != null) {
+					Type = "Оргетхника";
+				} else {
+					Type = "Расходник";
+				}
+			}
+			@Type
+		</td>
+
+		<td>
 			@if (theShippingitem.Devmodel != null) {
 				@theShippingitem.Devmodel.FullName
 			} else {
@@ -32,9 +51,9 @@
 		</td>
 		<td>
 			@if (theShippingitem.Devmodel != null) {
-				<button id="distribute@(distr.ID)" class="commit btn btn-primary" distr_id=@distr.ID store_id=@distr.StoreID matmodel_id=0 devmodel_id=@theShippingitem.Devmodel.ID type="button" >Принять оргтехнику</button>
+				<button id="distribute@(distr.ID)" class="commit btn btn-primary" distr_id=@distr.ID store_id=@distr.StoreID matmodel_id=0 devmodel_id=@theShippingitem.Devmodel.ID type="button" >Принять</button>
 			} else {
-				<button id="distribute@(distr.ID)" class="commit btn btn-primary" distr_id=@distr.ID store_id=@distr.StoreID matmodel_id=@theShippingitem.Matmodel.ID devmodel_id=0  type="button" >Принять расходник</button>
+				<button id="distribute@(distr.ID)" class="commit btn btn-primary" distr_id=@distr.ID store_id=@distr.StoreID matmodel_id=@theShippingitem.Matmodel.ID devmodel_id=0  type="button" >Принять</button>
 			}
 		</td>
 	</tr>

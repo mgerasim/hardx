@@ -3,7 +3,7 @@
                     assembly="HardX"
                    namespace="HardX.Models">
 
-  <class name="Shipping" table="SHIPPINGS">
+  <class name="Shipping" table="SHIPPINGS" lazy="false">
 
     <id name="ID" column="id" type="int">
 
